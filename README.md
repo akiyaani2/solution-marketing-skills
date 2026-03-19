@@ -1,10 +1,8 @@
 # Solution Marketing Skills
 
-**18 production-ready AI skills for marketing teams that run on GitHub.**
+**23 production-ready AI skills for marketing teams that run on GitHub.**
 
-Built from 3 months of real operations managing 175+ issues, 30+ epics, 5 concurrent hackathon programs, monthly MBRs, and cross-solution coordination — all through GitHub Issues and Project boards.
-
-These skills work with **Claude Code**, **GitHub Copilot** (coding agent & chat), **Cursor**, **Codex CLI**, and any platform that supports the [Agent Skills](https://agentskills.io) open standard.
+Built from real operations managing 175+ issues, 30+ epics, 5 concurrent programs, monthly MBRs, and cross-solution coordination. These skills work with **Claude Code**, **GitHub Copilot**, **Cursor**, **Codex CLI**, and any platform supporting the [Agent Skills](https://agentskills.io) open standard (26+ platforms).
 
 ---
 
@@ -12,14 +10,15 @@ These skills work with **Claude Code**, **GitHub Copilot** (coding agent & chat)
 
 - [Quick Start](#quick-start)
 - [Skills by Category](#skills-by-category)
-  - [Reporting & Communication](#reporting--communication)
-  - [Project Management](#project-management)
-  - [Events & Programs](#events--programs)
-  - [Operations](#operations)
+  - [Competitive & Market Insights](#1-competitive--market-insights)
+  - [Writing & Meeting Prep](#2-writing--meeting-prep)
+  - [Data Insights & Analytics](#3-data-insights--analytics)
+  - [Devil's Advocate](#4-devils-advocate)
+  - [Strategic Thinking & OKR Alignment](#5-strategic-thinking--okr-alignment)
 - [How Skills Work Together](#how-skills-work-together)
-- [Using Skills with GitHub Copilot](#using-skills-with-github-copilot)
+- [MCP Servers](#mcp-servers)
+- [Using Skills with Copilot](#using-skills-with-copilot)
 - [Using Skills with Copilot Studio Agents](#using-skills-with-copilot-studio-agents)
-- [MCP Servers That Extend These Skills](#mcp-servers-that-extend-these-skills)
 - [The Agent Skills Standard](#the-agent-skills-standard)
 - [Setting Up Your Repo](#setting-up-your-repo)
 - [Customization Guide](#customization-guide)
@@ -29,161 +28,312 @@ These skills work with **Claude Code**, **GitHub Copilot** (coding agent & chat)
 
 ## Quick Start
 
-### Option 1 — Copy what you need
-
-Browse the [`skills/`](.claude/skills/) directory. Copy any skill folder into your repo:
-
 ```bash
-# Copy one skill
-cp -r solution-marketing-skills/.claude/skills/standup your-repo/.claude/skills/
-
-# Copy all skills
-cp -r solution-marketing-skills/.claude/skills/* your-repo/.claude/skills/
-```
-
-### Option 2 — Clone the full collection
-
-```bash
+# Option 1: Copy all skills to your repo
 git clone https://github.com/akiyaani2/solution-marketing-skills.git
 cp -r solution-marketing-skills/.claude/skills/* your-repo/.claude/skills/
-```
 
-### Option 3 — Add as a Git submodule
+# Option 2: Copy to .github/skills/ for Copilot
+cp -r solution-marketing-skills/.claude/skills/* your-repo/.github/skills/
 
-```bash
+# Option 3: Add as submodule
 git submodule add https://github.com/akiyaani2/solution-marketing-skills.git .claude/shared-skills
 ```
 
-### Option 4 — Use with Copilot
-
-Copy skills to `.github/skills/` instead of `.claude/skills/`:
-
-```bash
-mkdir -p your-repo/.github/skills
-cp -r solution-marketing-skills/.claude/skills/* your-repo/.github/skills/
-```
-
-Copilot also reads `.claude/skills/` automatically — either location works.
+Start with 3 skills: [`/standup`](.claude/skills/standup/) + [`/epic-health`](.claude/skills/epic-health/) + [`/pressure-test`](.claude/skills/pressure-test/). Add more as your workflow matures.
 
 ---
 
 ## Skills by Category
 
-### Reporting & Communication
+### 1. Competitive & Market Insights
 
-6 skills for team visibility, leadership reporting, and cross-team coordination.
+*"What's happening out there?"*
 
-| Skill | Command | What It Does | Details |
-|-------|---------|-------------|---------|
-| [**standup**](.claude/skills/standup/) | `/standup` | Daily async standup from GitHub activity | Yesterday / today / blockers per person. Supports `--brief` for one-liners. |
-| [**weekly-status**](.claude/skills/weekly-status/) | `/weekly-status [name]` | Weekly status per team member | Completed, in-progress, blocked, coming up. Roll-up mode for team leads. |
-| [**mbr**](.claude/skills/mbr/) | `/mbr` | Monthly Business Review package | Executive summary, owner breakdowns, metrics, narrative template. Ready for leadership. |
-| [**peer-digest**](.claude/skills/peer-digest/) | `/peer-digest` | Friday cross-team update | What shipped, what's coming, cross-team heads up. Under 10 lines. |
-| [**1on1-prep**](.claude/skills/1on1-prep/) | `/1on1-prep [name]` | 1:1 meeting prep | Open issues, blockers, recent wins, FIRE framework (Feedback, Ideas, Requests, Expectations). |
-| [**escalation-tracker**](.claude/skills/escalation-tracker/) | `/escalations` | Track leadership escalations | Pending / responded / resolved with SLA monitoring. Configurable by leadership tier. |
+Skills for understanding the competitive landscape, tracking market signals, and grounding decisions in real intelligence.
 
-### Project Management
+| Skill | Command | What It Does |
+|-------|---------|-------------|
+| [**competitive-scan**](.claude/skills/competitive-scan/) | `/competitive-scan` | Structured scanning of AWS, GCP, and partner ecosystems. Produces competitive briefs for leadership. |
+| [**content-pipeline**](.claude/skills/content-pipeline/) | `/content-pipeline` | Track content production including competitive analysis content. Blog, video, social, and session pipeline. |
+| [**cross-solution-sync**](.claude/skills/cross-solution-sync/) | `/x-sp` | Cross-team coordination that surfaces market context and shared intelligence across solution plays. |
 
-5 skills for board hygiene, initiative health, and decision governance.
+**Best MCP servers for this category:**
+- [Microsoft Learn MCP](#1-microsoft-learn-mcp) — ground competitive claims in official docs
+- [Power BI MCP](#5-power-bi-modeling-mcp) — pull market dashboards and engagement data
 
-| Skill | Command | What It Does | Details |
-|-------|---------|-------------|---------|
-| [**epic-health**](.claude/skills/epic-health/) | `/epic-health` | Score epics on 5 health dimensions | Completion %, blocked count, staleness, RAPID, TBD count. Weighted scoring. |
-| [**issue-triage**](.claude/skills/issue-triage/) | `/issue-triage` | Bulk triage with P0 cascade | Stale detection, priority downgrade pattern, orphan reparenting, label hygiene. |
-| [**solution-play-health**](.claude/skills/solution-play-health/) | `/sp-health` | Strategic health scoring | Layer above epic-health. Scores solution plays across multiple dimensions. |
-| [**event-countdown**](.claude/skills/event-countdown/) | `/event-countdown` | Event readiness dashboard | Three urgency tiers. Readiness % with color coding adjusted for time proximity. |
-| [**decision**](.claude/skills/decision/) | `/decision "desc"` | Decision records (TD-NNNN) | Context, options, decision, RAPID roles, consequences. Auto-numbered. |
+---
 
-### Events & Programs
+### 2. Writing & Meeting Prep
 
-3 skills for event logistics, hackathon operations, and content production.
+*"Help me prepare and produce."*
 
-| Skill | Command | What It Does | Details |
-|-------|---------|-------------|---------|
-| [**event-ops**](.claude/skills/event-ops/) | `/event-ops` | Full event lifecycle management | Workback schedules, vendor checklists, readiness scoring, cross-event calendar. |
-| [**hackathon-tracker**](.claude/skills/hackathon-tracker/) | `/hack-status` | Hackathon program tracking | Pipeline stages (planning → outcomes), registration funnels, cross-hack comparison. |
-| [**content-pipeline**](.claude/skills/content-pipeline/) | `/content-pipeline` | Content production pipeline | Blog, video, social, session abstracts. Ideation → production → review → published. |
+Skills for meeting preparation, content drafting, report generation, and communication.
 
-### Operations
+| Skill | Command | What It Does |
+|-------|---------|-------------|
+| [**meeting-notes**](.claude/skills/meeting-notes/) | `/meeting-notes` | Capture notes, auto-extract action items as GitHub Issues. Templates for 1:1s, syncs, and recurring insights sessions. |
+| [**1on1-prep**](.claude/skills/1on1-prep/) | `/1on1-prep [name]` | 1:1 meeting prep with open issues, blockers, wins, and FIRE framework (Feedback, Ideas, Requests, Expectations). |
+| [**mbr**](.claude/skills/mbr/) | `/mbr` | Monthly Business Review package. Executive summary, owner breakdowns, metrics, narrative template. |
+| [**peer-digest**](.claude/skills/peer-digest/) | `/peer-digest` | Friday cross-team update. What shipped, what's coming, cross-team heads up. Under 10 lines. |
+| [**standup**](.claude/skills/standup/) | `/standup` | Daily async standup from GitHub activity. Yesterday / today / blockers per person. |
+| [**weekly-status**](.claude/skills/weekly-status/) | `/weekly-status [name]` | Weekly status per team member. Completed, in-progress, blocked, coming up. |
+| [**escalation-tracker**](.claude/skills/escalation-tracker/) | `/escalations` | Track items escalated to leadership with SLA monitoring and response tracking. |
+| [**git-sync**](.claude/skills/git-sync/) | `/git-sync` | Automated git pull / commit / push with standardized messages. |
 
-4 skills for budget management, cross-team coordination, meeting capture, and git workflow.
+**Best MCP servers for this category:**
+- [GitHub MCP](#3-github-mcp-server) — pull issue context for meeting prep and reports
+- [Work IQ MCP](#2-microsoft-work-iq-mcp) — calendar context, Teams posting, email distribution
 
-| Skill | Command | What It Does | Details |
-|-------|---------|-------------|---------|
-| [**budget-ops**](.claude/skills/budget-ops/) | `/budget-ops` | Budget & vendor operations | PO lifecycle tracking, co-marketing fund utilization, vendor status, leadership reports. |
-| [**cross-solution-sync**](.claude/skills/cross-solution-sync/) | `/x-sp` | Cross-team coordination | Shared workstreams, dependencies, joint events, sync prep. Goes deeper than peer-digest. |
-| [**meeting-notes**](.claude/skills/meeting-notes/) | `/meeting-notes` | Meeting capture & action extraction | Auto-extract action items as GitHub Issues. Templates for 1:1s, syncs, recurring insights. |
-| [**git-sync**](.claude/skills/git-sync/) | `/git-sync` | Automated git workflow | Pull, commit, push with standardized messages. Force-push prevention, conflict detection. |
+---
+
+### 3. Data Insights & Analytics
+
+*"Show me the numbers."*
+
+Skills for metrics, health scoring, trend analysis, and operational dashboards.
+
+| Skill | Command | What It Does |
+|-------|---------|-------------|
+| [**epic-health**](.claude/skills/epic-health/) | `/epic-health` | Score epics on 5 health dimensions. Completion %, blocked count, staleness, RAPID, TBD count. |
+| [**issue-triage**](.claude/skills/issue-triage/) | `/issue-triage` | Bulk triage with P0 downgrade cascade pattern. Stale detection, orphan reparenting, label hygiene. |
+| [**solution-play-health**](.claude/skills/solution-play-health/) | `/sp-health` | Strategic health scoring for solution plays. Layer above epic-health. Quarter-over-quarter comparison. |
+| [**hackathon-tracker**](.claude/skills/hackathon-tracker/) | `/hack-status` | Hackathon pipeline tracking. Registration funnels, judging status, cross-hack comparison, outcomes analysis. |
+| [**event-countdown**](.claude/skills/event-countdown/) | `/event-countdown` | Event readiness dashboard. Three urgency tiers with readiness % and color coding. |
+| [**event-ops**](.claude/skills/event-ops/) | `/event-ops` | Full event lifecycle. Workback schedules, vendor checklists, readiness scoring, cross-event calendar. |
+| [**budget-ops**](.claude/skills/budget-ops/) | `/budget-ops` | PO tracking, co-marketing fund utilization, vendor management, budget reports for leadership. |
+
+**Best MCP servers for this category:**
+- [GitHub MCP](#3-github-mcp-server) — real-time issue and board data
+- [Power BI MCP](#5-power-bi-modeling-mcp) — dashboard data, semantic model queries
+- [Dataverse MCP](#4-dataverse-mcp) — business data, CRM records, program metrics
+
+---
+
+### 4. Devil's Advocate
+
+*"Challenge my thinking."*
+
+Skills that push back, find holes, and make your plans stronger before you commit. The category most teams don't have — and need most.
+
+| Skill | Command | What It Does |
+|-------|---------|-------------|
+| [**pressure-test**](.claude/skills/pressure-test/) | `/pressure-test` | Challenge any plan through 7 lenses: assumptions, resources, timeline, stakeholders, competition, failure modes, opportunity cost. |
+| [**pre-mortem**](.claude/skills/pre-mortem/) | `/pre-mortem` | "It failed. Why?" Reason backwards from failure to surface risks before they happen. |
+| [**red-team**](.claude/skills/red-team/) | `/red-team` | Take the competitor's perspective. How would AWS or GCP counter your program? |
+
+**Best MCP servers for this category:**
+- [Microsoft Learn MCP](#1-microsoft-learn-mcp) — verify your own claims against official docs
+- [GitHub MCP](#3-github-mcp-server) — pull actual data to check assumptions
+
+---
+
+### 5. Strategic Thinking & OKR Alignment
+
+*"Am I working on the right things?"*
+
+Skills for planning, goal alignment, decision governance, and making sure daily work connects to quarterly objectives.
+
+| Skill | Command | What It Does |
+|-------|---------|-------------|
+| [**okr-check**](.claude/skills/okr-check/) | `/okr-check` | Score any work item against OKRs. Scan for orphaned work, uncover drift, check coverage of key results. |
+| [**decision**](.claude/skills/decision/) | `/decision "desc"` | Create formatted decision records (TD-NNNN). Context, options, decision, RAPID roles, consequences. |
+| [**solution-play-health**](.claude/skills/solution-play-health/) | `/sp-health` | Strategic health scoring. Also appears in Data Insights — it bridges analytics and strategy. |
+
+**Best MCP servers for this category:**
+- [GitHub MCP](#3-github-mcp-server) — pull issue data for alignment analysis
+- [Dataverse MCP](#4-dataverse-mcp) — access OKR/goal data if stored in Dynamics/Dataverse
 
 ---
 
 ## How Skills Work Together
 
-Skills compose into a natural operating rhythm:
-
 ```
-                    ┌─────────────────────────────────────────┐
-                    │           OPERATING RHYTHM               │
-                    └─────────────────────────────────────────┘
+                ┌──────────────────────────────────────────────────┐
+                │              YOUR OPERATING RHYTHM                │
+                └──────────────────────────────────────────────────┘
 
-  DAILY             /standup ──────────────────► team pulse
-
-  WEEKLY            /weekly-status ────────────► per-person view
-                    /issue-triage ─────────────► board hygiene
-                    /epic-health ──────────────► initiative health
-                    /x-sp ─────────────────────► cross-team sync
-
-  BIWEEKLY          /1on1-prep ────────────────► meeting prep
-
-  MONTHLY           /mbr ──────────────────────► leadership package
-                    /budget-ops ───────────────► financial status
-                    /sp-health ────────────────► strategic view
-
-  FRIDAY            /peer-digest ──────────────► cross-team update
-
-  EVENTS            /event-ops ────────────────► logistics
-                    /hack-status ──────────────► hackathon pipeline
-                    /event-countdown ──────────► readiness check
-
-  AD HOC            /meeting-notes ────────────► capture & extract
-                    /escalations ──────────────► track upward items
-                    /decision ─────────────────► document decisions
-                    /content-pipeline ─────────► content status
+   DAILY         /standup ──────────────────────► team pulse
+                                                      │
+   WEEKLY        /weekly-status ────────────────► per-person view
+                 /issue-triage ─────────────────► board hygiene
+                 /epic-health ──────────────────► initiative health
+                 /x-sp ─────────────────────────► cross-team sync
+                                                      │
+   BIWEEKLY      /1on1-prep ────────────────────► meeting prep
+                 /meeting-notes ────────────────► capture action items
+                                                      │
+   MONTHLY       /mbr ──────────────────────────► leadership package
+                 /budget-ops ───────────────────► financial status
+                 /sp-health ────────────────────► strategic view
+                 /competitive-scan ─────────────► market intelligence
+                                                      │
+   FRIDAY        /peer-digest ──────────────────► cross-team update
+                                                      │
+   EVENTS        /event-ops ────────────────────► logistics
+                 /hack-status ──────────────────► hackathon pipeline
+                 /event-countdown ──────────────► readiness check
+                                                      │
+   BEFORE ANY    /pressure-test ────────────────► find the holes
+   BIG DECISION  /pre-mortem ───────────────────► imagine failure
+                 /red-team ─────────────────────► competitor view
+                 /okr-check ────────────────────► alignment check
+                                                      │
+   AD HOC        /escalations ──────────────────► track upward items
+                 /decision ─────────────────────► document decisions
+                 /content-pipeline ─────────────► content status
 ```
 
-**Composition chains:**
-- `/standup` data feeds into `/weekly-status` which feeds into `/mbr`
-- `/epic-health` aggregates into `/sp-health` which feeds MBR narrative
-- `/1on1-prep` combines with `/meeting-notes` for a full meeting cycle
-- `/event-countdown` feeds `/event-ops` for deeper logistics
-- `/escalations` tracks items surfaced in any other skill
+**Key composition chains:**
+- `/standup` → `/weekly-status` → `/mbr` (daily → weekly → monthly roll-up)
+- `/epic-health` → `/sp-health` → `/okr-check` (tactical → strategic → alignment)
+- `/1on1-prep` + `/meeting-notes` (prepare → capture → action items → issues)
+- `/competitive-scan` → `/red-team` → `/pressure-test` (intelligence → adversarial thinking → plan hardening)
+- `/event-countdown` → `/event-ops` → `/hack-status` (awareness → logistics → execution)
 
 ---
 
-## Using Skills with GitHub Copilot
+## MCP Servers
 
-These skills are built on the [Agent Skills](https://agentskills.io) open standard, which is supported by **both Claude Code and GitHub Copilot**.
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io) servers give AI agents real-time access to tools and data. These skills become dramatically more powerful when paired with the right MCP servers.
 
-### With Copilot Coding Agent
+### Recommended Setup (Priority Order)
 
-The Copilot coding agent (GA for all paid Copilot plans) can use these skills autonomously:
+#### 1. Microsoft Learn MCP
 
-1. Place skills in `.github/skills/` or `.claude/skills/` in your repo
-2. Assign a GitHub Issue to Copilot (just like assigning to a team member)
-3. Copilot reads the relevant skill and executes autonomously
-4. A draft PR is opened with the results
+**What:** Search and fetch official Microsoft/Azure documentation.
+**Why first:** Grounds all research, competitive analysis, and content creation in accurate, official information. Prevents hallucinated product claims.
 
-**Example:** Create an issue titled "Generate this month's MBR package" and assign it to Copilot. The agent will find the `/mbr` skill, pull issue data via `gh` CLI, and generate the MBR as a markdown file in a PR.
+| Tool | What It Does |
+|------|-------------|
+| `microsoft_docs_search` | Search docs, return concise content chunks |
+| `microsoft_code_sample_search` | Find working code examples |
+| `microsoft_docs_fetch` | Fetch full page content from any Learn URL |
 
-### With Copilot Chat (VS Code / GitHub.com)
+**Setup:**
+```json
+{
+  "mcpServers": {
+    "microsoft-learn": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/microsoft-learn-mcp"]
+    }
+  }
+}
+```
 
-In Copilot Chat, reference skills by name:
+**Skills it powers:** competitive-scan, content-pipeline, red-team, pressure-test
+
+---
+
+#### 2. Microsoft Work IQ MCP
+
+**What:** Enterprise-grade MCP servers for Microsoft 365 — Teams, Calendar, Mail, SharePoint, OneDrive, Word.
+**Why:** Connects your AI agent to the Microsoft ecosystem your team already uses.
+**Requires:** M365 Copilot license. Currently in preview.
+
+| Server | What It Does | Skills It Powers |
+|--------|-------------|-----------------|
+| Work IQ Calendar | Create/update events, suggest meeting times | meeting-notes, 1on1-prep, event-ops |
+| Work IQ Teams | Post messages, create chats, channel ops | peer-digest, standup, escalation-tracker |
+| Work IQ Mail | Send/search emails, reply-all | mbr (distribution), escalation-tracker |
+| Work IQ SharePoint | Upload files, search, manage lists | budget-ops, content-pipeline |
+| Work IQ Word | Create/read documents | mbr, meeting-notes, decision |
+
+**Setup:** Managed via Microsoft 365 admin center or Copilot Studio. See [Work IQ documentation](https://learn.microsoft.com/en-us/microsoft-agent-365/tooling-servers-overview).
+
+---
+
+#### 3. GitHub MCP Server
+
+**What:** Full CRUD on GitHub Issues, PRs, Projects, Discussions, Actions, and code search.
+**Why:** This is the data backbone. Every reporting and analytics skill pulls from GitHub.
+
+| Capability | Skills It Powers |
+|-----------|-----------------|
+| Issue CRUD | issue-triage, epic-health, standup, weekly-status |
+| Project board management | hackathon-tracker, event-ops, solution-play-health |
+| Discussion access | meeting-notes, decision |
+| Code search | competitive-scan (verify implementations) |
+
+**Setup:**
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "ghcr.io/github/github-mcp-server"],
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-token>" }
+    }
+  }
+}
+```
+
+**Repo:** [github/github-mcp-server](https://github.com/github/github-mcp-server)
+
+---
+
+#### 4. Dataverse MCP
+
+**What:** Chat over your business data — discover tables, run queries, retrieve/insert/update records, execute custom prompts grounded in business context.
+**Why:** If your team tracks programs, customers, or OKRs in Dynamics 365 or Dataverse, this connects your AI skills directly to that data.
+
+| Capability | Skills It Powers |
+|-----------|-----------------|
+| Query business records | budget-ops, okr-check, hackathon-tracker (if registration data is in Dataverse) |
+| Discover tables | competitive-scan (partner data), event-ops (venue/logistics data) |
+| Insert/update records | meeting-notes (sync action items to CRM) |
+
+**Setup:** See [microsoft/Dataverse-MCP](https://github.com/microsoft/Dataverse-MCP) for authentication and configuration.
+
+---
+
+#### 5. Power BI Modeling MCP
+
+**What:** Brings Power BI semantic modeling capabilities to AI agents. Query datasets, analyze models, generate DAX.
+**Why:** If your team uses Power BI dashboards (engagement metrics, registration data, program performance), this gives your AI agent direct access.
+
+| Capability | Skills It Powers |
+|-----------|-----------------|
+| Query semantic models | mbr (pull actual metrics), hackathon-tracker (registration data) |
+| Analyze data models | solution-play-health (performance trends), budget-ops (spend analysis) |
+| Generate DAX queries | Custom analytics on demand |
+
+**Setup:** See [microsoft/powerbi-modeling-mcp](https://github.com/microsoft/powerbi-modeling-mcp) (519 stars, actively maintained).
+
+---
+
+### MCP + Skills Matrix
+
+| MCP Server | Cat 1: Competitive | Cat 2: Writing | Cat 3: Analytics | Cat 4: Devil's Advocate | Cat 5: Strategy |
+|-----------|-------------------|---------------|-----------------|----------------------|----------------|
+| Microsoft Learn | Primary | Support | — | Verification | — |
+| Work IQ | — | Primary | — | — | — |
+| GitHub | Support | Primary | Primary | Data source | Data source |
+| Dataverse | Support | — | Primary | — | Primary |
+| Power BI | Support | — | Primary | — | Support |
+
+---
+
+## Using Skills with Copilot
+
+These skills follow the [Agent Skills](https://agentskills.io) standard — the same format works across Claude Code and GitHub Copilot.
+
+### Copilot Coding Agent (Autonomous)
+
+1. Place skills in `.github/skills/` or `.claude/skills/`
+2. Assign a GitHub Issue to Copilot (like assigning to a team member)
+3. Copilot reads the relevant skill, pulls data via `gh` CLI, and opens a draft PR
+
+**Example:** Create an issue "Run monthly epic health check" → assign to Copilot → it executes `/epic-health` and produces the report.
+
+### Copilot Chat
 
 ```
-@workspace Use the epic-health skill to score all our type:initiative epics
+@workspace Use the pressure-test skill to challenge our Build 2026 plan
 ```
 
-### With Copilot in the CLI
+### Copilot CLI
 
 ```bash
 gh copilot suggest "use the standup skill to generate today's standup"
@@ -193,105 +343,39 @@ gh copilot suggest "use the standup skill to generate today's standup"
 
 ## Using Skills with Copilot Studio Agents
 
-If your team has access to **Copilot Studio**, you can create custom agents that leverage these skills:
+### Low-Code Setup
 
-### Low-Code Agent Setup
+1. Create a new agent in **Copilot Studio**
+2. Add this repo (or individual SKILL.md files) as **knowledge sources**
+3. Map skills to **topics**: "Generate standup" triggers standup SKILL.md instructions
+4. Connect **Power Automate flows** or **MCP connectors** for `gh` CLI execution
+5. Deploy to **Microsoft Teams** — team members invoke via chat
 
-1. **Create a new agent** in Copilot Studio
-2. **Add knowledge sources** — point to this repo or upload individual SKILL.md files as knowledge
-3. **Define topics** — map each skill to a Copilot Studio topic:
-   - Topic: "Generate standup" → triggers standup skill instructions
-   - Topic: "MBR prep" → triggers mbr skill instructions
-   - Topic: "Triage board" → triggers issue-triage skill instructions
-4. **Connect actions** — use Power Automate flows or MCP connectors to execute `gh` CLI commands
-5. **Deploy to Teams** — team members invoke the agent in Microsoft Teams
+### Pro-Code Setup (Microsoft Foundry)
 
-### Pro-Code Agent Setup (Microsoft Foundry)
-
-For deeper integration, use the [Microsoft Agent Framework](https://devblogs.microsoft.com/foundry/introducing-microsoft-agent-framework-the-open-source-engine-for-agentic-ai-apps/) to build agents that:
-- Read SKILL.md files as instructions
-- Use the GitHub MCP server for issue/board operations
-- Use Work IQ MCP servers for Teams/Calendar/Mail integration
-- Run autonomously on Azure compute
+Use the [Microsoft Agent Framework](https://devblogs.microsoft.com/foundry/introducing-microsoft-agent-framework-the-open-source-engine-for-agentic-ai-apps/) to build agents that read SKILL.md files, use MCP servers for data, and run on Azure compute.
 
 ### Sharing Skills as Knowledge
 
-Each SKILL.md file is a self-contained instruction set. You can:
-- Upload them as **Copilot Studio knowledge articles**
-- Reference them in **Copilot custom instructions** (`.github/copilot-instructions.md`)
-- Embed them in **Power Platform AI Builder** prompts
-- Share them as templates in your org's **Copilot Extensions** catalog
-
----
-
-## MCP Servers That Extend These Skills
-
-[Model Context Protocol (MCP)](https://modelcontextprotocol.io) servers give AI agents real-time access to external tools and data. These servers pair well with the skills in this repo:
-
-### Recommended MCP Servers
-
-| Server | What It Does | Skills It Extends |
-|--------|-------------|------------------|
-| [**GitHub MCP Server**](https://github.com/github/github-mcp-server) | Full CRUD on issues, PRs, projects, discussions | All skills — this is the primary data source |
-| [**GitHub Projects V2 MCP**](https://github.com/Arclio/github-projects-mcp) | Direct project board management via natural language | epic-health, issue-triage, weekly-status |
-| [**Microsoft Learn MCP**](https://learn.microsoft.com/en-us/azure/) | Search and fetch official Microsoft documentation | content-pipeline (technical accuracy), research |
-| [**Work IQ Calendar**](https://learn.microsoft.com/en-us/microsoft-agent-365/) | Create/update calendar events, suggest meeting times | event-ops (scheduling), meeting-notes |
-| [**Work IQ Teams**](https://learn.microsoft.com/en-us/microsoft-agent-365/) | Post messages, create chats, channel operations | peer-digest (delivery), standup (distribution) |
-| [**Work IQ Mail**](https://learn.microsoft.com/en-us/microsoft-agent-365/) | Send/search emails, reply-all | escalation-tracker (follow-ups), mbr (distribution) |
-| [**Work IQ SharePoint**](https://learn.microsoft.com/en-us/microsoft-agent-365/) | Upload files, search, manage lists | budget-ops (PO docs), content-pipeline (assets) |
-
-### Setting Up MCP Servers
-
-For **Claude Code**, configure in `.claude/settings.json`:
-
-```json
-{
-  "mcpServers": {
-    "github": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "ghcr.io/github/github-mcp-server"],
-      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-token>" }
-    },
-    "microsoft-learn": {
-      "command": "npx",
-      "args": ["-y", "@anthropic/microsoft-learn-mcp"]
-    }
-  }
-}
-```
-
-For **Copilot**, MCP servers are configured at the organization level in your Copilot settings or via `.github/copilot-mcp.json`.
-
-> **Note:** Microsoft Work IQ MCP servers require an M365 Copilot license and are currently in preview. Check [Work IQ documentation](https://learn.microsoft.com/en-us/microsoft-agent-365/tooling-servers-overview) for availability.
+- Upload SKILL.md files as **Copilot Studio knowledge articles**
+- Add to **Copilot custom instructions** (`.github/copilot-instructions.md`)
+- Embed in **Power Platform AI Builder** prompts
+- Distribute through your org's **Copilot Extensions** catalog
 
 ---
 
 ## The Agent Skills Standard
 
-These skills follow the [Agent Skills](https://agentskills.io) open specification — a portable format for giving AI agents new capabilities.
+These skills follow the [Agent Skills](https://agentskills.io) open specification by Anthropic. Adopted by **26+ platforms** including Claude Code, GitHub Copilot, Cursor, Codex CLI, Gemini CLI, VS Code, and more.
 
-### Why This Matters
-
-The same SKILL.md file works across **26+ platforms**:
-
-| Platform | Status | How It Uses Skills |
-|----------|--------|--------------------|
-| **Claude Code** | Supported | `.claude/skills/` directory |
-| **GitHub Copilot** | Supported | `.github/skills/` or `.claude/skills/` |
-| **VS Code** (agent mode) | Supported | Reads from either directory |
-| **Cursor** | Supported | `.cursor/skills/` or `.claude/skills/` |
-| **Codex CLI** (OpenAI) | Supported | Standard skill directories |
-| **Gemini CLI** | Supported | Standard skill directories |
-| **Copilot Studio** | Via knowledge upload | Upload SKILL.md as knowledge article |
-
-### Skill File Structure
+### Skill Structure
 
 ```
 .claude/skills/my-skill/
-  SKILL.md           # Required — YAML frontmatter + markdown instructions
-  scripts/           # Optional — helper scripts the skill can reference
-  references/        # Optional — detailed docs, API references
-  assets/            # Optional — templates, sample files
+  SKILL.md           # Required — YAML frontmatter + instructions
+  scripts/           # Optional — helper scripts
+  references/        # Optional — detailed docs
+  assets/            # Optional — templates, samples
 ```
 
 ### SKILL.md Format
@@ -299,15 +383,12 @@ The same SKILL.md file works across **26+ platforms**:
 ```yaml
 ---
 name: my-skill
-description: One-line description of what this skill does and when to trigger it
+description: What this does and when to trigger it (for the AI, not humans)
 ---
 
 # My Skill
-
-Instructions for the AI agent...
+Step-by-step instructions...
 ```
-
-The `description` field is what the AI reads to decide whether to activate the skill. Write it for the model, not for humans.
 
 ---
 
@@ -315,143 +396,86 @@ The `description` field is what the AI reads to decide whether to activate the s
 
 ### Prerequisites
 
-- A GitHub repo with Issues enabled
+- GitHub repo with Issues enabled
 - [GitHub CLI](https://cli.github.com/) (`gh`) installed and authenticated
 - An AI coding tool (Claude Code, Copilot, Cursor, etc.)
 
-### Recommended Label Structure
-
-These skills expect a consistent label taxonomy. Configure these labels in your repo:
+### Recommended Labels
 
 ```
-Priority:
-  p0                    — Critical / blocking
-  p1                    — High priority
-  p2                    — Normal priority
-
-Ownership:
-  owner:[name]          — Primary owner (one per team member)
-
-Function:
-  func:events           — Event management
-  func:hackathon        — Hackathon programs
-  func:content          — Content production
-  func:gtm              — Go-to-market
-  func:ops              — Operations
-  func:data             — Data & analytics
-  func:partnership      — Partner coordination
-
-Solution Play:
-  sp:[play-name]        — Your solution plays
-  sp:cross-solution     — Cross-play items
-
-Status:
-  status:blocked        — Blocked on something
-  status:at-risk        — At risk of missing target
-  status:waiting-external — Waiting on external party
-
-Type:
-  type:initiative       — Epic / strategic initiative
-  type:task             — Individual work item
-  type:decision-needed  — Requires a decision
-
-Stakeholder:
-  stakeholder:[name]    — Visibility for specific leaders
-
-Event:
-  event:[name]          — Specific event or program
+Priority:     p0, p1, p2
+Ownership:    owner:[name]
+Function:     func:events, func:hackathon, func:content, func:gtm, func:ops
+Solution:     sp:[play-name], sp:cross-solution
+Status:       status:blocked, status:at-risk, status:waiting-external
+Type:         type:initiative, type:task, type:decision-needed
+Stakeholder:  stakeholder:[name]
+Event:        event:[name]
 ```
 
-### GitHub Project Board Setup
+### Project Board Structure
 
-For maximum skill effectiveness, create project boards per team member:
-
-1. **[Name] — [Domain]** board per person (e.g., "Mindy — Events & Partner Execution")
-2. **Leadership View** board for initiative-level roll-up
-3. **Events Calendar** board for timeline visualization
-4. **Cross-Solution Portfolio** board for cross-team items
+1. **Per-person boards** — one board per team member
+2. **Leadership View** — initiative-level roll-up
+3. **Events Calendar** — timeline visualization
+4. **Cross-Solution Portfolio** — cross-team items
 
 ---
 
 ## Customization Guide
 
-Every skill is designed to be customized. Here's how:
-
-### 1. Labels
-
-Search and replace label prefixes in SKILL.md files:
-
+### Labels
 ```bash
-# If your team uses "area:" instead of "func:"
+# Replace label prefixes to match your repo
 find .claude/skills -name "SKILL.md" -exec sed -i '' 's/func:/area:/g' {} +
 ```
 
-### 2. Team Members
+### Team Members
+Replace `[Team Lead]`, `[Manager]`, `owner:[name]` placeholders with your actual team.
 
-Replace placeholder names with your actual team:
+### Events & Programs
+Update event labels in `event-ops`, `event-countdown`, and `hackathon-tracker`.
 
-```bash
-# In 1on1-prep, weekly-status, standup, etc.
-# Replace [Team Lead] with actual names
-```
+### Decision Rights
+Update approval chains in `escalation-tracker` and `budget-ops`.
 
-### 3. Event Portfolio
-
-Update event labels and known events in `event-ops`, `event-countdown`, and `hackathon-tracker`.
-
-### 4. Reporting Cadence
-
-Adjust the operating rhythm in skills like `mbr` (monthly), `weekly-status` (weekly), `standup` (daily) to match your team's cadence.
-
-### 5. Decision Rights
-
-Update the escalation chains in `escalation-tracker` and `budget-ops` to match your org's approval hierarchy.
+### OKRs
+Document your OKRs in the repo (`operations/okrs/`) so `/okr-check` can reference them.
 
 ---
 
 ## FAQ
 
-**Q: Do I need Claude Code to use these skills?**
-No. These skills work with any tool that supports the [Agent Skills](https://agentskills.io) standard — including GitHub Copilot, Cursor, Codex CLI, and Gemini CLI.
+**Do I need Claude Code?**
+No. These work with any tool supporting [Agent Skills](https://agentskills.io) — Copilot, Cursor, Codex CLI, Gemini CLI, etc.
 
-**Q: Can I use these skills in Copilot Chat without the coding agent?**
-Yes. Reference the skill content in your Copilot custom instructions (`.github/copilot-instructions.md`) or ask Copilot Chat to follow the instructions in a specific SKILL.md file.
+**Do I need all 23 skills?**
+No. Start with `/standup` + `/epic-health` + `/pressure-test`. Add more as needed.
 
-**Q: Do I need all 18 skills?**
-No. Start with what you need. Most teams begin with `/standup`, `/weekly-status`, and `/epic-health`, then add more as their workflow matures.
+**Can Copilot Studio agents use these?**
+Yes. Upload SKILL.md files as knowledge articles. See [Copilot Studio section](#using-skills-with-copilot-studio-agents).
 
-**Q: Can I contribute new skills?**
-Yes. PRs are welcome. Follow the SKILL.md format documented above, keep skills generic (no team-specific names), and include a Gotchas section.
+**How do MCP servers relate to skills?**
+Skills = instructions (what to do). MCP servers = connections (how to access data). Together: knowledge + capability.
 
-**Q: How do these skills interact with MCP servers?**
-Skills provide the instructions (what to do). MCP servers provide the connections (how to access data). Together, they give AI agents both knowledge and capability. For example, the `/mbr` skill tells the agent how to structure a Monthly Business Review, and the GitHub MCP server gives it real-time access to your issues and project boards.
-
-**Q: Can Copilot Studio agents use these skills?**
-Yes. Upload SKILL.md files as knowledge articles in Copilot Studio, or point your agent's knowledge source to this repo. See [Using Skills with Copilot Studio Agents](#using-skills-with-copilot-studio-agents) for details.
-
----
-
-## Contributing
-
-These skills are built from real operational patterns. If you improve a skill or create a new one for your team, contributions are welcome:
-
-1. Fork this repo
-2. Create your skill in `.claude/skills/[skill-name]/SKILL.md`
-3. Follow the [Agent Skills specification](https://agentskills.io/specification)
-4. Include a Gotchas section with real operational tips
-5. Keep it generic — no team-specific names or repo references
-6. Submit a PR
+**Can I contribute?**
+Yes. PRs welcome. Follow the [Agent Skills spec](https://agentskills.io/specification), keep it generic, include a Gotchas section.
 
 ---
 
 ## Resources
 
-- [Agent Skills Specification](https://agentskills.io/specification) — The open standard these skills follow
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code) — Claude Code skill authoring guide
-- [GitHub Copilot Agent Skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) — Copilot's skill documentation
-- [GitHub MCP Server](https://github.com/github/github-mcp-server) — Official GitHub MCP server
-- [Microsoft Work IQ](https://learn.microsoft.com/en-us/microsoft-agent-365/tooling-servers-overview) — Enterprise MCP servers for M365
-- [awesome-agent-skills](https://github.com/skillmatic-ai/awesome-agent-skills) — Community skill directory
+| Resource | Link |
+|----------|------|
+| Agent Skills Specification | [agentskills.io](https://agentskills.io/specification) |
+| GitHub Copilot Skills Docs | [docs.github.com](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) |
+| Microsoft MCP Catalog | [github.com/microsoft/mcp](https://github.com/microsoft/mcp) |
+| GitHub MCP Server | [github.com/github/github-mcp-server](https://github.com/github/github-mcp-server) |
+| Microsoft Work IQ | [learn.microsoft.com](https://learn.microsoft.com/en-us/microsoft-agent-365/tooling-servers-overview) |
+| Dataverse MCP | [github.com/microsoft/Dataverse-MCP](https://github.com/microsoft/Dataverse-MCP) |
+| Power BI MCP | [github.com/microsoft/powerbi-modeling-mcp](https://github.com/microsoft/powerbi-modeling-mcp) |
+| Microsoft Learn MCP | [npmjs.com](https://www.npmjs.com/package/@anthropic/microsoft-learn-mcp) |
+| Awesome MCP Servers | [github.com/punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers) |
 
 ---
 
