@@ -1,6 +1,8 @@
 ---
 name: escalation-tracker
-description: Track items escalated to leadership with SLA monitoring. Dashboard of pending, responded, and resolved escalations. Create new escalations with options and recommendations.
+description: Tracks items escalated to leadership with SLA monitoring. Dashboard of pending, responded, and resolved escalations. Creates new escalations with options and recommendations.
+allowed-tools: [Bash, Read, Grep, Glob]
+disable-model-invocation: true
 ---
 
 # Escalation Tracker

@@ -1,6 +1,7 @@
 ---
 name: pressure-test
-description: Challenge any plan, proposal, or decision — find the holes, ask the hard questions, surface risks, identify what could go wrong. Use when you need a devil's advocate before committing to a direction.
+description: Challenges any plan, proposal, or decision — find the holes, ask the hard questions, surface risks, identify what could go wrong. For use when you need a devil's advocate before committing to a direction.
+allowed-tools: [Read]
 ---
 
 # Pressure Test

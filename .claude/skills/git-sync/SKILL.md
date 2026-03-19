@@ -2,6 +2,7 @@
 name: git-sync
 description: Automated git pull/commit/push with standardized commit messages. Safety features include branch validation, force-push prevention, merge conflict detection, and reporting of both local file changes and GitHub API changes.
 allowed-tools: [Bash]
+disable-model-invocation: true
 trigger_phrases:
   - "/git-sync"
   - "/git-sync -m"

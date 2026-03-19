@@ -1,6 +1,7 @@
 ---
 name: 1on1-prep
-description: Generate 1:1 meeting prep for any team member. Pulls open issues, recent completions, blockers, and FIRE framework prompts. Supports upward mode for meetings with your own manager.
+description: Generates 1:1 meeting prep for any team member. Pulls open issues, recent completions, blockers, and FIRE framework prompts. Supports upward mode for meetings with your own manager.
+allowed-tools: [Bash, Read, Grep, Glob]
 ---
 
 # 1:1 Prep Generator

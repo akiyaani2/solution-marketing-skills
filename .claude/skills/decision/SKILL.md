@@ -1,7 +1,8 @@
 ---
 name: decision
-description: Create a properly formatted decision record (TD-NNNN or DR-NNNN) with structured template — context, options considered, decision, RAPID roles, consequences. Auto-finds next available number.
+description: Creates a properly formatted decision record (TD-NNNN or DR-NNNN) with structured template — context, options considered, decision, RAPID roles, consequences. Auto-finds next available number.
 allowed-tools: [Bash, Read, Write, Glob]
+disable-model-invocation: true
 trigger_phrases:
   - "/decision"
   - '/decision "description"'

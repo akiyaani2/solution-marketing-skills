@@ -2,6 +2,7 @@
 name: budget-ops
 description: Budget and vendor operations management — PO tracking, co-marketing fund utilization, spend-vs-plan analysis, vendor lifecycle views, and leadership budget reports for solution marketing teams
 allowed-tools: [Bash, Read, Write, Edit]
+disable-model-invocation: true
 trigger_phrases:
   - "/budget-ops"
   - "/budget-status"

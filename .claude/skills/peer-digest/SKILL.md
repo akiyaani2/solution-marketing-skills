@@ -1,6 +1,7 @@
 ---
 name: peer-digest
-description: Generate a Friday cross-team digest for peer solution play leads. Covers what shipped, what's coming, cross-team heads up, blockers, and team health -- all in under 10 lines.
+description: Generates a Friday cross-team digest for peer solution play leads. Covers what shipped, what's coming, cross-team heads up, blockers, and team health -- all in under 10 lines.
+allowed-tools: [Bash, Read, Grep, Glob]
 ---
 
 # Peer Digest Generator

@@ -1,6 +1,7 @@
 ---
 name: red-team
-description: Take the competitor's perspective — if you were AWS or GCP, how would you counter this program? Use to stress-test positioning, identify defensive gaps, and sharpen competitive strategy.
+description: Takes the competitor's perspective — if you were AWS or GCP, how would you counter this program? Use to stress-test positioning, identify defensive gaps, and sharpen competitive strategy.
+allowed-tools: [Read]
 ---
 
 # Red Team

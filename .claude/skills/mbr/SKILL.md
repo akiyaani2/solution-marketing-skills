@@ -1,6 +1,7 @@
 ---
 name: mbr
-description: Generate a Monthly Business Review package from GitHub Issues. Produces leadership-ready output with executive summary, completions by owner, in-progress by priority, blockers, metrics, and narrative.
+description: Generates a Monthly Business Review package from GitHub Issues. Produces leadership-ready output with executive summary, completions by owner, in-progress by priority, blockers, metrics, and narrative.
+allowed-tools: [Bash, Read, Grep, Glob]
 ---
 
 # MBR Generator

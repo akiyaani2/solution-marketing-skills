@@ -1,6 +1,7 @@
 ---
 name: competitive-scan
-description: Structured competitive intelligence scanning — compare your skilling, events, hackathon, and content programs against AWS, GCP, and other cloud competitors. Use when preparing competitive briefs, positioning content, or justifying program investment.
+description: Structured competitive intelligence scanning — compare your skilling, events, hackathon, and content programs against AWS, GCP, and other cloud competitors. For use when preparing competitive briefs, positioning content, or justifying program investment.
+allowed-tools: [Bash, Read, Grep, Glob, WebSearch, WebFetch]
 ---
 
 # Competitive Scan

@@ -1,6 +1,6 @@
 ---
 name: takeshi-tuesday
-description: Captures weekly Takeshi Tuesday insights — market signals, competitive moves, content ideas, and action items. Maintains a persistent log so each session knows what was captured previously. Use when capturing weekly insights, market signals, or recurring intelligence sessions.
+description: Captures weekly Takeshi Tuesday insights — market signals, competitive moves, content ideas, and action items. Maintains a persistent log so each session knows what was captured previously. For use when capturing weekly insights, market signals, or recurring intelligence sessions.
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep, WebSearch, WebFetch
 ---
 

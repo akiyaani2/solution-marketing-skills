@@ -1,6 +1,6 @@
 ---
 name: cross-solution-sync
-description: Cross-team coordination for matrix organizations — track shared workstreams, dependencies, joint events, and per-peer alignment. Generate sync prep notes and visibility reports for peer teams.
+description: Cross-team coordination for matrix organizations — tracks shared workstreams, dependencies, joint events, and per-peer alignment. Generates sync prep notes and visibility reports for peer teams.
 allowed-tools: [Bash, Read, Write, Edit]
 trigger_phrases:
   - "/x-sp"

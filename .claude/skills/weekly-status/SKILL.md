@@ -1,6 +1,7 @@
 ---
 name: weekly-status
-description: Generate a weekly status summary for any team member from their GitHub project board. Shows completed, in-progress, blocked, and upcoming items.
+description: Generates a weekly status summary for any team member from their GitHub project board. Shows completed, in-progress, blocked, and upcoming items.
+allowed-tools: [Bash, Read, Grep, Glob]
 ---
 
 # Weekly Status Generator

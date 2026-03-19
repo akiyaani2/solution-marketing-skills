@@ -1,6 +1,7 @@
 ---
 name: okr-check
-description: Check any work item, initiative, or proposal against your OKRs and strategic goals. Scores alignment, flags drift, and identifies orphaned work that doesn't connect to any objective.
+description: Checks any work item, initiative, or proposal against your OKRs and strategic goals. Scores alignment, flags drift, and identifies orphaned work that doesn't connect to any objective.
+allowed-tools: [Bash, Read, Grep, Glob]
 ---
 
 # OKR Alignment Check

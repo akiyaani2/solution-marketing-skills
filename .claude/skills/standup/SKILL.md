@@ -1,6 +1,7 @@
 ---
 name: standup
-description: Generate daily async standup from recent GitHub activity. Shows yesterday/today/blockers per person using owner labels.
+description: Generates daily async standup from recent GitHub activity. Shows yesterday/today/blockers per person using owner labels.
+allowed-tools: [Bash, Read, Grep, Glob]
 ---
 
 # Standup Generator

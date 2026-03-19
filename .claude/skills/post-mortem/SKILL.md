@@ -1,7 +1,8 @@
 ---
 name: post-mortem
-description: Run a structured post-mortem after an event, program, or initiative completes — capture what worked, what didn't, root causes, and improvements for next time. Maintains a persistent log of all post-mortems for cross-event learning. Use after hackathons, events, campaigns, or any completed initiative.
+description: Runs a structured post-mortem after an event, program, or initiative completes — capture what worked, what didn't, root causes, and improvements for next time. Maintains a persistent log of all post-mortems for cross-event learning. For use after hackathons, events, campaigns, or any completed initiative.
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
+disable-model-invocation: true
 ---
 
 # Post-Mortem

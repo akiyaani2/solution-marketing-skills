@@ -1,6 +1,6 @@
 ---
 name: epic-health
-description: Score all type:initiative epics on 5 health dimensions — completion %, blocked count, staleness, RAPID completeness, TBD count. Produces a weighted health score with green/yellow/red grading.
+description: Scores all type:initiative epics on 5 health dimensions — completion %, blocked count, staleness, RAPID completeness, TBD count. Produces a weighted health score with green/yellow/red grading.
 allowed-tools: [Bash, Read]
 trigger_phrases:
   - "/epic-health"

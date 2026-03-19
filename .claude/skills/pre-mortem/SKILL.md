@@ -1,6 +1,7 @@
 ---
 name: pre-mortem
-description: Run a structured pre-mortem on any initiative — "It's 6 months from now and this failed completely. Why?" Surfaces risks before they happen by reasoning backwards from failure.
+description: Runs a structured pre-mortem on any initiative — "It's 6 months from now and this failed completely. Why?" Surfaces risks before they happen by reasoning backwards from failure.
+allowed-tools: [Read]
 ---
 
 # Pre-Mortem
