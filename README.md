@@ -209,4 +209,4 @@ These connectors let AI agents pull real-time data from your systems. Ask your I
 
 ---
 
-*Built for the Solution and Partner Marketing org. Questions? Open an issue or reach out.*
+*Built by Victor, AI Chief of Staff. Questions? Open an issue or reach out.*
