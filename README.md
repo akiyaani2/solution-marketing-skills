@@ -10,36 +10,47 @@ Works with **Copilot**, **Claude**, **ChatGPT**, and any AI assistant. No techni
 
 | I want to... | Go here |
 |-------------|---------|
-| 📊 **Build a deck or presentation** | [deck-builder](.claude/skills/deck-builder/) or [doc-to-slides](prompts/doc-to-slides.md) |
-| 🎯 **Prep for a meeting** | [talking-points](.claude/skills/talking-points/) or [1on1-prep](.claude/skills/1on1-prep/) |
-| ✉️ **Draft an email** | [email-drafter](.claude/skills/email-drafter/) or [recap-email](prompts/recap-email.md) |
-| 📈 **Analyze data or a spreadsheet** | [excel-analyzer](.claude/skills/excel-analyzer/) or [data-to-insights](prompts/data-to-insights.md) |
-| 📝 **Summarize something for leadership** | [exec-summary](.claude/skills/exec-summary/) |
-| 📄 **Create a one-pager or brief** | [one-pager](.claude/skills/one-pager/) |
+| 📊 **Build a deck or presentation** | [deck-builder](.claude/skills/everyday-work/deck-builder/) or [doc-to-slides](prompts/doc-to-slides.md) |
+| 🎯 **Prep for a meeting** | [talking-points](.claude/skills/everyday-work/talking-points/) or [1on1-prep](.claude/skills/everyday-work/1on1-prep/) |
+| ✉️ **Draft an email** | [email-drafter](.claude/skills/everyday-work/email-drafter/) or [recap-email](prompts/recap-email.md) |
+| 📈 **Analyze data or a spreadsheet** | [excel-analyzer](.claude/skills/everyday-work/excel-analyzer/) or [data-to-insights](prompts/data-to-insights.md) |
+| 📝 **Summarize something for leadership** | [exec-summary](.claude/skills/everyday-work/exec-summary/) |
+| 📄 **Create a one-pager or brief** | [one-pager](.claude/skills/everyday-work/one-pager/) |
 | ✍️ **Write a blog post** | [blog-from-bullets](prompts/blog-from-bullets.md) |
 | 📱 **Write social media posts** | [social-from-content](prompts/social-from-content.md) |
-| 📣 **Write a weekly leadership update** | [leadership-update](.claude/skills/leadership-update/) |
-| 🔥 **Challenge or pressure-test a plan** | [pressure-test](.claude/skills/pressure-test/) or [pre-mortem](.claude/skills/pre-mortem/) |
-| 🥊 **Think like the competition** | [red-team](.claude/skills/red-team/) or [competitive-scan](.claude/skills/competitive-scan/) |
-| 🎯 **Check if work aligns to OKRs** | [okr-check](.claude/skills/okr-check/) |
-| 📅 **Track events or hackathons** | [event-ops](.claude/skills/event-ops/) or [hackathon-tracker](.claude/skills/hackathon-tracker/) |
+| 📣 **Write a weekly leadership update** | [leadership-update](.claude/skills/everyday-work/leadership-update/) |
+| 🔥 **Challenge or pressure-test a plan** | [pressure-test](.claude/skills/strategy-and-challenge/pressure-test/) or [pre-mortem](.claude/skills/strategy-and-challenge/pre-mortem/) |
+| 🥊 **Think like the competition** | [red-team](.claude/skills/strategy-and-challenge/red-team/) or [competitive-scan](.claude/skills/strategy-and-challenge/competitive-scan/) |
+| 🎯 **Check if work aligns to OKRs** | [okr-check](.claude/skills/strategy-and-challenge/okr-check/) |
+| 📅 **Track events or hackathons** | [event-ops](.claude/skills/program-operations/event-ops/) or [hackathon-tracker](.claude/skills/program-operations/hackathon-tracker/) |
 | ⚙️ **Set up automated reports in Teams** | [scheduled-tasks/](scheduled-tasks/) |
 | 🤖 **Build a Copilot Studio agent** | [How to Build an Agent](copilot-studio/HOW-TO-BUILD-AN-AGENT.md) |
 
 ---
 
-## 💡 Prompts vs Skills — What's the difference?
+## 💡 Prompts vs Skills — When to use which
 
-| | 📝 Prompt | ⚡ Skill |
-|---|----------|---------|
-| **What it is** | A single instruction you paste into AI | A full playbook the AI follows like a trained expert |
-| **Best for** | One-off tasks ("write me a blog post") | Repeatable workflows ("run meeting prep every week") |
-| **Depth** | One question → one answer | Multi-step with templates, decision logic, quality checks |
-| **Memory** | Starts fresh every time | Can track history across sessions |
+This repo has **prompts** and **skills**. They solve different problems.
 
-**Start with prompts** if you're new. **Graduate to skills** when you repeat the same prompt weekly.
+### 📝 Prompts — for one-off tasks
 
-> 📖 [What are skills?](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) · [Skill best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) — from Anthropic
+A prompt is a single instruction. You paste it into Copilot or Claude, describe what you need, and get a result. It's like texting a really smart colleague — you ask one question, you get one answer.
+
+**Use prompts when:** You need something done once. A blog post, a recap email, a slide outline. You won't need to do this exact thing the same way next week.
+
+**Example:** You paste the [blog-from-bullets](prompts/blog-from-bullets.md) prompt, add your bullet points, and get a polished blog draft back.
+
+### ⚡ Skills — for repeatable workflows
+
+A skill is a full playbook. Instead of a single question-and-answer, the AI follows a multi-step process — gathering input, making decisions, applying quality checks, and producing structured output. Think of it like handing someone a runbook, not just a question.
+
+**Use skills when:** You do the same type of work regularly and want consistent, high-quality results every time. Weekly leadership updates. Monthly business reviews. Meeting prep before every 1:1.
+
+**Example:** The [leadership-update](.claude/skills/everyday-work/leadership-update/) skill doesn't just write an update — it first filters your raw notes through an altitude check (is this strategic enough for leadership?), then routes each bullet to the strongest framing pattern (competitive, metric-led, or strategic narrative), then assembles the update in the approved format, and finally checks for 7 common failure modes before you submit.
+
+**One prompt = one question, one answer. One skill = a trained process that runs the same way every time.**
+
+> 📖 [What are skills?](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) · [Best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) — from Anthropic
 
 ---
 
@@ -47,7 +58,7 @@ Works with **Copilot**, **Claude**, **ChatGPT**, and any AI assistant. No techni
 
 **Prompts** (30 seconds) — Open any file in [`/prompts/`](prompts/), copy, paste into Copilot or Claude, done.
 
-**Skills** (2 minutes) — Open any file in [`/skills/`](.claude/skills/), copy the content, paste as instructions, describe your task.
+**Skills** (2 minutes) — Open any skill, copy the content, paste as instructions, describe your task.
 
 <details>
 <summary>🔧 Install into your team's workspace (IT/admins)</summary>
@@ -64,7 +75,7 @@ cp -r solution-marketing-skills/.claude/skills/* your-repo/.claude/skills/
 
 ### 📝 [Prompts](prompts/) — Copy-paste, zero setup
 
-10 ready-to-use prompts. Open one, copy, paste, go.
+10 prompts. Open one, copy, paste, go.
 
 | Prompt | What You Get |
 |--------|-------------|
@@ -81,79 +92,70 @@ cp -r solution-marketing-skills/.claude/skills/* your-repo/.claude/skills/
 
 ---
 
-### ⚡ [Skills](.claude/skills/) — Deeper capabilities
+### ⚡ Skills — 34 skills in 3 folders
 
-34 skills organized into 3 groups based on how you work.
+Skills are organized by how you use them. Browse the folder that matches your work.
 
-<details>
-<summary>💼 <strong>Everyday Work</strong> — Presentations, emails, meeting prep, data, writing (17 skills)</summary>
+#### 💼 [Everyday Work](.claude/skills/everyday-work/) — 17 skills
 
-The skills your team uses daily. Decks, emails, summaries, meeting prep, data analysis, and content.
-
-| Skill | What It Does |
-|-------|-------------|
-| [deck-builder](.claude/skills/deck-builder/) | Slide outlines from bullet points or data — templates for briefings, MBRs, one-pagers |
-| [exec-summary](.claude/skills/exec-summary/) | Distills any document into a leadership-ready summary |
-| [email-drafter](.claude/skills/email-drafter/) | Professional emails calibrated to recipient and situation |
-| [one-pager](.claude/skills/one-pager/) | Single-page program brief (what/why/who/when/metrics/ask) |
-| [talking-points](.claude/skills/talking-points/) | Meeting prep with main points, anticipated Q&A, and landmines |
-| [excel-analyzer](.claude/skills/excel-analyzer/) | Spreadsheet analysis — trends, anomalies, insights |
-| [stakeholder-brief](.claude/skills/stakeholder-brief/) | Same update reframed for VP, peers, team, and partners |
-| [data-to-slides](.claude/skills/data-to-slides/) | Turn raw data into presentation content with chart suggestions |
-| [leadership-update](.claude/skills/leadership-update/) | Weekly exec update with strategic framing and altitude check |
-| [meeting-notes](.claude/skills/meeting-notes/) | Capture notes and auto-extract action items |
-| [1on1-prep](.claude/skills/1on1-prep/) | 1:1 meeting prep with FIRE framework |
-| [mbr](.claude/skills/mbr/) | Monthly Business Review package for leadership |
-| [peer-digest](.claude/skills/peer-digest/) | Friday cross-team update in under 10 lines |
-| [standup](.claude/skills/standup/) | Daily async standup from project activity |
-| [weekly-status](.claude/skills/weekly-status/) | Weekly status per team member |
-| [escalation-tracker](.claude/skills/escalation-tracker/) | Track items sent to leadership with SLA monitoring |
-| [content-pipeline](.claude/skills/content-pipeline/) | Content production pipeline — blog, video, social, sessions |
-
-</details>
-
-<details>
-<summary>🔥 <strong>Strategy & Challenge</strong> — Competitive intel, pressure testing, OKR alignment (10 skills)</summary>
-
-Skills that make your strategy sharper. Research the market, challenge your plans, and stay aligned to goals.
+Presentations, emails, meeting prep, summaries, data analysis, reporting, and content.
 
 | Skill | What It Does |
 |-------|-------------|
-| [pressure-test](.claude/skills/pressure-test/) | Challenge any plan through 7 lenses — assumptions, resources, timeline, competition, failure modes |
-| [pre-mortem](.claude/skills/pre-mortem/) | "It's 6 months from now and this failed. Why?" — surface risks before they happen |
-| [red-team](.claude/skills/red-team/) | Take the competitor's perspective — how would they counter your program? |
-| [competitive-scan](.claude/skills/competitive-scan/) | Structured scanning of AWS, GCP, and partner ecosystems |
-| [takeshi-tuesday](.claude/skills/takeshi-tuesday/) | Weekly market insights with persistent memory across sessions |
-| [okr-check](.claude/skills/okr-check/) | Score any work item against OKRs — detect drift, find orphaned work |
-| [decision](.claude/skills/decision/) | Formatted decision records with options, RAPID roles, consequences |
-| [solution-play-health](.claude/skills/solution-play-health/) | Strategic health scoring across solution plays |
-| [cross-solution-sync](.claude/skills/cross-solution-sync/) | Cross-team coordination — shared workstreams, dependencies, joint events |
-| [post-mortem](.claude/skills/post-mortem/) | After-action review with persistent learning log |
+| [deck-builder](.claude/skills/everyday-work/deck-builder/) | Slide outlines from bullet points or data |
+| [exec-summary](.claude/skills/everyday-work/exec-summary/) | Distills any document into a leadership-ready summary |
+| [email-drafter](.claude/skills/everyday-work/email-drafter/) | Professional emails calibrated to recipient and situation |
+| [one-pager](.claude/skills/everyday-work/one-pager/) | Single-page program brief |
+| [talking-points](.claude/skills/everyday-work/talking-points/) | Meeting prep with Q&A and landmines |
+| [excel-analyzer](.claude/skills/everyday-work/excel-analyzer/) | Spreadsheet analysis — trends, anomalies, insights |
+| [stakeholder-brief](.claude/skills/everyday-work/stakeholder-brief/) | Same update reframed for multiple audiences |
+| [data-to-slides](.claude/skills/everyday-work/data-to-slides/) | Raw data into presentation content |
+| [leadership-update](.claude/skills/everyday-work/leadership-update/) | Weekly exec update with altitude check and strategic framing |
+| [meeting-notes](.claude/skills/everyday-work/meeting-notes/) | Capture notes and extract action items |
+| [1on1-prep](.claude/skills/everyday-work/1on1-prep/) | 1:1 meeting prep with FIRE framework |
+| [mbr](.claude/skills/everyday-work/mbr/) | Monthly Business Review package |
+| [peer-digest](.claude/skills/everyday-work/peer-digest/) | Friday cross-team update (<10 lines) |
+| [standup](.claude/skills/everyday-work/standup/) | Daily async standup |
+| [weekly-status](.claude/skills/everyday-work/weekly-status/) | Weekly status per person |
+| [escalation-tracker](.claude/skills/everyday-work/escalation-tracker/) | Track items sent to leadership |
+| [content-pipeline](.claude/skills/everyday-work/content-pipeline/) | Content production pipeline |
 
-</details>
+#### 🔥 [Strategy & Challenge](.claude/skills/strategy-and-challenge/) — 10 skills
 
-<details>
-<summary>📋 <strong>Program Operations</strong> — Events, hackathons, budgets, board management (7 skills)</summary>
-
-Skills for running programs at scale. Event logistics, hackathon pipelines, budget tracking, and project health.
+Competitive intel, pressure testing, decision records, OKR alignment, and strategic health.
 
 | Skill | What It Does |
 |-------|-------------|
-| [event-ops](.claude/skills/event-ops/) | Full event lifecycle — workback schedules, vendor checklists, readiness scoring |
-| [hackathon-tracker](.claude/skills/hackathon-tracker/) | Hackathon pipeline — registration, judging, outcomes, cross-hack comparison |
-| [event-countdown](.claude/skills/event-countdown/) | Event readiness dashboard with urgency tiers |
-| [budget-ops](.claude/skills/budget-ops/) | PO tracking, co-marketing funds, vendor management, budget reports |
-| [epic-health](.claude/skills/epic-health/) | Score initiatives on 5 health dimensions |
-| [issue-triage](.claude/skills/issue-triage/) | Bulk triage with priority cascade pattern |
-| [git-sync](.claude/skills/git-sync/) | Automated project sync |
+| [pressure-test](.claude/skills/strategy-and-challenge/pressure-test/) | Challenge plans through 7 lenses |
+| [pre-mortem](.claude/skills/strategy-and-challenge/pre-mortem/) | "It failed. Why?" — reason backwards from failure |
+| [red-team](.claude/skills/strategy-and-challenge/red-team/) | Think like the competition |
+| [competitive-scan](.claude/skills/strategy-and-challenge/competitive-scan/) | AWS/GCP/partner landscape scanning |
+| [takeshi-tuesday](.claude/skills/strategy-and-challenge/takeshi-tuesday/) | Weekly market insights with persistent memory |
+| [okr-check](.claude/skills/strategy-and-challenge/okr-check/) | Score work against OKRs, detect drift |
+| [decision](.claude/skills/strategy-and-challenge/decision/) | Formatted decision records |
+| [solution-play-health](.claude/skills/strategy-and-challenge/solution-play-health/) | Strategic health scoring across plays |
+| [cross-solution-sync](.claude/skills/strategy-and-challenge/cross-solution-sync/) | Cross-team coordination |
+| [post-mortem](.claude/skills/strategy-and-challenge/post-mortem/) | After-action review with persistent log |
 
-</details>
+#### 📋 [Program Operations](.claude/skills/program-operations/) — 7 skills
+
+Event logistics, hackathon pipelines, budgets, project health, and board management.
+
+| Skill | What It Does |
+|-------|-------------|
+| [event-ops](.claude/skills/program-operations/event-ops/) | Event lifecycle — workback schedules, vendor checklists, readiness |
+| [hackathon-tracker](.claude/skills/program-operations/hackathon-tracker/) | Hackathon pipeline — registration, judging, outcomes |
+| [event-countdown](.claude/skills/program-operations/event-countdown/) | Event readiness dashboard with urgency tiers |
+| [budget-ops](.claude/skills/program-operations/budget-ops/) | PO tracking, co-marketing funds, budget reports |
+| [epic-health](.claude/skills/program-operations/epic-health/) | Score initiatives on 5 health dimensions |
+| [issue-triage](.claude/skills/program-operations/issue-triage/) | Bulk triage with priority cascade pattern |
+| [git-sync](.claude/skills/program-operations/git-sync/) | Automated project sync |
 
 ---
 
 ### ⏰ [Scheduled Tasks](scheduled-tasks/) — Automations for Copilot Studio
 
-Set up once, runs on autopilot. Posts to Teams or saves to SharePoint.
+Set up once, runs on autopilot.
 
 | When | What | Where |
 |------|------|-------|
@@ -165,7 +167,7 @@ Set up once, runs on autopilot. Posts to Teams or saves to SharePoint.
 
 ### 🤖 [Agents](agents/) — Copilot Studio blueprints
 
-4 agents ready to deploy to Teams. Each includes build guide, knowledge sources, and instructions.
+4 agents ready to deploy to Teams.
 
 | Agent | What It Does | For |
 |-------|-------------|-----|
@@ -190,7 +192,7 @@ Set up once, runs on autopilot. Posts to Teams or saves to SharePoint.
 
 | Connector | What It Does | More Info |
 |-----------|-------------|-----------|
-| Microsoft Learn | Search official Microsoft docs | [Setup](https://www.npmjs.com/package/@anthropic/microsoft-learn-mcp) |
+| Microsoft Learn | Official Microsoft docs | [Setup](https://www.npmjs.com/package/@anthropic/microsoft-learn-mcp) |
 | Work IQ (M365) | Teams, Calendar, Mail, SharePoint | [Docs](https://learn.microsoft.com/en-us/microsoft-agent-365/tooling-servers-overview) |
 | GitHub | Issues, boards, project status | [Docs](https://github.com/github/github-mcp-server) |
 | Dataverse | Business data and CRM records | [Docs](https://github.com/microsoft/Dataverse-MCP) |
@@ -207,8 +209,6 @@ Set up once, runs on autopilot. Posts to Teams or saves to SharePoint.
 **Do I need GitHub?** Only for Program Operations skills. Everything else works without it.
 
 **What AI tool do I need?** Any — Copilot, Claude, ChatGPT.
-
-**How do I contribute?** Suggestions welcome. Open an issue or reach out.
 
 ---
 
