@@ -74,11 +74,11 @@ These 8 skills are designed for people who live in **PowerPoint, Excel, Teams, a
 
 | Skill | What Your Team Says | What They Get |
 |-------|-------------------|--------------|
-| [**deck-builder**](.claude/skills/deck-builder/) | "Build me slides for Ashley's briefing" | Slide-by-slide outlines with titles, bullets, speaker notes, and chart suggestions. Ready to paste into PowerPoint. |
-| [**exec-summary**](.claude/skills/exec-summary/) | "Summarize this 5-page doc for Vivek" | Half-page or one-page leadership-ready summary. Pyramid principle. Lead with the answer. |
-| [**email-drafter**](.claude/skills/email-drafter/) | "Write a follow-up to NVIDIA after GTC" | Professional email calibrated to recipient seniority. Templates for status updates, asks, escalations, partner outreach. |
+| [**deck-builder**](.claude/skills/deck-builder/) | "Build me slides for the leadership briefing" | Slide-by-slide outlines with titles, bullets, speaker notes, and chart suggestions. Ready to paste into PowerPoint. |
+| [**exec-summary**](.claude/skills/exec-summary/) | "Summarize this 5-page doc for my director" | Half-page or one-page leadership-ready summary. Pyramid principle. Lead with the answer. |
+| [**email-drafter**](.claude/skills/email-drafter/) | "Write a follow-up to the partner team after their conference" | Professional email calibrated to recipient seniority. Templates for status updates, asks, escalations, partner outreach. |
 | [**one-pager**](.claude/skills/one-pager/) | "I need a brief on the NFL hackathon" | Structured program overview: what/why/who/when/metrics/investment/ask. One page. |
-| [**talking-points**](.claude/skills/talking-points/) | "Prep me for tomorrow's meeting with Ashley" | Main points, supporting data, anticipated Q&A, and landmines to avoid. |
+| [**talking-points**](.claude/skills/talking-points/) | "Prep me for tomorrow's meeting with my director" | Main points, supporting data, anticipated Q&A, and landmines to avoid. |
 | [**excel-analyzer**](.claude/skills/excel-analyzer/) | "What do these registration numbers mean?" | Data summary, trend analysis, anomaly detection, and actionable insights from any spreadsheet. |
 | [**stakeholder-brief**](.claude/skills/stakeholder-brief/) | "I need to update everyone on the same thing" | Same facts reframed for each audience: VP, skip-level, peers, team, and partners. |
 | [**data-to-slides**](.claude/skills/data-to-slides/) | "Turn these metrics into MBR slides" | Presentation-ready content with chart recommendations, narrative framing, and key takeaways. |
@@ -538,5 +538,5 @@ Yes. PRs welcome. Follow the [Agent Skills spec](https://agentskills.io/specific
 
 ---
 
-*Built by the AI Apps & Agents Skilling team. Maintained by Victor, President, Microsoft Operations Group.*
-*For questions or feedback, reach out to Aaron Stark.*
+*Built by the AI Apps & Agents Skilling team. Maintained by the team.*
+*For questions or feedback, open an issue or submit a PR.*

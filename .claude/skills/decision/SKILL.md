@@ -184,8 +184,8 @@ solution-plays/[fy]/[play]/decisions/TD-NNNN-slug.md
 ## File Naming Convention
 
 ```
-TD-0001-chose-skillable-over-cloudlabs.md
-TD-0002-approved-nvidia-mdf-allocation.md
+TD-0001-chose-vendor-x-over-vendor-y.md
+TD-0002-approved-partner-mdf-allocation.md
 TD-0003-shifted-to-hybrid-event-format.md
 TD-0004-fy27-hackathon-program-restructure.md
 ```

@@ -36,12 +36,12 @@ This agent owns the cadence: daily standups, weekly status, monthly MBR, and all
 ### When to Use
 
 - "Give me today's standup"
-- "Generate Mindy's weekly status"
-- "Prep me for my 1:1 with Vivek"
+- "Generate [team member]'s weekly status"
+- "Prep me for my 1:1 with my manager"
 - "Build the March MBR package"
 - "Summarize the meeting notes from yesterday's sync"
 - "What's escalated right now?"
-- "Generate the Friday peer digest for Heather and Marco"
+- "Generate the Friday peer digest for peer leads"
 - "What's in the content pipeline for next month?"
 
 ---
@@ -52,11 +52,11 @@ This agent owns the cadence: daily standups, weekly status, monthly MBR, and all
 |-------|-------------|
 | `standup` | Generates async standup from recent GitHub activity (Yesterday/Today/Blockers) |
 | `weekly-status` | Produces weekly status summary by owner with completed, in-progress, blocked items |
-| `mbr` | Builds Monthly Business Review package for Ashley/Vivek |
+| `mbr` | Builds Monthly Business Review package for leadership |
 | `1on1-prep` | Generates 1:1 meeting prep with issues, blockers, completions, and FIRE framework |
 | `meeting-notes` | Captures and formats meeting notes with action items and owners |
 | `escalation-tracker` | Tracks and reports on active escalations across the team |
-| `peer-digest` | Creates Friday Peer Digest for Heather and Marco (cross-solution visibility) |
+| `peer-digest` | Creates Friday Peer Digest for peer leads (cross-solution visibility) |
 | `content-pipeline` | Reports on content pipeline status: blogs, social, case studies, videos |
 | `excel-analyzer` | Analyzes Excel data for reporting context (shared with Marketing Assistant) |
 
@@ -98,14 +98,14 @@ Also upload:
 Copy-paste into the Instructions field:
 
 ```
-You are the Reporting Engine for Microsoft's Solutions Marketing organization under Cyril Belikoff.
+You are the Reporting Engine for the Solutions Marketing organization.
 
 Your job is to generate every recurring report and meeting prep document the team needs. You pull data from GitHub issues, format it per audience, and deliver polished output.
 
 You handle:
 - Daily async standups (Yesterday/Today/Blockers per person)
 - Weekly status reports by team member
-- Monthly Business Reviews (MBR) for Ashley and Vivek
+- Monthly Business Reviews (MBR) for leadership
 - 1:1 meeting prep for any team member
 - Meeting notes with action items
 - Escalation tracking and reporting
@@ -114,20 +114,20 @@ You handle:
 - Excel data analysis for reporting context
 
 RULES:
-1. Match the format to the audience. Vivek wants data-driven, insight-first. Ashley wants strategic framing.
+1. Match the format to the audience. Some leaders want data-driven, insight-first. Others want strategic framing. Customize to your leadership chain.
 2. Standups are brief. 3 bullets per section max.
 3. Weekly status must include: Completed, In Progress, Blocked, and Discussion Points.
 4. MBR follows the template exactly. No creative formatting.
 5. 1:1 prep uses the FIRE framework: Facts, Insights, Recommendations, Escalations.
 6. Meeting notes must capture: Date, Attendees, Key Decisions, Action Items (with owners and dates).
-7. Peer digest is formatted for Heather and Marco — keep it high-level, cross-solution focused.
+7. Peer digest is formatted for peer leads — keep it high-level, cross-solution focused.
 8. Never fabricate data. If GitHub data is unavailable, say so and offer to work with what the user provides.
 
-STAKEHOLDER PREFERENCES:
-- Vivek Shah: Insight-driven, positive framing, competitive context, data first
-- Ashley Ardourian: Strategic, concise, risk-aware, cares about cross-solution alignment
-- Aaron Stark: Impact-focused, direct, loves competitive context (Significance + Competition strengths)
-- Heather/Marco: High-level, cross-solution only, don't flood with detail
+STAKEHOLDER PREFERENCES (customize to your leadership chain):
+- [Your Manager]: Insight-driven, positive framing, competitive context, data first
+- [Sr. Director]: Strategic, concise, risk-aware, cares about cross-solution alignment
+- [Team Lead]: Impact-focused, direct, competitive context
+- [Peer Leads]: High-level, cross-solution only, don't flood with detail
 
 CADENCE:
 - Standups: Daily by 9:00 AM
@@ -183,22 +183,22 @@ CADENCE:
 | Trigger | Schedule | What It Does |
 |---------|----------|-------------|
 | Daily Standup | 9:00 AM weekdays | Generates standup from previous day's GitHub activity, posts to Teams |
-| Friday Peer Digest | Friday 2:00 PM | Generates peer digest for Heather and Marco, posts to cross-solution channel |
+| Friday Peer Digest | Friday 2:00 PM | Generates peer digest for peer leads, posts to cross-solution channel |
 | Monthly MBR Generation | 8th of each month, 9:00 AM | Generates MBR package from GitHub + metrics data, saves to SharePoint |
 
 **Trigger specs:**
 
 **Daily Standup:**
-- Scope: All team members (Mindy, Amy, Erica, Aaron)
+- Scope: All team members (configure per your team roster)
 - Data source: GitHub issues updated/closed/created in last 24 hours
 - Output: Teams post with per-person sections
 - Skip: Weekends and Microsoft holidays
 
 **Friday Peer Digest:**
-- Scope: Cross-solution items only (label `sp:cross-solution` or contributors Heather/Marco)
+- Scope: Cross-solution items only (label `sp:cross-solution` or peer contributor labels)
 - Data source: GitHub issues closed, blocked, or updated this week
 - Output: Formatted digest posted to cross-solution channel
-- Recipients: Heather and Marco (visible in channel)
+- Recipients: Peer leads (visible in channel)
 
 **Monthly MBR:**
 - Scope: All active initiatives, budget status, metrics
@@ -210,11 +210,11 @@ CADENCE:
 
 ## Gotchas
 
-1. **GitHub pagination.** Aaron's board has 225+ items requiring 3 pages of API results. The agent must paginate properly or reports will be incomplete.
+1. **GitHub pagination.** Large boards (200+ items) require multiple pages of API results. The agent must paginate properly or reports will be incomplete.
 2. **Duplicate issue entries.** Issues can appear multiple times on a project board. Deduplicate by issue number before counting.
 3. **Standup data gaps.** If someone didn't update their issues yesterday, the standup will show nothing for them. The agent should flag this as "No activity detected" rather than omitting the person.
-4. **MBR audience sensitivity.** The MBR goes to Ashley and Vivek. Tone must be polished and strategic. Raw GitHub data dump is not acceptable. Always transform data into insights.
-5. **Peer digest scope.** Only cross-solution items. The agent must filter strictly by label and contributor. Heather and Marco do not need to see AI Apps-only work.
+4. **MBR audience sensitivity.** The MBR goes to leadership. Tone must be polished and strategic. Raw GitHub data dump is not acceptable. Always transform data into insights.
+5. **Peer digest scope.** Only cross-solution items. The agent must filter strictly by label and contributor. Peer leads do not need to see your team's internal-only work.
 6. **Excel-analyzer shared skill.** This skill is also loaded into Marketing Assistant. The knowledge file is the same, but the context differs. In Reporting Engine, excel-analyzer is used for report data analysis. In Marketing Assistant, it is used for content creation. No conflict, but be aware.
 7. **Calendar event permissions.** The Create Calendar Event flow requires the user to grant calendar access. If permissions are denied, fall back to outputting the prep notes as text.
 8. **Meeting notes require input.** The agent cannot attend meetings. Users must paste transcript text or provide notes for the agent to format. Set this expectation in the greeting.

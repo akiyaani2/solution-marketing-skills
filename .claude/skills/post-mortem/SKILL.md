@@ -60,7 +60,7 @@ Key data points:
 
 ### Step 2: What Worked
 
-Identify successes. Be specific — "the event went well" is not useful. "Registration hit 150% of target because the NVIDIA co-marketing email drove 3x normal signup rate" is useful.
+Identify successes. Be specific — "the event went well" is not useful. "Registration hit 150% of target because the partner co-marketing email drove 3x normal signup rate" is useful.
 
 For each success:
 - **What**: Specific thing that worked

@@ -14,7 +14,7 @@ Creates a single-page brief for any program, initiative, event, or proposal. Des
 - `/one-pager "NFL Hackathon"`
 - `create a one-pager for [topic]`
 - `give me a brief on [topic]`
-- `I need a one-pager for Ashley/Vivek`
+- `I need a one-pager for leadership`
 
 ## One-Pager Template
 
@@ -86,7 +86,7 @@ Include a competitive angle if relevant.]
 
 - A one-pager is ONE PAGE. If it doesn't fit, you're including too much detail. Move details to an appendix.
 - The "Ask" section is the most important. If you don't know what you're asking for, you don't need a one-pager — you need a conversation.
-- Use the "Why" section to connect to goals your audience cares about. Ashley cares about pipeline. Vivek cares about competitive positioning. Cyril cares about portfolio impact.
+- Use the "Why" section to connect to goals your audience cares about. Your director cares about pipeline. Your VP cares about competitive positioning. The CVP cares about portfolio impact.
 - "Green/Yellow/Red" status should match reality, not optimism. Leaders respect honest Yellow more than fake Green.
 - Always include metrics, even if the program hasn't started. Show what you'll MEASURE, not just what you'll DO.
 - If your one-pager is for a decision: make the decision easy. Include your recommendation, the cost, and the deadline.

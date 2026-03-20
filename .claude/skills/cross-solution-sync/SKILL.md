@@ -237,7 +237,7 @@ Configure your peer teams by maintaining labels or a configuration reference:
 
 - **Peer teams are real people, not automation targets.** Never auto-send communications to peer teams. This skill prepares drafts and generates visibility — a human must review and send all cross-team communications.
 - **Cross-team commitments require your team lead's judgment.** Never auto-commit resources, timelines, or deliverables on behalf of your team. Surface the request and let the team lead decide.
-- **Label conventions must be consistent.** If you use `contributor:heather` but someone else tags issues with `team:data-platform`, your queries will miss items. Standardize and document your cross-team label scheme.
+- **Label conventions must be consistent.** If you use `contributor:[peer-name]` but someone else tags issues with `team:data-platform`, your queries will miss items. Standardize and document your cross-team label scheme.
 - **Dependencies are often implicit, not labeled.** Two teams may have a dependency that is not captured in any issue label — it lives in someone's head or a meeting note. During sync prep, explicitly ask: "Are there dependencies we haven't tracked?"
 - **Peer digests should be concise and action-oriented.** Peers do not want a full dump of your team's status. They want: (1) what affects them, (2) what they need to do, (3) what is coming next. Ruthlessly filter to only cross-team-relevant items.
 - **Sync meetings are expensive.** If the prep reveals no open items, no blockers, and no upcoming shared deadlines, recommend canceling the sync or making it async. Do not hold meetings for the sake of the cadence.

@@ -11,7 +11,7 @@ Drafts professional emails calibrated to the recipient, situation, and urgency. 
 ## Trigger Phrases
 
 - `/email-drafter`
-- `/email-drafter --to ashley --type status-update`
+- `/email-drafter --to [leader] --type status-update`
 - `draft an email to [name] about [topic]`
 - `write a follow-up email`
 - `help me ask [leader] for [approval/budget/decision]`
@@ -138,16 +138,16 @@ Best,
 
 | Recipient | Tone | Length | Key Differences |
 |-----------|------|--------|----------------|
-| CVP+ (Alysa, Cyril) | Formal, concise, strategic | 3-5 sentences | Lead with impact. No fluff. |
-| Sr. Director (Ashley, Vivek) | Professional, direct | 5-8 sentences | Include recommendation. Respect their time. |
-| Peers (Heather, Marco) | Collaborative, casual-professional | Flexible | Be direct but friendly. Skip formality. |
-| Team (Mindy, Amy, Erica) | Warm, clear, actionable | Flexible | Be specific about what you need from them. |
-| Partners (NVIDIA, Skillable) | Professional, mutual-benefit framing | 5-10 sentences | Always frame as partnership, not request. |
+| CVP+ | Formal, concise, strategic | 3-5 sentences | Lead with impact. No fluff. |
+| Sr. Director | Professional, direct | 5-8 sentences | Include recommendation. Respect their time. |
+| Peers (cross-team leads) | Collaborative, casual-professional | Flexible | Be direct but friendly. Skip formality. |
+| Team members | Warm, clear, actionable | Flexible | Be specific about what you need from them. |
+| Partners | Professional, mutual-benefit framing | 5-10 sentences | Always frame as partnership, not request. |
 | External (speakers, vendors) | Formal, appreciative | 5-8 sentences | Clear ask, easy to say yes to. |
 
 ## Writing Rules
 
-1. **Subject line is a headline.** "[Action Needed] Budget Approval for NVIDIA Hack — Due Friday" not "Re: Question"
+1. **Subject line is a headline.** "[Action Needed] Budget Approval for Partner Hack — Due Friday" not "Re: Question"
 2. **First sentence is the point.** "I'm writing to request X" or "Quick update on X." Never "I hope this email finds you well."
 3. **Bold the key info.** Leadership scans, they don't read. Bold the status, the ask, the deadline.
 4. **One email, one topic.** Don't combine a budget ask with an event update.

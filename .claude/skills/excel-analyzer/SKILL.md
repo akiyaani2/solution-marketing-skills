@@ -115,4 +115,4 @@ For Excel files, the skill will use Python/pandas if available, or parse the str
 - Registrations ≠ attendees ≠ completions. Be precise about which metric you're analyzing.
 - Budget data may be in different currencies or fiscal periods. Confirm the units.
 - Trends from small datasets (< 30 data points) are unreliable. Flag when sample size is too small.
-- Always provide insights, not just numbers. "Registrations are 2,400" is data. "Registrations hit 2,400 — 45% above target, driven by the NVIDIA co-marketing email" is an insight.
+- Always provide insights, not just numbers. "Registrations are 2,400" is data. "Registrations hit 2,400 — 45% above target, driven by the partner co-marketing email" is an insight.

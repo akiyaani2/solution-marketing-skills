@@ -74,7 +74,7 @@ For each key data point, produce:
 3. **Always include context.** A number alone is meaningless. Compare to: target, last period, competitor, or benchmark.
 4. **Round aggressively.** Leadership doesn't need "2,387 registrations." They need "~2,400 registrations (45% above target)."
 5. **Color codes meaning.** Green = good/above target. Red = attention needed. Don't use random colors.
-6. **Source your data.** Small text at the bottom: "Source: Skillable platform, as of [date]."
+6. **Source your data.** Small text at the bottom: "Source: [Platform name], as of [date]."
 
 ## Gotchas
 

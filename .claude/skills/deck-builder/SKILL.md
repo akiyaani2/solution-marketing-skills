@@ -138,16 +138,16 @@ Slide 3: ASK (if needed)
 
 | Audience | Tone | Focus | Slide Count |
 |----------|------|-------|-------------|
-| VP/Director (Ashley, Vivek) | Strategic, metric-driven | Outcomes, risks, asks | 5-7 |
-| Skip-level (Cyril, Alysa) | Executive, headline-only | Impact, alignment, decisions | 3-5 |
-| Team (Mindy, Amy, Erica) | Tactical, detail-rich | Tasks, timelines, owners | 8-12 |
-| Partners (NVIDIA, Skillable) | Professional, collaborative | Shared goals, joint metrics | 5-7 |
-| Peers (Heather, Marco) | Casual, cross-team | Shared items, dependencies | 3-5 |
+| VP/Director | Strategic, metric-driven | Outcomes, risks, asks | 5-7 |
+| Skip-level (VP+) | Executive, headline-only | Impact, alignment, decisions | 3-5 |
+| Team members | Tactical, detail-rich | Tasks, timelines, owners | 8-12 |
+| Partners | Professional, collaborative | Shared goals, joint metrics | 5-7 |
+| Peers (cross-team leads) | Casual, cross-team | Shared items, dependencies | 3-5 |
 
 ## Gotchas
 
 - This skill creates content, not .pptx files. The output is structured text meant to be pasted into PowerPoint or Copilot.
-- Always specify the audience before generating. A deck for Alysa looks very different from a deck for the team.
+- Always specify the audience before generating. A deck for a CVP looks very different from a deck for the team.
 - "Appendix" slides are where you put the data your VP might ask about. Always have backup data ready.
 - If using Copilot in PowerPoint: give it the generated outline and say "create slides from this outline using [template name]."
 - Speaker notes are as important as slide content. The slides should be clean; the notes carry the narrative.

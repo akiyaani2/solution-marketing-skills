@@ -12,7 +12,7 @@ How to deploy the Solution Marketing Skills as Copilot Studio agents for your te
 │  Agents respond using skills + live data.                │
 │                                                           │
 │  "Build me a deck on our hackathon results"              │
-│  "What's the budget status for NVIDIA?"                  │
+│  "What's the budget status for our partner program?"     │
 │  "Pressure-test my Build 2026 plan"                      │
 │                                                           │
 └────────────────────────┬──────────────────────────────────┘
@@ -130,7 +130,7 @@ These make agents run WITHOUT someone messaging them.
 | **Daily 9am** | Reporting Engine | Generates standup, posts to Teams channel |
 | **Every Friday 2pm** | Reporting Engine | Generates weekly digest, posts to Teams channel |
 | **Monthly 8th** | Reporting Engine | Generates MBR draft, saves to SharePoint |
-| **New email from NVIDIA** | Program Tracker | Flags and summarizes for Aaron |
+| **New email from partner** | Program Tracker | Flags and summarizes for team lead |
 | **New SharePoint file in /events/** | Program Tracker | Analyzes and logs to event tracker |
 
 ### MCP Servers

@@ -4,8 +4,8 @@ title: Budget & Vendor Operations Analyst
 description: >
   Standalone budget deep-dive agent for local analysis. Handles PO tracking,
   MDF allocation, vendor operations, and budget burn analysis. Merged into
-  Program Tracker for Teams users. Standalone only for Sallie's dedicated
-  budget tool or local deep-dive work.
+  Program Tracker for Teams users. Standalone only for ops coordinator's
+  dedicated budget tool or local deep-dive work.
 tier: repo-local
 copilot-studio-name: "N/A"
 skills:
@@ -24,9 +24,9 @@ skills:
 
 The Budget Analyst is the dedicated budget deep-dive agent. For most users, budget questions are handled by the Program Tracker in Teams. The Budget Analyst exists as a standalone tool for two scenarios:
 
-1. **Sallie needs a dedicated budget tool.** Sallie manages budget operations at ~15% allocation to this team and has no Microsoft network access. When she needs deep-dive budget analysis, the Budget Analyst runs locally and exports results to Excel for her.
+1. **Ops coordinator needs a dedicated budget tool.** The ops coordinator manages budget operations at partial allocation to this team and may lack network access. When they need deep-dive budget analysis, the Budget Analyst runs locally and exports results to Excel for them.
 
-2. **Local deep-dive analysis.** When Aaron or the CoS needs detailed budget work that exceeds what Program Tracker handles (multi-quarter projections, vendor cost modeling, MDF scenario analysis), the Budget Analyst provides focused analytical depth.
+2. **Local deep-dive analysis.** When the team lead or CoS needs detailed budget work that exceeds what Program Tracker handles (multi-quarter projections, vendor cost modeling, MDF scenario analysis), the Budget Analyst provides focused analytical depth.
 
 ### Why NOT in Teams
 
@@ -34,7 +34,7 @@ Budget skills are already available through Program Tracker in Teams. A second b
 
 ### Promotion Path
 
-If budget work becomes heavy enough to warrant a standalone Teams presence (e.g., the team grows, MDF volume increases, or Sallie gets network access), this agent can be promoted to Tier 1 as **Budget Assistant** in Teams. The AGENT.md would need:
+If budget work becomes heavy enough to warrant a standalone Teams presence (e.g., the team grows, MDF volume increases, or the ops coordinator gets network access), this agent can be promoted to Tier 1 as **Budget Assistant** in Teams. The AGENT.md would need:
 - Full Copilot Studio Build Guide section
 - Dedicated flows (separate from Program Tracker's)
 - Clear scope boundaries with Program Tracker
@@ -58,7 +58,7 @@ If budget work becomes heavy enough to warrant a standalone Teams presence (e.g.
 | Multi-quarter modeling | No | Yes |
 | Vendor cost comparison | No | Yes |
 | MDF scenario analysis | No | Yes |
-| Excel export for Sallie | No | Yes |
+| Excel export for ops coordinator | No | Yes |
 
 The Budget Analyst handles the analytical depth. Program Tracker handles the operational surface.
 
@@ -66,47 +66,47 @@ The Budget Analyst handles the analytical depth. Program Tracker handles the ope
 
 ## How It Operates
 
-**Runtime:** Claude Code on Mac Studio
+**Runtime:** Claude Code (local)
 **Model:** Sonnet (sufficient for budget analysis, faster than Opus)
-**Invocation:** Called by the CoS or directly by Aaron when deep budget work is needed
+**Invocation:** Called by the CoS or directly by team lead when deep budget work is needed
 
 ### Typical Workflow
 
-1. Aaron or CoS identifies need for budget deep-dive
+1. Team lead or CoS identifies need for budget deep-dive
 2. Budget Analyst reads source data from `operations/skilling-bom/` and relevant Excel files
 3. Performs analysis (burn rate projection, MDF allocation modeling, vendor comparison)
 4. Outputs results as formatted markdown and/or Excel file
-5. If for Sallie: exports to `operations/exports/` in Excel format
+5. If for ops coordinator: exports to `operations/exports/` in Excel format
 
 ### Budget Context
 
 | Term | Definition |
 |------|-----------|
 | **PO** | Purchase Order -- formal vendor payment commitment |
-| **MDF** | Market Development Funds -- co-marketing budget with partners (primarily NVIDIA) |
+| **MDF** | Market Development Funds -- co-marketing budget with partners |
 | **BOM** | Bill of Materials -- the budget tracking system |
 | **SOW** | Statement of Work -- vendor contract scope |
 
 **PO lifecycle:** Request > Approval > Active > Closed
 
-**MDF approval chain:** Ashley/Vivek > Jessica
+**MDF approval chain:** [Director] > [VP]
 
-**Budget decision thresholds:**
+**Budget decision thresholds (customize to your org):**
 - < $5K: CoS can approve (delegated authority)
-- $5K-$25K: Aaron approves
-- $25K+: Ashley > Vivek approval required
+- $5K-$25K: Team lead approves
+- $25K+: Director > VP approval required
 
 ---
 
 ## Gotchas
 
 1. **Budget numbers are sensitive.** Never post dollar amounts to Teams channels. Budget figures go in Excel files, direct messages, or SharePoint with restricted access. The Program Tracker knows this rule too, but double-check.
-2. **Sallie has no network access.** All budget outputs for Sallie must be in Excel format, saved to `operations/exports/`. She cannot access GitHub, Teams, or SharePoint directly.
-3. **MDF is not our money.** MDF comes from partner agreements (primarily NVIDIA). It has strict usage rules and reporting requirements. The Budget Analyst must flag any MDF usage that might violate partner terms.
+2. **Ops coordinator may have no network access.** All budget outputs for the ops coordinator must be in Excel format, saved to `operations/exports/`. They cannot access GitHub, Teams, or SharePoint directly.
+3. **MDF is not our money.** MDF comes from partner agreements. It has strict usage rules and reporting requirements. The Budget Analyst must flag any MDF usage that might violate partner terms.
 4. **Fiscal calendar alignment.** Microsoft fiscal year starts July 1. Q3 FY26 = Jan-Mar 2026. Q4 FY26 = Apr-Jun 2026. Always specify fiscal quarter, not calendar quarter.
 5. **PO tracking lag.** PO status in the BOM may lag actual approval status by 1-2 weeks. The Budget Analyst should note the data freshness date on all reports.
-6. **Vendor rate sensitivity.** Red Door Collaborative rates and contract terms are confidential. Never include vendor rates in reports that could be shared beyond Aaron and Sallie.
-7. **Promotion trigger.** If Aaron starts asking for budget analysis more than 3x per week, or if Sallie gets network access, revisit the Tier 1 promotion. Document the decision using the `/decision` skill.
+6. **Vendor rate sensitivity.** Vendor rates and contract terms are confidential. Never include vendor rates in reports that could be shared beyond the team lead and ops coordinator.
+7. **Promotion trigger.** If the team lead starts asking for budget analysis more than 3x per week, or if the ops coordinator gets network access, revisit the Tier 1 promotion. Document the decision using the `/decision` skill.
 
 ---
 

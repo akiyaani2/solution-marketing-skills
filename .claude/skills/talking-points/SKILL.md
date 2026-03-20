@@ -11,8 +11,8 @@ Prepares you for any conversation with structured talking points, supporting dat
 ## Trigger Phrases
 
 - `/talking-points`
-- `/talking-points "1:1 with Vivek about hackathon program"`
-- `/talking-points --prep-for ashley`
+- `/talking-points "1:1 with my manager about hackathon program"`
+- `/talking-points --prep-for director`
 - `prep me for my meeting with [name]`
 - `what should I say about [topic]`
 - `help me prepare for [meeting]`
@@ -70,19 +70,19 @@ A: [Your honest, prepared response]
 
 ## Meeting-Type Presets
 
-### Leadership Update (Ashley/Vivek)
+### Leadership Update (Director/VP)
 - Lead with wins, then risks
 - Frame everything in terms of business impact
 - Have backup data ready but don't present it unless asked
 - End with a specific ask or next step
 
-### Skip-Level (Cyril/Alysa)
+### Skip-Level (VP+)
 - 2-3 talking points max (they have 5 minutes of attention)
 - Lead with the most strategic point
 - Competitive context is valuable at this level
 - Don't get into operational details unless asked
 
-### Peer Sync (Heather/Marco)
+### Peer Sync (cross-team leads)
 - Lead with what affects them
 - Ask what they need from you
 - Share upcoming conflicts or dependencies
@@ -94,7 +94,7 @@ A: [Your honest, prepared response]
 - Give specific feedback (FIRE framework)
 - Ask what they need from you
 
-### Partner Meeting (NVIDIA/vendor)
+### Partner Meeting (partner/vendor)
 - Lead with shared goals and mutual benefit
 - Quantify what you've delivered together
 - Propose next steps that benefit both sides

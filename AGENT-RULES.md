@@ -1,10 +1,10 @@
 # Agent Creation Rules — Solution Marketing Skills
 
 **Version:** 1.0
-**Scope:** This repo and Copilot Studio deployments for Cyril's org (80+ people)
-**Owner:** Victor (CoS)
+**Scope:** This repo and Copilot Studio deployments for your org (80+ people)
+**Owner:** Team lead / CoS
 
-These rules are NOT the ALCUB3 V4.3/V4.4 rules. Those are built for 197+ OpenClaw agents with SOUL.md, heartbeats, and gateway registration. These rules are for **Copilot Studio agents deployed to Microsoft Teams** for a corporate marketing organization.
+These rules are for **Copilot Studio agents deployed to Microsoft Teams** for a corporate marketing organization.
 
 ---
 
@@ -53,10 +53,9 @@ Use `[Function] + [Level]` pattern:
 - No L6/L7/L8 levels in the name (that's internal)
 - Avoid "Manager" unless it actually manages other agents
 
-### Victor (Special Case)
+### CoS (Special Case)
 
 - **In this repo / GitHub:** CoS (Chief of Staff)
-- **In OpenClaw / Discord:** President, Microsoft Operations Group
 - **In Teams:** Not deployed (runs locally in Claude Code)
 
 ---
@@ -81,16 +80,16 @@ These agents are visible to the entire org. They must be:
 ### Tier 2: Repo-Local (Never Deployed to Teams)
 
 These agents maintain the system. They exist as AGENT.md reference docs for:
-- OpenClaw registration (Victor's portfolio integration)
-- Claude Code agent definitions (local execution on Mac Studio)
+- Agent registry integration (portfolio management)
+- Claude Code agent definitions (local execution)
 - Documentation of how the system works
 
 | Agent | Role | Why Not in Teams |
 |-------|------|-----------------|
-| **Victor (CoS)** | Orchestrates everything | Runs as Claude Code locally, not a chatbot |
-| **Cross-Portfolio Liaison** | Firewall enforcement, cross-group comms | Microsoft-confidential data — can't go through shared platform |
+| **CoS** | Orchestrates everything | Runs as Claude Code locally, not a chatbot |
+| **Cross-Portfolio Liaison** | Firewall enforcement, cross-group comms | Confidential data — can't go through shared platform |
 | **Platform Lead** | Builds and maintains Copilot Studio agents | Meta-agent — builds the system, not a user-facing tool |
-| **Budget Analyst** | Budget/vendor deep-dive | Merged into Program Tracker for Teams. Standalone only for specialized local use |
+| **Budget Analyst** | Budget/vendor deep-dive | Merged into Program Tracker for Teams; standalone only for specialized local use |
 
 ---
 
@@ -159,7 +158,7 @@ skills: [array of skill names]
 
 1. **Identity** — Role, scope, why repo-local
 2. **Skills** — What it owns
-3. **How It Operates** — Claude Code, OpenClaw, or reference-only
+3. **How It Operates** — Claude Code, agent registry, or reference-only
 4. **Gotchas** — What to watch for
 
 ---
@@ -217,12 +216,11 @@ Examples:
 
 ## What These Rules Are NOT
 
-- NOT ALCUB3 V4.3/V4.4 Agent Creation Rules (those are for OpenClaw, 197+ agents, SOUL.md workspaces)
-- NOT a governance framework for the full portfolio (that's the Operating Constitution)
+- NOT a governance framework for a full multi-agent portfolio
 - NOT rules for building agents in Foundry or the Agent SDK (those have their own patterns)
 
 These rules are specifically for **Copilot Studio agents serving a Microsoft marketing org via Teams.**
 
 ---
 
-*Maintained by Victor (CoS), Microsoft Operations Group.*
+*Maintained by the team.*

@@ -11,7 +11,7 @@ Takes a single piece of information (program update, decision, announcement) and
 ## Trigger Phrases
 
 - `/stakeholder-brief`
-- `/stakeholder-brief "NVIDIA hackathon results"`
+- `/stakeholder-brief "partner hackathon results"`
 - `brief [leader] on [topic]`
 - `I need to update everyone on [topic]`
 - `how do I communicate this to [audience]`
@@ -20,35 +20,35 @@ Takes a single piece of information (program update, decision, announcement) and
 
 Given a single input, generate communications for each relevant audience:
 
-### For VP / Director (Ashley, Vivek)
+### For VP / Director
 - **Format:** 3-5 bullet points or half-page summary
 - **Frame:** Business impact, metrics, strategic alignment
 - **Tone:** Direct, confident, data-backed
 - **Include:** Wins, risks (with mitigation), specific asks
 - **Exclude:** Implementation details, team dynamics
 
-### For Skip-Level (Cyril, Alysa)
+### For Skip-Level (VP+)
 - **Format:** 2-3 sentences or 3 bullet points
 - **Frame:** Portfolio impact, competitive positioning
 - **Tone:** Strategic, concise
 - **Include:** Headline metric, strategic significance
 - **Exclude:** Everything else (they'll ask if curious)
 
-### For Peers (Heather, Marco)
+### For Peers (cross-team leads)
 - **Format:** Casual update, 3-5 bullet points
 - **Frame:** What affects them, shared opportunities
 - **Tone:** Collaborative, collegial
 - **Include:** Cross-team implications, upcoming dependencies
 - **Exclude:** Your internal team details
 
-### For Team (Mindy, Amy, Erica, Sallie)
+### For Team members
 - **Format:** Detailed update with action items
 - **Frame:** What changed, what it means for their work
 - **Tone:** Clear, supportive, actionable
 - **Include:** Specific tasks, timeline changes, context
 - **Exclude:** Leadership politics, budget details (unless relevant)
 
-### For Partners (NVIDIA, Skillable, etc.)
+### For Partners
 - **Format:** Professional email or brief
 - **Frame:** Shared success, mutual benefit
 - **Tone:** Collaborative, appreciative

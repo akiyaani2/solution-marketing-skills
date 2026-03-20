@@ -14,7 +14,7 @@ Takes any detailed input — long documents, meeting transcripts, data dumps, st
 - `/exec-summary "Q3 program results"`
 - `summarize this for leadership`
 - `give me the executive summary`
-- `TL;DR this for Ashley/Vivek`
+- `TL;DR this for leadership`
 - `bottom line on [topic]`
 
 ## Summary Formats
@@ -86,10 +86,10 @@ For complex topics, use the Minto Pyramid:
 
 | Audience Level | What They Want | What to Include | What to Skip |
 |---------------|---------------|----------------|-------------|
-| CVP+ (Alysa, Cyril) | Impact, strategic alignment | Portfolio-level metrics, competitive context | Implementation details |
-| Sr. Director (Ashley, Vivek) | Program health, risks, asks | Program metrics, team performance, budget | Tactical task lists |
-| Director (Aaron) | Execution detail, blockers | Per-person status, specific blockers, timelines | Strategic framing (he knows the strategy) |
-| Peers (Heather, Marco) | Cross-team impact | Shared dependencies, joint timelines | Your internal team details |
+| CVP+ | Impact, strategic alignment | Portfolio-level metrics, competitive context | Implementation details |
+| Sr. Director | Program health, risks, asks | Program metrics, team performance, budget | Tactical task lists |
+| Director | Execution detail, blockers | Per-person status, specific blockers, timelines | Strategic framing (he knows the strategy) |
+| Peers (cross-team leads) | Cross-team impact | Shared dependencies, joint timelines | Your internal team details |
 
 ## Gotchas
 
