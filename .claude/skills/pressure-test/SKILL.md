@@ -1,77 +1,59 @@
 ---
 name: pressure-test
-description: Challenges any plan, proposal, or decision — find the holes, ask the hard questions, surface risks, identify what could go wrong. For use when you need a devil's advocate before committing to a direction.
+description: "Challenges any plan, proposal, or decision through 7 structured lenses — find the holes, surface hidden risks, and identify what could go wrong before it does. Use when someone shares a plan and needs a devil's advocate, even when a plan looks solid — especially when a plan looks solid. Also activate when someone says 'what am I missing,' 'poke holes in this,' 'is this ready,' or seems overconfident about an untested idea."
 allowed-tools: [Read]
 ---
 
 # Pressure Test
 
-Be the devil's advocate. Take any plan, proposal, initiative, or decision and systematically challenge it. Find what's weak, what's missing, and what could fail.
+Be the devil's advocate. Take any plan, proposal, initiative, or decision and systematically challenge it through 7 lenses. The goal is to make the plan better, not to kill it — every problem surfaced comes with a recommended fix.
 
-## Trigger Phrases
+## When to Activate
 
-- `/pressure-test`
-- `/pressure-test #[issue-number]`
-- `challenge this plan`
-- `what am I missing`
-- `poke holes in this`
-- `devil's advocate on [topic]`
+Trigger on ANY of these signals:
+- Direct: "pressure-test this," "challenge this plan," "devil's advocate"
+- Indirect: "what am I missing," "poke holes in this," "is this ready?"
+- Implied: user shares a plan and asks for "feedback" or "review" — a pressure test is often more valuable than a line-edit
+- Proactive: when a plan looks complete but hasn't been stress-tested, suggest this skill. Plans that feel "done" are the most dangerous because confidence suppresses critical thinking.
 
-## What This Skill Does
+## Step 1: Intake
 
-When invoked, take the user's plan/proposal/idea and run it through these 7 challenge lenses:
+Identify what you're testing:
+- A plan or proposal (most common)
+- A decision that's been made
+- A strategy or initiative
+- A pitch or presentation
 
-### 1. Assumption Audit
+Then identify the stakes: Is this a low-risk experiment or a high-commitment bet? Higher stakes = deeper pressure test.
 
-List every assumption the plan makes. For each one, rate:
-- **Confidence**: High / Medium / Low / Untested
-- **Impact if wrong**: Critical / Significant / Minor
-- **Evidence**: What data supports this assumption?
+## Step 2: Apply the Seven Lenses
 
-Flag any assumption that is both Low-confidence AND Critical-impact.
+Load the full framework from [references/seven-lenses.md](references/seven-lenses.md). Here's the summary:
 
-### 2. Resource Reality Check
+| # | Lens | Core Question | Why It Matters |
+|---|------|--------------|----------------|
+| 1 | **Assumption Audit** | What are we taking for granted? | The most dangerous risks are the ones you've assumed away. Untested certainties kill more plans than unknown unknowns. |
+| 2 | **Resource Reality Check** | Can the team actually do this? | Plans are built on paper where people have infinite bandwidth. Reality has sick days, competing priorities, and fire drills. |
+| 3 | **Timeline Stress Test** | What breaks if the start slips 2 weeks? | Timelines are built on optimistic assumptions stacked on each other. A 1-week slip in step 2 becomes a 3-week slip by step 5. |
+| 4 | **Stakeholder Blindspots** | Who has veto power that isn't in the plan? | Plans fail politically as often as they fail operationally. A technically perfect plan that ignores a key approver will still fail. |
+| 5 | **Competitive Counter-Move** | If a competitor saw this, what would they do? | Plans built in a vacuum assume competitors stand still. They don't. |
+| 6 | **Failure Modes** | What's the sneaky failure nobody's thinking about? | There are three types: likely, catastrophic, and sneaky. Most planning only addresses the first. |
+| 7 | **Opportunity Cost** | Is this the best use of these resources? | Every plan commits resources that can't be used elsewhere. Are you optimizing the right thing? |
 
-- Does this plan account for who actually does the work?
-- Are the same people assigned to multiple concurrent priorities?
-- Is there slack for the unexpected?
-- What happens if a key person is unavailable for 2 weeks?
+**Not every lens applies equally.** For a tactical project, lenses 1-3 matter most. For a strategic bet, lenses 4-7 matter most. Weight your analysis accordingly — don't force-fit all 7 if some aren't relevant.
 
-### 3. Timeline Stress Test
+## Step 3: Synthesize
 
-- What are the hard deadlines vs. soft targets?
-- Which dependencies are sequential vs. parallelizable?
-- What's the critical path? What's the float?
-- If the start slips 2 weeks, does the plan still work?
-- Are there external dependencies with no SLA?
+After applying the lenses, produce a synthesis with:
 
-### 4. Stakeholder Blindspots
+1. **Verdict**: STRONG / NEEDS WORK / RISKY / RETHINK
+2. **Top 3 Concerns**: The three biggest risks, ranked by (likelihood x impact)
+3. **What I'd Change**: Specific, actionable recommendations — not just problems
+4. **What's Actually Strong**: Genuine strengths. Pure criticism without acknowledging what works is useless and erodes trust.
 
-- Who needs to approve this that hasn't been consulted?
-- Who will be affected that hasn't been informed?
-- Who has veto power that isn't in the plan?
-- What would [your manager / skip-level / exec sponsor] push back on?
+## Step 4: Output
 
-### 5. Competitive Counter-Move
-
-- If your competitor saw this plan, what would they do?
-- Does this plan create a defensible advantage or just match the market?
-- Is there a faster/cheaper/more impactful alternative you haven't considered?
-
-### 6. Failure Modes
-
-- What's the most likely way this fails?
-- What's the most catastrophic way this fails?
-- What's the sneaky failure mode nobody's thinking about?
-- If this partially succeeds, is partial success still valuable?
-
-### 7. Opportunity Cost
-
-- What are you NOT doing by committing to this?
-- Is there something with higher ROI that this displaces?
-- Could the same resources produce more impact elsewhere?
-
-## Output Format
+Use this format:
 
 ```markdown
 ## Pressure Test: [Plan/Proposal Name]
@@ -108,17 +90,22 @@ Flag any assumption that is both Low-confidence AND Critical-impact.
 - [Genuine strengths — be honest, not just negative]
 ```
 
-## How To Use This Well
+End with: "Want me to go deeper on any specific lens, or help you build the mitigations into the plan?"
 
-- **Before committing**: Run this on any proposal before presenting to leadership
-- **Before escalating**: Pressure-test your escalation before it reaches your manager
-- **During planning**: Challenge FY plans, event designs, program strategies
-- **On someone else's plan**: "Pressure-test this proposal from [peer/team]"
+## Reference Files
+
+- **[references/seven-lenses.md](references/seven-lenses.md)** — Full framework with detailed questions, examples, red flags, and output tables for each lens
 
 ## Gotchas
 
-- This skill is most valuable when you're emotionally invested in the plan. That's exactly when you need it most.
-- Don't skip the "What's Actually Strong" section. Pure criticism without acknowledging strengths is useless.
-- If you ask for a pressure test and disagree with the findings, that's data — explain why and the skill will adjust.
-- Combine with `/pre-mortem` for an even deeper challenge.
-- The goal is to make the plan better, not to kill it. Recommend fixes, not just problems.
+- This skill is most valuable when you're emotionally invested in the plan. That's exactly when you need it most — and exactly when you'll be most tempted to dismiss the findings.
+- If you ask for a pressure test and disagree with the findings, say so. The skill will engage with your counterarguments and adjust. Disagreement is data, not failure.
+- Don't skip the "What's Actually Strong" section. It builds trust and identifies what to protect during revisions.
+- Combine with `/pre-mortem` for an even deeper challenge (pre-mortem imagines the plan already failed; pressure-test challenges it before execution).
+- For maximum value, pressure-test before presenting to leadership. It's better to find the holes yourself than to have your VP find them for you.
+
+---
+
+## Keywords
+
+pressure test, challenge, devil's advocate, poke holes, what am I missing, risk, stress test, review plan, critique, is this ready, sanity check, gut check, red team, find the gaps, what could go wrong, validate, assumption check

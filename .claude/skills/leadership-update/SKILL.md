@@ -1,57 +1,79 @@
 ---
 name: leadership-update
-description: Generates weekly leadership update submissions in a strategic format — leads with the "what" and "why," stays at the right altitude, includes competitive context and business impact. Use when preparing weekly executive updates, leadership digests, or recurring status submissions.
+description: "Generates strategic leadership updates that stay at the right altitude — leads with impact, includes competitive context, and filters out operational noise. Use when preparing weekly executive updates, leadership digests, or recurring status submissions. Also activate when someone shares raw notes or an issue list and says 'reframe this for leadership,' 'what should I include in the exec update,' or is preparing for a recurring leadership cadence — even if they don't call it a 'leadership update' explicitly."
 allowed-tools: Read, Grep, Glob, Bash
 ---
 
-# Weekly Leadership Update
+# Leadership Update Generator
 
-Generate a weekly leadership update that stays at the right strategic altitude. Designed for recurring submissions to VP+ leadership.
+Transforms raw work data — issue lists, standup notes, weekly activity — into strategic leadership updates that land at the right altitude. Designed for recurring VP+ submissions where every word competes for attention across a portfolio of 10+ team updates.
 
-## Trigger Phrases
+## When to Activate
 
-- `/leadership-update`
-- `prep the weekly update`
-- `weekly leadership submission`
-- `what should I include in the exec update`
+Trigger on ANY of these signals:
+- Direct: "leadership update," "weekly update," "exec submission"
+- Indirect: "reframe this for leadership," "what should I include," "make this executive-level"
+- Implied: user shares raw notes and mentions it's for their VP, skip-level, or a leadership cadence
+- Recurring: any mention of a weekly or biweekly leadership reporting cycle
 
-## The Altitude Check
+## Step 1: Apply the Altitude Check
 
-Before including ANY bullet, ask: *Does leadership really need to know this?*
+Before writing anything, filter the input. Load the full altitude framework from [references/altitude-check.md](references/altitude-check.md).
 
-| Include | Don't Include |
-|---------|--------------|
-| Strategic direction changes | Minor task completions |
-| Program milestones with business impact | Individual ticket updates |
-| Competitive positioning wins | Internal process changes |
-| Partner milestones | Fire drills or temporary blockers |
-| Metrics WITH business context | Raw numbers without narrative |
-| Risks that affect direction | Risks already being handled |
+For every potential bullet, apply the three-question test:
 
-## Strategic Framing
+1. **"Would my skip-level care about this?"** If your VP's VP wouldn't mention it, cut it.
+2. **"Does this connect to a business outcome?"** "Updated 12 issues" fails. "Registration pipeline at 85% of annual target" passes.
+3. **"Would this change anyone's decision?"** If knowing this wouldn't cause leadership to act differently, it's noise.
 
-For each bullet, use this pattern:
+**Fail any one question = cut the bullet.** Move it to a team standup or 1:1 instead.
 
-1. **One-line headline** — what happened (strategic "what")
-2. **Why it matters** — strategic goal it serves
-3. **Evidence** — metric with comparison (vs target, vs last period, vs competitor)
+## Step 2: Route by Audience
 
-**BAD — too executional:**
+| Audience | Altitude | Bullet Count | What They Need |
+|----------|----------|-------------|---------------|
+| VP+ | Portfolio level | 2-3 max | Is the portfolio healthy? Strategic shifts? |
+| Sr. Director | Program level | 3-5 | Are key programs on track? What needs attention? |
+| Director (manager) | Initiative level | 5-7 | What's moving, stuck, or needs a decision? |
+| Peers | Dependency level | 2-3 | What affects their team? What to coordinate on? |
+
+If the user hasn't specified the audience, ask. The same accomplishment is a full bullet for a Director, a sub-bullet for a VP, and not included at all for a CVP.
+
+## Step 3: Frame Each Bullet
+
+Every bullet needs a frame that makes the information meaningful. Load the full framework from [references/framing-patterns.md](references/framing-patterns.md). Choose the strongest frame available:
+
+| Frame | When to Use | Structure |
+|-------|------------|-----------|
+| **Competitive** | You outperformed an alternative or competitor | [What we did] — [how it compares] |
+| **Metric-Led** | You have numbers that beat a target | [Metric] — [vs. target/prior] — [what it means] |
+| **Strategic** | Your work connects to an org priority | [Initiative headline] — [how this advances it] |
+
+**Strongest approach:** Combine 2-3 frames in a single bullet when possible.
+
+For each bullet, apply this structure:
+1. **One-line headline** — strategic "what" (bolded)
+2. **Why it matters** — business context in 1 sentence
+3. **Evidence** — metric with comparison (vs. target, vs. last period, vs. competitor)
+
+### Good vs. Bad Examples
+
+**Bad (too operational):**
 > - Closed 12 issues this week
 > - Updated lab content
 > - Had team meetings
 
-**GOOD — right altitude:**
+**Good (right altitude, competitive frame):**
 > **Hackathon registration pipeline on track for annual target**
-> - Partner co-marketing registration opened at conference; 400 signups in first 48 hours (2x pace vs prior year)
-> - Unified platform confirmed for Q4 flagship event — first cross-team hack platform
+> - Partner co-marketing registration opened; 400 signups in 48 hours (2x pace vs prior year)
+> - Unified platform confirmed for Q4 flagship event
 
-## Output Template
+## Step 4: Assemble the Update
 
 ```
 Week of [DATE]
 
-[Your Team/Function] — [Your Name]
+[Team/Function] — [Name]
 
 **Highlights:**
 - [Strategic headline — what happened]
@@ -66,39 +88,31 @@ Week of [DATE]
 - [Next milestone] — [date + why it matters]
 
 **Escalations/Risks:**
-- [Only if strategic-level — omit if none]
+- [Only if strategic-level — omit section entirely if none]
 ```
 
-## Formatting Rules
+### Formatting Rules
+- **Depth:** 2 levels max (headline + one level of supporting bullets)
+- **Length:** 3-5 strong bullets beats 10 weak ones, every time
+- **Negative items:** Always "risk + mitigation," never "things went wrong"
+- **Links:** Include dashboard or asset links for quick reference when useful
+- **Light weeks:** "Steady execution — all programs tracking to plan" is a valid update. Don't pad.
 
-- **Depth:** 2 levels max (headline + one level of bullets)
-- **Length:** 3-5 strong bullets beats 10 weak ones
-- **Tone:** Strategic, concise, leadership-appropriate
-- **Links:** Include dashboard or asset links when useful for quick reference
-- **Negative items:** Frame as "risk + mitigation," not "things went wrong"
-- **Always submit.** Even during light weeks — short and sweet is fine
+## Reference Files
 
-## Variations
-
-**For VP-level audience:**
-Lead with business impact and competitive context. Skip operational details entirely. 3 bullets max.
-
-**For Director-level audience:**
-Include program-level milestones and team velocity. Light on strategy, heavier on progress. 5 bullets OK.
-
-**For cross-team peers:**
-Focus only on what affects them. Dependencies, shared events, resource conflicts.
-
-## Tips for Better Results
-
-- Provide your raw notes or issue list and say "reframe these at leadership altitude"
-- Mention the audience by level ("this goes to our VP") so the AI calibrates tone
-- Include competitive benchmarks when you have them — "2x pace vs last year" is more compelling than "400 signups"
-- If you're unsure about including something, leave it out. Brevity earns trust at leadership level.
+- **[references/altitude-check.md](references/altitude-check.md)** — Include/exclude table, the three-question altitude test, transformation examples, light-week protocol
+- **[references/framing-patterns.md](references/framing-patterns.md)** — Competitive, metric-led, and strategic framing with examples, combination patterns, and negative-item framing
 
 ## Gotchas
 
 - The most common mistake is including too much. Leadership reads 10+ updates weekly. Yours needs to be scannable in 30 seconds.
-- Competitive context wins. "Our program outpaced the competitor equivalent by 2x" gets remembered. "We had 400 signups" doesn't.
-- Negative framing matters. "Risk: timeline slipped 1 week — mitigation: content lock preserved by compressing review cycle" is professional. "We're late" is not.
-- If you have nothing strategic to report, say so briefly: "Steady execution this week; all programs tracking to plan." That's a perfectly valid update.
+- Competitive context wins every time. "Our program outpaced the equivalent by 2x" gets remembered. "We had 400 signups" doesn't.
+- Negative framing matters. "Risk: timeline slipped 1 week — mitigated by compressing review cycle; original deadline preserved" is professional. "We're late" is not.
+- If you have nothing strategic to report, say so briefly. Padding with operational items to fill space actually undermines your credibility.
+- Always submit, even during light weeks. Consistency builds trust. Silence creates uncertainty.
+
+---
+
+## Keywords
+
+leadership update, weekly update, exec update, executive submission, leadership digest, weekly status, reframe for leadership, VP update, skip-level update, strategic update, what should I include, recurring update, weekly cadence, leadership reporting

@@ -1,154 +1,87 @@
 ---
 name: deck-builder
-description: Builds PowerPoint slide outlines and content from bullet points, data, or a brief. Generates structured slide-by-slide content ready to paste into PowerPoint or Copilot. Use when creating presentations, decks, pitch materials, MBR slides, or stakeholder briefings.
+description: "Builds PowerPoint slide outlines and presentation content from bullet points, data, briefs, or raw notes. Use when the user wants to create slides, build a deck, prep a presentation, make a pitch, or turn any information into a visual format — even if they just say 'I need to present this' without mentioning slides. Also activate when someone shares meeting prep, status data, or program results and the output would be stronger as a deck than as a document."
 allowed-tools: Read, Write, Edit, Bash
 ---
 
 # Deck Builder
 
-Turns rough ideas, bullet points, or data into structured PowerPoint slide content. Outputs slide-by-slide outlines with titles, body content, speaker notes, and visual suggestions — ready to paste into PowerPoint or feed to Copilot for formatting.
+Turns rough ideas, bullet points, data, or briefs into structured slide content — ready to paste into PowerPoint or feed to Copilot for formatting. This skill creates content and structure, not .pptx files.
 
-## Trigger Phrases
+## When to Activate
 
-- `/deck-builder`
-- `/deck-builder "MBR for March"`
-- `/deck-builder --template stakeholder-brief`
-- `build me a deck on [topic]`
-- `create slides for [meeting/event]`
-- `turn this into a presentation`
+Trigger on ANY of these signals, even if the user doesn't explicitly say "slides" or "deck":
+- Direct: "build me a deck," "create slides," "make a presentation"
+- Indirect: "I need to present this to [audience]," "turn this into something visual"
+- Implied: user shares bullet points or data and mentions an upcoming meeting, review, or briefing
+- Adjacent: "prep me for [meeting name]" when the meeting involves presenting
 
-## How It Works
+## Step 1: Route by Deck Type
 
-1. User provides: topic, audience, key points (or a data source)
-2. Skill generates: slide-by-slide outline with content
-3. User pastes into PowerPoint or feeds to Copilot for design
+Ask yourself: **What type of deck does the user need?**
 
-This skill does NOT create .pptx files directly. It creates the **content and structure** that goes into slides. Your team can then:
-- Paste into PowerPoint manually
-- Give to Copilot in PowerPoint to auto-format
-- Use a corporate template and fill in the generated content
+| Signal | Template | Load From |
+|--------|----------|-----------|
+| Briefing, update, program review | Stakeholder Briefing (5-7 slides) | [references/templates.md](references/templates.md) |
+| MBR, monthly review, business review | Monthly Business Review (8-10 slides) | [references/templates.md](references/templates.md) |
+| Event overview, program pitch, one-pager | Event/Program One-Pager (2-3 slides) | [references/templates.md](references/templates.md) |
+| None of the above | Custom / Freeform | [references/templates.md](references/templates.md) |
 
-## Deck Templates
+If unclear, ask: "Is this a leadership briefing, a monthly review, an event overview, or something else?"
 
-### Stakeholder Briefing (5-7 slides)
+## Step 2: Route by Audience
 
-```
-Slide 1: TITLE
-  Title: [Initiative/Program Name]
-  Subtitle: Briefing for [Audience] | [Date]
-  Notes: [Context for presenter]
+**Who is reading these slides?** This determines tone, depth, and slide count.
 
-Slide 2: EXECUTIVE SUMMARY
-  Title: At a Glance
-  Body:
-    - Status: [Green/Yellow/Red]
-    - Key metric: [number with context]
-    - Key metric: [number with context]
-    - Key decision needed: [if any]
-  Notes: [Lead with the headline — what does leadership need to know?]
+Load the full audience calibration from [references/audience-guide.md](references/audience-guide.md), then apply:
 
-Slide 3: PROGRESS
-  Title: What We've Accomplished
-  Body:
-    - [Win 1 with metric]
-    - [Win 2 with metric]
-    - [Win 3 with metric]
-  Visual: Bar chart or timeline showing progress
-  Notes: [Celebrate wins first — frame positively]
+| Audience | Slide Count | Key Adjustment |
+|----------|-------------|----------------|
+| VP+ / Skip-level | 3-5 | Headlines only. Every slide answers "so what?" |
+| Director / Sr. Director | 5-7 | Strategic + evidence. Include recommendation. |
+| Team members | 8-12 | Tactical detail. Tasks, owners, timelines. |
+| Partners | 5-7 | Mutual benefit framing. Shared metrics. |
+| Peers | 3-5 | Only what affects them. Skip internal details. |
 
-Slide 4: CURRENT STATE
-  Title: Where We Are Now
-  Body:
-    - In Progress: [items]
-    - Blocked: [items with owners]
-    - Coming Next: [items]
-  Visual: Kanban or pipeline view
-  Notes: [Be honest about blockers — leadership respects transparency]
+If the user hasn't specified the audience, ask. A deck for a VP looks completely different from a deck for the team — getting this wrong wastes the user's time.
 
-Slide 5: RISKS & ASKS
-  Title: What We Need
-  Body:
-    - Risk 1: [description] → Ask: [what you need]
-    - Risk 2: [description] → Ask: [what you need]
-  Notes: [Every risk should have a proposed mitigation and a clear ask]
+## Step 3: Generate Content
 
-Slide 6: NEXT STEPS
-  Title: Looking Ahead
-  Body:
-    - [Next milestone with date]
-    - [Next milestone with date]
-    - [Decision point with date]
-  Notes: [End with forward momentum, not problems]
+Apply these rules to every slide:
 
-Slide 7: APPENDIX (optional)
-  Title: Supporting Data
-  Body: [Detailed metrics, comparison tables, backup slides]
-```
+1. **One idea per slide.** If a slide has 3 unrelated points, split it into 3 slides. This is the most common structural mistake.
+2. **Titles are headlines, not labels.** "Registration Hit 150% of Target" not "Registration Update." Headlines tell the story even if the body is never read.
+3. **Body bullets: 3-5 per slide max.** Each under 15 words. If a bullet needs a paragraph to explain, it belongs in speaker notes.
+4. **Speaker notes for every slide.** This is where the presenter's narrative goes. The slides are the visual — the notes are the talk track.
+5. **Visual suggestions for data slides.** Suggest specific chart types: "Bar chart comparing Q3 vs. Q4 registration," not just "add a chart."
+6. **Quantify everything.** Replace "[X%]" placeholders with actual numbers from the user's input. Placeholder brackets make slides useless.
 
-### Monthly Business Review (8-10 slides)
+## Step 4: Deliver
 
-```
-Slide 1: TITLE — MBR [Month Year]
-Slide 2: EXECUTIVE SUMMARY — 3-5 key headlines
-Slide 3: WINS — What shipped/completed this month
-Slide 4: BY THE NUMBERS — Key metrics with MoM trends
-Slide 5: BY TEAM MEMBER — What each person delivered
-Slide 6: PROGRAM DEEP-DIVE — Spotlight on 1-2 programs
-Slide 7: PIPELINE — What's coming next month
-Slide 8: RISKS & BLOCKERS — What needs leadership attention
-Slide 9: ASKS — Budget, approvals, decisions needed
-Slide 10: APPENDIX — Detailed data tables
-```
+Output format: Slide-by-slide markdown, following the template structure. Include:
+- Slide number and type
+- Title (headline format)
+- Body bullets
+- Visual suggestion (where applicable)
+- Speaker notes
 
-### Event/Program One-Pager (2-3 slides)
+End with: "This is ready to paste into PowerPoint or feed to Copilot with your corporate template. Want me to adjust the depth, add slides, or change the audience level?"
 
-```
-Slide 1: OVERVIEW
-  Title: [Event/Program Name]
-  Body:
-    - What: [1-line description]
-    - When: [date(s)]
-    - Who: [audience]
-    - Goal: [target metric]
-    - Status: [Green/Yellow/Red]
+## Reference Files
 
-Slide 2: DETAILS
-  Body:
-    - Program structure
-    - Partners involved
-    - Budget summary
-    - Timeline
-
-Slide 3: ASK (if needed)
-  Body:
-    - What we need from leadership
-    - Decision deadline
-```
-
-## Content Generation Rules
-
-1. **One idea per slide.** If a slide has 3 unrelated points, split it.
-2. **Titles are headlines, not labels.** "Registration Hit 150% of Target" not "Registration Update."
-3. **Body bullets: 3-5 per slide max.** Each under 15 words.
-4. **Speaker notes for every slide.** This is where the detail goes.
-5. **Visual suggestions for data slides.** "Bar chart showing X" or "Timeline of Y."
-6. **Audience-appropriate language.** VP+ sees strategy and metrics. Team sees tasks and details.
-
-## Audience Presets
-
-| Audience | Tone | Focus | Slide Count |
-|----------|------|-------|-------------|
-| VP/Director | Strategic, metric-driven | Outcomes, risks, asks | 5-7 |
-| Skip-level (VP+) | Executive, headline-only | Impact, alignment, decisions | 3-5 |
-| Team members | Tactical, detail-rich | Tasks, timelines, owners | 8-12 |
-| Partners | Professional, collaborative | Shared goals, joint metrics | 5-7 |
-| Peers (cross-team leads) | Casual, cross-team | Shared items, dependencies | 3-5 |
+- **[references/templates.md](references/templates.md)** — Full slide-by-slide templates for all deck types
+- **[references/audience-guide.md](references/audience-guide.md)** — Audience presets, tone calibration, and the "So What?" test
 
 ## Gotchas
 
-- This skill creates content, not .pptx files. The output is structured text meant to be pasted into PowerPoint or Copilot.
-- Always specify the audience before generating. A deck for a CVP looks very different from a deck for the team.
-- "Appendix" slides are where you put the data your VP might ask about. Always have backup data ready.
+- Always specify the audience before generating. Ask if the user hasn't.
+- "Appendix" slides are where you put the data a VP might ask about. Always have backup slides ready.
 - If using Copilot in PowerPoint: give it the generated outline and say "create slides from this outline using [template name]."
 - Speaker notes are as important as slide content. The slides should be clean; the notes carry the narrative.
-- For data-heavy decks, provide the actual numbers. Placeholder brackets ("[X%]") make slides useless.
+- For data-heavy decks, provide the actual numbers. Don't generate slides with empty brackets.
+
+---
+
+## Keywords
+
+deck, slides, presentation, powerpoint, pptx, pitch, briefing, MBR, monthly review, business review, stakeholder update, event one-pager, copilot, present, slide outline, speaker notes, visual, build a deck, prep a deck, turn into slides, create a presentation
