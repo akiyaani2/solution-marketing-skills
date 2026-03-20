@@ -1,6 +1,6 @@
 # Solution Marketing Skills
 
-**33 production-ready AI skills for marketing teams.**
+**33 skills, 10 prompts, 5 scheduled automations, and 8 agent blueprints for marketing teams.**
 
 Built from real operations managing 175+ issues, 30+ epics, 5 concurrent programs, monthly MBRs, and cross-solution coordination. These skills work with **Claude Code**, **GitHub Copilot**, **Copilot Studio**, **Cursor**, **Codex CLI**, and any platform supporting the [Agent Skills](https://agentskills.io) open standard (26+ platforms).
 
@@ -19,6 +19,8 @@ No technical setup required for the Corporate Productivity skills — they work 
   - [Data Insights & Analytics](#4-data-insights--analytics)
   - [Devil's Advocate](#5-devils-advocate)
   - [Strategic Thinking & OKR Alignment](#6-strategic-thinking--okr-alignment)
+- [Prompt Bank](#prompt-bank)
+- [Scheduled Tasks](#scheduled-tasks)
 - [How Skills Work Together](#how-skills-work-together)
 - [MCP Servers](#mcp-servers)
 - [Using Skills with Copilot](#using-skills-with-copilot)
@@ -199,6 +201,47 @@ Skills for planning, goal alignment, decision governance, and making sure daily 
 | [**solution-play-health**](.claude/skills/solution-play-health/) | `/sp-health` | Strategic health scoring. Also appears in Data Insights — it bridges analytics and strategy. |
 
 **Best MCP servers:** [GitHub MCP](#3-github-mcp-server), [Dataverse MCP](#4-dataverse-mcp)
+
+---
+
+## Prompt Bank
+
+**10 copy-paste prompts that work in any AI tool.** No setup, no skills installation — just paste and go.
+
+Browse the full collection: [`/prompts/`](prompts/)
+
+| Prompt | Category | What You Get |
+|--------|----------|-------------|
+| [Blog from Bullets](prompts/blog-from-bullets.md) | Content Creation | Structured blog post draft from rough bullet points |
+| [Meeting to Actions](prompts/meeting-to-actions.md) | Meeting & Comms | Structured action items with owners and due dates from messy notes |
+| [Data to Insights](prompts/data-to-insights.md) | Data & Analysis | Executive-ready narrative from raw numbers |
+| [Recap Email](prompts/recap-email.md) | Meeting & Comms | Professional recap with decisions, actions, and next steps |
+| [Doc to Slides](prompts/doc-to-slides.md) | Presentation | 5-7 slide outline with headline titles and speaker notes |
+| [Tighten Copy](prompts/tighten-copy.md) | Editing | Cut any text to half length, keep all key points |
+| [Social from Content](prompts/social-from-content.md) | Content Creation | LinkedIn + X posts from any blog or announcement |
+| [Partnership Proposal](prompts/partnership-proposal.md) | Strategy | Structured proposal with mutual benefits and success metrics |
+| [Kickoff Agenda](prompts/kickoff-agenda.md) | Strategy | Meeting agenda with time allocations and pre-read list |
+| [OKRs to Milestones](prompts/okrs-to-milestones.md) | Strategy | Quarterly milestones with dates, owners, and dependencies |
+
+**How to use:** Open any prompt file → copy "The Prompt" section → paste into Copilot Chat, Claude.ai, or ChatGPT → replace `[brackets]` with your content → send.
+
+---
+
+## Scheduled Tasks
+
+**5 pre-built automations for Copilot Studio + Power Automate.** Set up once, runs on schedule, posts results to Teams or saves to SharePoint.
+
+Browse the full collection: [`/scheduled-tasks/`](scheduled-tasks/)
+
+| Cadence | Task | What Your Team Sees |
+|---------|------|-------------------|
+| **Daily 9am** | [Morning Pulse](scheduled-tasks/daily-morning-pulse.md) | Teams post: what's due today, what's blocked, what closed yesterday |
+| **Weekly Monday** | [Board Health Check](scheduled-tasks/weekly-board-health.md) | Teams post: stale issues, missing labels, unowned P0s, health score |
+| **Weekly Friday 2pm** | [Friday Digest](scheduled-tasks/weekly-friday-digest.md) | Teams post: what shipped, what's active, what's blocked, what's coming |
+| **Monthly 8th** | [MBR Data Package](scheduled-tasks/monthly-mbr-package.md) | SharePoint doc: metrics, completions by owner, narrative template |
+| **On new issue** | [Auto-Triage](scheduled-tasks/new-issue-auto-triage.md) | GitHub comment: suggested labels, priority, and owner |
+
+Each task includes: Copilot Studio trigger setup (step-by-step), Power Automate flow design (real connector names), sample output (what the team actually sees), and customization options.
 
 ---
 
