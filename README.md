@@ -28,20 +28,33 @@ Works with **Copilot**, **Claude**, **ChatGPT**, and any AI assistant. No techni
 
 ---
 
+## 💡 Prompts vs Skills — What's the difference?
+
+This repo has both **prompts** and **skills**. They're different tools for different situations.
+
+| | 📝 Prompt | ⚡ Skill |
+|---|----------|---------|
+| **What it is** | A single instruction you paste into an AI chat | A full playbook the AI follows like a trained expert |
+| **How you use it** | Copy → paste → go | The AI loads it automatically, or you copy it as instructions |
+| **Best for** | One-off tasks ("write me a blog post from these bullets") | Repeatable workflows ("run the same meeting prep process every week") |
+| **Depth** | One question, one answer | Multi-step process with templates, decision logic, and quality checks |
+| **Memory** | Starts fresh every time | Can track history across sessions (e.g., weekly insights log) |
+| **Example** | "Summarize this document for my VP" | A full leadership update skill that pressure-tests claims, generates 3 headline options, and checks for 7 failure modes before you submit |
+
+**Start with prompts** if you're new to AI tools. **Graduate to skills** when you find yourself repeating the same prompt every week.
+
+> 📖 Want to go deeper? Read Anthropic's guide on [what skills are and how they work](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) or their [skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices).
+
+---
+
 ## ⚡ How to use
 
-**Option 1: Copy-paste a prompt** (30 seconds)
+**Prompts** (30 seconds) — Open any file in [`/prompts/`](prompts/), copy the prompt, paste into Copilot Chat or Claude, done.
 
-Open any file in [`/prompts/`](prompts/), copy the prompt, paste into Copilot Chat or Claude, done.
-
-**Option 2: Use a skill** (2 minutes)
-
-Open any skill file in the [skills folder](.claude/skills/), copy the content, paste into your AI tool as instructions, then describe your task.
-
-**Option 3: Install into your team's workspace** (for IT/admins — 5 minutes)
+**Skills** (2 minutes) — Open any file in the [skills folder](.claude/skills/), copy the content, paste into your AI tool as instructions, then describe your task. Or if your team uses Claude Code or Copilot, skills load automatically.
 
 <details>
-<summary>🔧 Technical setup (click to expand)</summary>
+<summary>🔧 Install into your team's workspace (for IT/admins — 5 minutes)</summary>
 
 ```bash
 git clone https://github.com/akiyaani2/solution-marketing-skills.git
