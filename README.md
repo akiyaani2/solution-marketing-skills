@@ -1,6 +1,6 @@
 # Solution Marketing Skills
 
-AI-powered toolkit for marketing teams. 34 skills, 10 prompts, 5 automations, 8 agent blueprints.
+AI-powered toolkit for Solution and Partner Marketing teams. Prompts, skills, automations, and Copilot Studio agent blueprints — ready to use.
 
 Works with **Copilot**, **Claude**, **ChatGPT**, and any AI assistant. No technical setup required.
 
@@ -99,10 +99,11 @@ Or for Copilot: copy to `.github/skills/` instead.
 </details>
 
 <details>
-<summary><strong>Writing & Meeting Prep</strong> — Reports, standups, meeting notes (8 skills)</summary>
+<summary><strong>Writing & Meeting Prep</strong> — Reports, standups, meeting notes, leadership updates (9 skills)</summary>
 
 | Skill | What It Does |
 |-------|-------------|
+| [leadership-update](.claude/skills/leadership-update/) | Weekly exec update with altitude check and strategic framing |
 | [meeting-notes](.claude/skills/meeting-notes/) | Capture notes, extract action items |
 | [1on1-prep](.claude/skills/1on1-prep/) | 1:1 prep with FIRE framework |
 | [mbr](.claude/skills/mbr/) | Monthly Business Review package |
@@ -208,4 +209,4 @@ These connectors let AI agents pull real-time data from your systems. Ask your I
 
 ---
 
-*Built by the Solutions Marketing team. Questions? Open an issue or reach out.*
+*Built for the Solution and Partner Marketing org. Questions? Open an issue or reach out.*
