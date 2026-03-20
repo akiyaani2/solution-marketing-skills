@@ -1,8 +1,8 @@
 # Solution Marketing Skills
 
-AI-powered toolkit for marketing teams. 33 skills, 10 prompts, 5 automations, 8 agent blueprints.
+AI-powered toolkit for marketing teams. 34 skills, 10 prompts, 5 automations, 8 agent blueprints.
 
-Works with **Copilot**, **Claude**, **ChatGPT**, and [26+ AI tools](https://agentskills.io). No technical setup required.
+Works with **Copilot**, **Claude**, **ChatGPT**, and any AI assistant. No technical setup required.
 
 ---
 
@@ -22,8 +22,9 @@ Works with **Copilot**, **Claude**, **ChatGPT**, and [26+ AI tools](https://agen
 | **Think like the competition** | [red-team](.claude/skills/red-team/) or [competitive-scan](.claude/skills/competitive-scan/) |
 | **Check if work aligns to OKRs** | [okr-check](.claude/skills/okr-check/) |
 | **Track events or hackathons** | [event-ops](.claude/skills/event-ops/) or [hackathon-tracker](.claude/skills/hackathon-tracker/) |
+| **Write a weekly leadership update** | [leadership-update](.claude/skills/leadership-update/) |
 | **Set up automated reports in Teams** | [scheduled-tasks/](scheduled-tasks/) |
-| **Build a Copilot Studio agent** | [copilot-studio/HOW-TO-BUILD-AN-AGENT.md](copilot-studio/HOW-TO-BUILD-AN-AGENT.md) |
+| **Build a Copilot Studio agent** | [How to Build an Agent](copilot-studio/HOW-TO-BUILD-AN-AGENT.md) |
 
 ---
 
@@ -35,14 +36,20 @@ Open any file in [`/prompts/`](prompts/), copy the prompt, paste into Copilot Ch
 
 **Option 2: Use a skill** (2 minutes)
 
-Open any file in [`.claude/skills/`](.claude/skills/), copy the SKILL.md content, paste into your AI tool as instructions, then ask it to do the task.
+Open any skill file in the [skills folder](.claude/skills/), copy the content, paste into your AI tool as instructions, then describe your task.
 
-**Option 3: Install skills into your repo** (5 minutes)
+**Option 3: Install into your team's workspace** (for IT/admins — 5 minutes)
+
+<details>
+<summary>Technical setup (click to expand)</summary>
 
 ```bash
 git clone https://github.com/akiyaani2/solution-marketing-skills.git
 cp -r solution-marketing-skills/.claude/skills/* your-repo/.claude/skills/
 ```
+
+Or for Copilot: copy to `.github/skills/` instead.
+</details>
 
 ---
 
@@ -166,41 +173,39 @@ cp -r solution-marketing-skills/.claude/skills/* your-repo/.claude/skills/
 
 | Topic | Guide |
 |-------|-------|
-| Build a Copilot Studio agent | [HOW-TO-BUILD-AN-AGENT.md](copilot-studio/HOW-TO-BUILD-AN-AGENT.md) |
-| Deploy agents to your team | [DEPLOYMENT-GUIDE.md](copilot-studio/DEPLOYMENT-GUIDE.md) |
-| Agent creation rules | [AGENT-RULES.md](AGENT-RULES.md) |
-| Security & compliance | [SECURITY-OVERVIEW.md](copilot-studio/SECURITY-OVERVIEW.md) |
-| Agent instructions (copy-paste) | [agent-instructions.md](copilot-studio/agent-instructions.md) |
-| MCP servers for live data | See below |
+| Build a Copilot Studio agent | [How to Build an Agent](copilot-studio/HOW-TO-BUILD-AN-AGENT.md) |
+| Deploy agents to your team | [Deployment Guide](copilot-studio/DEPLOYMENT-GUIDE.md) |
+| Agent creation rules | [Agent Rules](AGENT-RULES.md) |
+| Security & compliance | [Security Overview](copilot-studio/SECURITY-OVERVIEW.md) |
+| Agent instructions (copy-paste) | [Agent Instructions](copilot-studio/agent-instructions.md) |
 
-### MCP Servers (connect AI to live data)
+<details>
+<summary><strong>Live data connectors</strong> (advanced — may need IT support)</summary>
 
-| Priority | Server | What It Does | Setup |
-|----------|--------|-------------|-------|
-| 1 | [Microsoft Learn](https://www.npmjs.com/package/@anthropic/microsoft-learn-mcp) | Official Azure/Microsoft docs | `npx -y @anthropic/microsoft-learn-mcp` |
-| 2 | [Work IQ](https://learn.microsoft.com/en-us/microsoft-agent-365/tooling-servers-overview) | Teams, Calendar, Mail, SharePoint | M365 admin center |
-| 3 | [GitHub](https://github.com/github/github-mcp-server) | Issues, boards, PRs, code search | Docker or binary |
-| 4 | [Dataverse](https://github.com/microsoft/Dataverse-MCP) | Business data, CRM, program records | Auth config |
-| 5 | [Power BI](https://github.com/microsoft/powerbi-modeling-mcp) | Dashboards, semantic models, DAX | Auth config |
+These connectors let AI agents pull real-time data from your systems. Ask your IT admin to help set these up.
+
+| Connector | What It Does | More Info |
+|-----------|-------------|-----------|
+| Microsoft Learn | Search official Microsoft documentation | [Setup guide](https://www.npmjs.com/package/@anthropic/microsoft-learn-mcp) |
+| Work IQ (M365) | Access Teams, Calendar, Mail, SharePoint | [Microsoft docs](https://learn.microsoft.com/en-us/microsoft-agent-365/tooling-servers-overview) |
+| GitHub | Pull project data — issues, boards, status | [GitHub docs](https://github.com/github/github-mcp-server) |
+| Dataverse | Query business data and CRM records | [Microsoft docs](https://github.com/microsoft/Dataverse-MCP) |
+| Power BI | Pull dashboard metrics and charts | [Microsoft docs](https://github.com/microsoft/powerbi-modeling-mcp) |
+
+</details>
 
 ---
 
 ## FAQ
 
-**Do I need to be technical?** No. Start with [`/prompts/`](prompts/) — just copy, paste, and go.
+**Do I need to be technical?** No. Start with the [Prompts folder](prompts/) — just copy, paste, and go.
 
-**Do I need GitHub?** Only for reporting/analytics skills. Everything else works without it.
+**Do I need GitHub?** Only for the reporting and analytics skills. Everything else works without it.
 
-**What AI tool do I need?** Any. These work in Copilot Chat, Claude.ai, ChatGPT, Cursor, and [26+ tools](https://agentskills.io).
+**What AI tool do I need?** Any. Copilot Chat, Claude, ChatGPT — whatever your team uses.
 
-**How do I contribute?** PRs welcome. Follow the [Agent Skills spec](https://agentskills.io/specification), keep it generic, include a Gotchas section.
-
----
-
-## Resources
-
-[Agent Skills Spec](https://agentskills.io/specification) | [Anthropic's Skills Guide (PDF)](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) | [Copilot Studio Docs](https://learn.microsoft.com/microsoft-copilot-studio) | [Microsoft MCP Catalog](https://github.com/microsoft/mcp)
+**How do I contribute?** Suggestions and improvements welcome. Open an issue or reach out to the team.
 
 ---
 
-*Built by the Solutions Marketing team. For questions, open an issue or submit a PR.*
+*Built by the Solutions Marketing team. Questions? Open an issue or reach out.*
