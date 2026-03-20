@@ -1,4 +1,4 @@
-# Solution Marketing Skills
+# 🚀 Solution Marketing Skills
 
 AI-powered toolkit for Solution and Partner Marketing teams. Prompts, skills, automations, and Copilot Studio agent blueprints — ready to use.
 
@@ -6,33 +6,33 @@ Works with **Copilot**, **Claude**, **ChatGPT**, and any AI assistant. No techni
 
 ---
 
-## What do you want to do?
+## 🔍 What do you want to do?
 
 | I want to... | Go here |
 |-------------|---------|
-| **Build a deck or presentation** | [deck-builder](.claude/skills/deck-builder/) or [doc-to-slides](prompts/doc-to-slides.md) |
-| **Prep for a meeting** | [talking-points](.claude/skills/talking-points/) or [1on1-prep](.claude/skills/1on1-prep/) |
-| **Draft an email** | [email-drafter](.claude/skills/email-drafter/) or [recap-email](prompts/recap-email.md) |
-| **Analyze data or a spreadsheet** | [excel-analyzer](.claude/skills/excel-analyzer/) or [data-to-insights](prompts/data-to-insights.md) |
-| **Summarize something for leadership** | [exec-summary](.claude/skills/exec-summary/) |
-| **Create a one-pager or brief** | [one-pager](.claude/skills/one-pager/) |
-| **Write a blog post** | [blog-from-bullets](prompts/blog-from-bullets.md) |
-| **Write social media posts** | [social-from-content](prompts/social-from-content.md) |
-| **Challenge or pressure-test a plan** | [pressure-test](.claude/skills/pressure-test/) or [pre-mortem](.claude/skills/pre-mortem/) |
-| **Think like the competition** | [red-team](.claude/skills/red-team/) or [competitive-scan](.claude/skills/competitive-scan/) |
-| **Check if work aligns to OKRs** | [okr-check](.claude/skills/okr-check/) |
-| **Track events or hackathons** | [event-ops](.claude/skills/event-ops/) or [hackathon-tracker](.claude/skills/hackathon-tracker/) |
-| **Write a weekly leadership update** | [leadership-update](.claude/skills/leadership-update/) |
-| **Set up automated reports in Teams** | [scheduled-tasks/](scheduled-tasks/) |
-| **Build a Copilot Studio agent** | [How to Build an Agent](copilot-studio/HOW-TO-BUILD-AN-AGENT.md) |
+| 📊 **Build a deck or presentation** | [deck-builder](.claude/skills/deck-builder/) or [doc-to-slides](prompts/doc-to-slides.md) |
+| 🎯 **Prep for a meeting** | [talking-points](.claude/skills/talking-points/) or [1on1-prep](.claude/skills/1on1-prep/) |
+| ✉️ **Draft an email** | [email-drafter](.claude/skills/email-drafter/) or [recap-email](prompts/recap-email.md) |
+| 📈 **Analyze data or a spreadsheet** | [excel-analyzer](.claude/skills/excel-analyzer/) or [data-to-insights](prompts/data-to-insights.md) |
+| 📝 **Summarize something for leadership** | [exec-summary](.claude/skills/exec-summary/) |
+| 📄 **Create a one-pager or brief** | [one-pager](.claude/skills/one-pager/) |
+| ✍️ **Write a blog post** | [blog-from-bullets](prompts/blog-from-bullets.md) |
+| 📱 **Write social media posts** | [social-from-content](prompts/social-from-content.md) |
+| 🔥 **Challenge or pressure-test a plan** | [pressure-test](.claude/skills/pressure-test/) or [pre-mortem](.claude/skills/pre-mortem/) |
+| 🥊 **Think like the competition** | [red-team](.claude/skills/red-team/) or [competitive-scan](.claude/skills/competitive-scan/) |
+| 🎯 **Check if work aligns to OKRs** | [okr-check](.claude/skills/okr-check/) |
+| 📅 **Track events or hackathons** | [event-ops](.claude/skills/event-ops/) or [hackathon-tracker](.claude/skills/hackathon-tracker/) |
+| 📣 **Write a weekly leadership update** | [leadership-update](.claude/skills/leadership-update/) |
+| ⚙️ **Set up automated reports in Teams** | [scheduled-tasks/](scheduled-tasks/) |
+| 🤖 **Build a Copilot Studio agent** | [How to Build an Agent](copilot-studio/HOW-TO-BUILD-AN-AGENT.md) |
 
 ---
 
-## How to use
+## ⚡ How to use
 
 **Option 1: Copy-paste a prompt** (30 seconds)
 
-Open any file in [`/prompts/`](prompts/), copy the prompt, paste into Copilot Chat or Claude.ai, done.
+Open any file in [`/prompts/`](prompts/), copy the prompt, paste into Copilot Chat or Claude, done.
 
 **Option 2: Use a skill** (2 minutes)
 
@@ -41,7 +41,7 @@ Open any skill file in the [skills folder](.claude/skills/), copy the content, p
 **Option 3: Install into your team's workspace** (for IT/admins — 5 minutes)
 
 <details>
-<summary>Technical setup (click to expand)</summary>
+<summary>🔧 Technical setup (click to expand)</summary>
 
 ```bash
 git clone https://github.com/akiyaani2/solution-marketing-skills.git
@@ -53,9 +53,9 @@ Or for Copilot: copy to `.github/skills/` instead.
 
 ---
 
-## What's in this repo
+## 📦 What's in this repo
 
-### [Prompts](prompts/) — Copy-paste, zero setup
+### 📝 [Prompts](prompts/) — Copy-paste, zero setup
 
 | Prompt | What You Get |
 |--------|-------------|
@@ -70,10 +70,10 @@ Or for Copilot: copy to `.github/skills/` instead.
 | [Kickoff Agenda](prompts/kickoff-agenda.md) | Meeting agenda with time allocations |
 | [OKRs to Milestones](prompts/okrs-to-milestones.md) | Quarterly milestones from objectives |
 
-### [Skills](.claude/skills/) — Deeper capabilities for AI tools
+### ⚡ [Skills](.claude/skills/) — Deeper capabilities for AI tools
 
 <details>
-<summary><strong>Corporate Productivity</strong> — Decks, emails, summaries, data (8 skills)</summary>
+<summary>💼 <strong>Corporate Productivity</strong> — Decks, emails, summaries, data (8 skills)</summary>
 
 | Skill | What It Does |
 |-------|-------------|
@@ -88,7 +88,7 @@ Or for Copilot: copy to `.github/skills/` instead.
 </details>
 
 <details>
-<summary><strong>Competitive & Market Insights</strong> — Research and intelligence (4 skills)</summary>
+<summary>🔭 <strong>Competitive & Market Insights</strong> — Research and intelligence (4 skills)</summary>
 
 | Skill | What It Does |
 |-------|-------------|
@@ -99,7 +99,7 @@ Or for Copilot: copy to `.github/skills/` instead.
 </details>
 
 <details>
-<summary><strong>Writing & Meeting Prep</strong> — Reports, standups, meeting notes, leadership updates (9 skills)</summary>
+<summary>✏️ <strong>Writing & Meeting Prep</strong> — Reports, standups, leadership updates (9 skills)</summary>
 
 | Skill | What It Does |
 |-------|-------------|
@@ -115,7 +115,7 @@ Or for Copilot: copy to `.github/skills/` instead.
 </details>
 
 <details>
-<summary><strong>Data Insights & Analytics</strong> — Metrics, health scoring, operations (8 skills)</summary>
+<summary>📊 <strong>Data Insights & Analytics</strong> — Metrics, health scoring, operations (8 skills)</summary>
 
 | Skill | What It Does |
 |-------|-------------|
@@ -130,7 +130,7 @@ Or for Copilot: copy to `.github/skills/` instead.
 </details>
 
 <details>
-<summary><strong>Devil's Advocate</strong> — Challenge your thinking (3 skills)</summary>
+<summary>🔥 <strong>Devil's Advocate</strong> — Challenge your thinking (3 skills)</summary>
 
 | Skill | What It Does |
 |-------|-------------|
@@ -140,7 +140,7 @@ Or for Copilot: copy to `.github/skills/` instead.
 </details>
 
 <details>
-<summary><strong>Strategic Thinking & OKR Alignment</strong> — Stay on strategy (3 skills)</summary>
+<summary>🎯 <strong>Strategic Thinking & OKR Alignment</strong> — Stay on strategy (3 skills)</summary>
 
 | Skill | What It Does |
 |-------|-------------|
@@ -149,39 +149,39 @@ Or for Copilot: copy to `.github/skills/` instead.
 | [solution-play-health](.claude/skills/solution-play-health/) | Strategic health scoring |
 </details>
 
-### [Scheduled Tasks](scheduled-tasks/) — Automations for Copilot Studio + Power Automate
+### ⏰ [Scheduled Tasks](scheduled-tasks/) — Automations for Copilot Studio
 
 | When | What | Where |
 |------|------|-------|
-| Daily 9am | [Morning Pulse](scheduled-tasks/daily-morning-pulse.md) | Teams channel |
-| Weekly Monday | [Board Health Check](scheduled-tasks/weekly-board-health.md) | Teams channel |
-| Weekly Friday | [Friday Digest](scheduled-tasks/weekly-friday-digest.md) | Teams channel |
-| Monthly 8th | [MBR Data Package](scheduled-tasks/monthly-mbr-package.md) | SharePoint |
-| On new issue | [Auto-Triage](scheduled-tasks/new-issue-auto-triage.md) | GitHub comment |
+| Daily 9am | [Morning Pulse](scheduled-tasks/daily-morning-pulse.md) | 💬 Teams channel |
+| Weekly Monday | [Board Health Check](scheduled-tasks/weekly-board-health.md) | 💬 Teams channel |
+| Weekly Friday | [Friday Digest](scheduled-tasks/weekly-friday-digest.md) | 💬 Teams channel |
+| Monthly 8th | [MBR Data Package](scheduled-tasks/monthly-mbr-package.md) | 📁 SharePoint |
+| On new issue | [Auto-Triage](scheduled-tasks/new-issue-auto-triage.md) | 🏷️ GitHub comment |
 
-### [Agents](agents/) — Copilot Studio blueprints
+### 🤖 [Agents](agents/) — Copilot Studio blueprints
 
 | Agent | What It Does | Deployed To |
 |-------|-------------|-------------|
-| [Marketing Assistant](agents/marketing-assistant/) | Decks, emails, summaries, meeting prep | Teams (everyone) |
-| [Strategy Advisor](agents/strategy-advisor/) | Competitive intel, pressure testing, OKR alignment | Teams (leads) |
-| [Program Tracker](agents/program-tracker/) | Events, hackathons, budgets, countdowns | Teams (program owners) |
-| [Reporting Engine](agents/reporting-engine/) | Standups, weekly status, MBR, 1:1 prep | Teams (team leads) |
+| [Marketing Assistant](agents/marketing-assistant/) | Decks, emails, summaries, meeting prep | 👥 Teams (everyone) |
+| [Strategy Advisor](agents/strategy-advisor/) | Competitive intel, pressure testing, OKR alignment | 👤 Teams (leads) |
+| [Program Tracker](agents/program-tracker/) | Events, hackathons, budgets, countdowns | 📋 Teams (program owners) |
+| [Reporting Engine](agents/reporting-engine/) | Standups, weekly status, MBR, 1:1 prep | 📊 Teams (team leads) |
 
 ---
 
-## Going deeper
+## 📚 Going deeper
 
 | Topic | Guide |
 |-------|-------|
-| Build a Copilot Studio agent | [How to Build an Agent](copilot-studio/HOW-TO-BUILD-AN-AGENT.md) |
-| Deploy agents to your team | [Deployment Guide](copilot-studio/DEPLOYMENT-GUIDE.md) |
-| Agent creation rules | [Agent Rules](AGENT-RULES.md) |
-| Security & compliance | [Security Overview](copilot-studio/SECURITY-OVERVIEW.md) |
-| Agent instructions (copy-paste) | [Agent Instructions](copilot-studio/agent-instructions.md) |
+| 🤖 Build a Copilot Studio agent | [How to Build an Agent](copilot-studio/HOW-TO-BUILD-AN-AGENT.md) |
+| 🚀 Deploy agents to your team | [Deployment Guide](copilot-studio/DEPLOYMENT-GUIDE.md) |
+| 📏 Agent creation rules | [Agent Rules](AGENT-RULES.md) |
+| 🔒 Security & compliance | [Security Overview](copilot-studio/SECURITY-OVERVIEW.md) |
+| 📋 Agent instructions (copy-paste) | [Agent Instructions](copilot-studio/agent-instructions.md) |
 
 <details>
-<summary><strong>Live data connectors</strong> (advanced — may need IT support)</summary>
+<summary>🔌 <strong>Live data connectors</strong> (advanced — may need IT support)</summary>
 
 These connectors let AI agents pull real-time data from your systems. Ask your IT admin to help set these up.
 
@@ -197,7 +197,7 @@ These connectors let AI agents pull real-time data from your systems. Ask your I
 
 ---
 
-## FAQ
+## ❓ FAQ
 
 **Do I need to be technical?** No. Start with the [Prompts folder](prompts/) — just copy, paste, and go.
 
@@ -209,4 +209,4 @@ These connectors let AI agents pull real-time data from your systems. Ask your I
 
 ---
 
-*Built by Victor, AI Chief of Staff. Questions? Open an issue or reach out.*
+*🤖 Built by Victor, AI Chief of Staff. Questions? Open an issue or reach out.*
