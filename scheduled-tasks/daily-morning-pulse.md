@@ -1,6 +1,6 @@
 # Daily Morning Pulse
 
-**Cadence:** Every weekday at 9:00 AM PT
+**Cadence:** Every weekday at 9:00 AM local time
 **Platform:** Copilot Studio + Power Automate
 **Output channel:** Microsoft Teams channel post
 
@@ -8,7 +8,7 @@
 
 ## What This Does
 
-Delivers a concise morning briefing to your team's Teams channel so everyone starts the day knowing what is due, what is stuck, and what moved yesterday. Without this, team leads spend 15-20 minutes manually scanning GitHub boards each morning to assemble the same picture. The automation eliminates that overhead and ensures nothing slips through the cracks overnight.
+Delivers a concise morning briefing to your team's Teams channel so everyone starts the day knowing what is due, what is stuck, and what moved yesterday. Without this, team leads spend 15–20 minutes manually scanning Planner boards and SharePoint list trackers each morning to assemble the same picture. This automation eliminates that overhead and ensures nothing slips through overnight.
 
 ## Sample Output
 
@@ -16,151 +16,118 @@ The following message appears in your Teams channel at 9:00 AM:
 
 ---
 
-**Daily Pulse -- Wednesday, March 18**
+**Daily Pulse — Wednesday, March 18**
 
-**Due Today (3)**
-- [ ] Finalize hackathon registration page copy -- *[Hackathon Lead]* -- P1
-- [ ] Submit Build session abstracts to review board -- *[GTM Lead]* -- P0
-- [ ] Send updated budget forecast to finance -- *[Ops Lead]* -- P1
+📋 **Due Today**
+- NVIDIA content brief → @Erica (P1)
+- Partner co-design review → @Mindy (P0 — overdue 1 day)
 
-**Blocked (1)**
-- NVIDIA MDF approval waiting on partner legal review -- *[Events Lead]* -- stuck 4 days
+🔄 **In Progress (updated yesterday)**
+- Build 2026 lab track outline — 60% → @Aaron
+- Applied Skills attribution model — Phase 2 spec → @Amy
 
-**Closed Yesterday (2)**
-- Competitive landscape deck for Q3 planning -- *[GTM Lead]*
-- Reactor session recording uploaded to Learn -- *[Hackathon Lead]*
+⛔ **Blocked**
+- Innovation Studio registration flow → waiting on UX review from @Kai
 
-**No Update in 7+ Days (2)**
-- Blog post: AI Agents customer story -- *[GTM Lead]* -- last updated Mar 10
-- 3P event sponsor contract review -- *[Events Lead]* -- last updated Mar 9
+📅 **Coming Up (next 48 hrs)**
+- March 18: NVIDIA sync call
+- March 19: Applied Skills weekly review
 
 ---
 
-## Setup in Copilot Studio
+## How to Build This
 
-### Step 1: Create the Agent (if not already created)
+### Step 1: Power Automate — Recurrence Trigger
 
-Use your **Reporting Engine** agent. If you have not created one yet:
-1. Go to [Copilot Studio](https://copilotstudio.microsoft.com)
-2. Click **Create** > **New agent**
-3. Name it `Reporting Engine`
-4. Set the description to: "Generates scheduled reports and summaries from GitHub project data"
-5. Click **Create**
+Create a scheduled flow:
+- **Trigger:** Recurrence
+- **Interval:** 1 day
+- **Frequency:** Day
+- **Start time:** 9:00 AM (team timezone)
+- **Days:** Monday, Tuesday, Wednesday, Thursday, Friday
 
-### Step 2: Add the Trigger
+### Step 2: Pull Data from M365 Sources
 
-1. Open your **Reporting Engine** agent
-2. Go to **Topics** in the left sidebar
-3. Click **+ Add** > **Topic** > **From blank**
-4. Name the topic `Morning Pulse`
-5. For the trigger, select **When a flow calls this topic** (this allows Power Automate to invoke it)
+**From Planner (via Graph API or Planner connector):**
+- Tasks due today: `dueDateTime le [today 11:59 PM] AND completedDateTime eq null`
+- Tasks completed yesterday: `completedDateTime ge [yesterday midnight] AND completedDateTime le [yesterday 11:59 PM]`
+- Tasks with no recent activity: `lastModifiedDateTime le [3 days ago] AND completedDateTime eq null`
+- Tasks marked blocked (if using bucket or label convention)
 
-### Step 3: Configure the Topic
+**From SharePoint List / MS Lists (via SharePoint connector):**
+- Items with `Target Date = today`
+- Items with `Status = "Blocked"` or `Obstacles` field non-empty
+- Items modified yesterday (`Modified >= yesterday midnight`)
 
-Add a **Message** node with the following instructions for the agent:
+### Step 3: Compose the Teams Message
 
-> You will receive three JSON arrays: `dueToday`, `blocked`, and `closedYesterday`, plus an array called `stale` for items with no update in 7+ days. Format them into a Teams-friendly summary using this structure:
->
-> - Header: "Daily Pulse -- [Day of week], [Month] [Day]"
-> - Section 1: "Due Today" -- list each item with title, owner, and priority
-> - Section 2: "Blocked" -- list each item with title, owner, and days stuck
-> - Section 3: "Closed Yesterday" -- list each item with title and owner
-> - Section 4: "No Update in 7+ Days" -- list each item with title, owner, and last updated date
-> - If any section has zero items, show "None" under that heading
+> ⚠️ **Formatting gotcha:** Teams collapses plain-text line breaks in Power Automate messages. Use HTML-formatted content via the "Post a message in a chat or channel" action with `Content-Type: HTML`. Structure with `<b>` for headers and `<br>` for line breaks.
 
-Add an **Output** variable called `formattedMessage` of type Text.
+```html
+<b>Daily Pulse — [Date]</b><br><br>
+<b>📋 Due Today</b><br>
+[Loop through due-today items: - Title → @Owner (Priority)]<br><br>
+<b>🔄 In Progress (updated yesterday)</b><br>
+[Loop through updated-yesterday items: - Title — Progress → @Owner]<br><br>
+<b>⛔ Blocked</b><br>
+[Loop through blocked items: - Title → waiting on...]<br><br>
+<b>📅 Coming Up (next 48 hrs)</b><br>
+[Loop through next-48h items: - Date: Title]
+```
 
-### Step 4: Connect the Flow
+### Step 4: Post to Teams Channel
 
-The topic receives input from the Power Automate flow below and returns `formattedMessage` back to the flow for posting to Teams.
+- **Action:** Post message in a chat or channel
+- **Post as:** Flow bot (or Copilot Studio agent)
+- **Post in:** Channel
+- **Team:** [Your team name]
+- **Channel:** [Your standup/pulse channel]
+- **Message:** HTML-formatted content from Step 3
 
-## Power Automate Flow Design
+### Step 5: Handle Empty Sections
 
-### Flow Name
+If a section has no items, post a placeholder rather than an empty header:
 
-`Reporting Engine - Post - Daily Morning Pulse`
+```html
+<b>⛔ Blocked</b><br>
+No blocked items today ✅
+```
 
-### Trigger
+---
 
-**Recurrence** (Schedule connector)
-- Frequency: Week
-- Interval: 1
-- On these days: Monday, Tuesday, Wednesday, Thursday, Friday
-- At these hours: 9
-- Time zone: Pacific Standard Time
+## Copilot Studio Variant
 
-### Inputs
+If using Copilot Studio instead of Power Automate directly:
 
-| Input | Type | Description |
-|-------|------|-------------|
-| `GitHubPAT` | String (env variable) | GitHub personal access token for API authentication |
-| `GitHubOwner` | String (env variable) | GitHub organization or username |
-| `GitHubRepo` | String (env variable) | Repository name |
-| `TeamsTeamId` | String (env variable) | Target Teams team ID |
-| `TeamsChannelId` | String (env variable) | Target Teams channel ID |
+1. Create a scheduled trigger in Copilot Studio (9:00 AM weekdays)
+2. Invoke the `standup` skill
+3. The skill pulls from Planner and SharePoint using Graph MCP connection
+4. Post the formatted output to Teams via the "Post to Teams Channel" agent flow
 
-### Actions (Step by Step)
+The key advantage of the Copilot Studio path: the standup skill handles data-gap messaging gracefully ("No activity detected for [Name]") rather than requiring custom error handling in Power Automate.
 
-1. **HTTP -- Get issues due today**
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+is:open+due:@{formatDateTime(utcNow(),'yyyy-MM-dd')}`
-   - Headers: `Authorization: Bearer @{variables('GitHubPAT')}`, `Accept: application/vnd.github+json`
+---
 
-2. **HTTP -- Get blocked issues**
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+is:open+label:status:blocked`
-   - Headers: same as above
+## Data Source Configuration
 
-3. **HTTP -- Get issues closed yesterday**
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+is:closed+closed:>@{formatDateTime(addDays(utcNow(),-1),'yyyy-MM-dd')}`
-   - Headers: same as above
+Configure these before deploying:
 
-4. **HTTP -- Get stale issues (no update in 7+ days)**
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+is:open+updated:<@{formatDateTime(addDays(utcNow(),-7),'yyyy-MM-dd')}`
-   - Headers: same as above
+| Setting | Value |
+|---------|-------|
+| Planner plan ID | [Your team's Planner plan ID — find in Planner URL] |
+| SharePoint site URL | [Your team's SharePoint site] |
+| SharePoint list name | [Your initiative tracker list name] |
+| Teams channel | [Your pulse/standup channel] |
+| Timezone | [Team timezone for 9 AM trigger] |
+| Skip weekends | Yes (built into Recurrence trigger) |
+| Skip holidays | Add condition: check against a holiday list or skip manually |
 
-5. **Compose -- Build input payload**
-   - Connector: Data Operation > Compose
-   - Input: JSON object combining the four API responses into `dueToday`, `blocked`, `closedYesterday`, and `stale` arrays (map each to title, assignee, labels, updated_at)
-
-6. **Copilot Studio -- Run Morning Pulse topic**
-   - Connector: Microsoft Copilot Studio
-   - Action: Run a flow-connected topic
-   - Agent: Reporting Engine
-   - Topic: Morning Pulse
-   - Input: the composed JSON payload from step 5
-
-7. **Microsoft Teams -- Post message in channel**
-   - Connector: Microsoft Teams
-   - Action: Post message in a chat or channel
-   - Team: `@{variables('TeamsTeamId')}`
-   - Channel: `@{variables('TeamsChannelId')}`
-   - Message: `@{outputs('Run_Morning_Pulse_topic')?['formattedMessage']}`
-
-### Output
-
-A formatted Teams channel message visible to the entire team.
-
-## Customization
-
-| Setting | Default | How to Change |
-|---------|---------|---------------|
-| Post time | 9:00 AM PT | Edit the Recurrence trigger hours and time zone |
-| Stale threshold | 7 days | Change the `-7` in step 4 URI to your preferred number |
-| Blocked label | `status:blocked` | Update the label filter in step 2 URI |
-| Include weekends | No (Mon-Fri only) | Add Saturday/Sunday to the Recurrence trigger days |
-| Channel | Single channel | Change `TeamsChannelId` env variable or duplicate the post step for multiple channels |
+---
 
 ## Gotchas
 
-- GitHub Search API has a rate limit of 30 requests per minute for authenticated users. This flow makes 4 requests, so you are well within limits for a single run.
-- The `due:` qualifier in GitHub search only works if your issues use the milestone due date or a project field mapped to a date. If you use custom project fields for due dates, you will need to use the GraphQL API (step 1 becomes an HTTP POST to `https://api.github.com/graphql` with a project items query).
-- Power Automate Recurrence triggers can drift by a few minutes. If exact timing matters, use the "Start time" field in the trigger to anchor it.
-- If the Copilot Studio agent takes more than 120 seconds to respond, the flow will time out. For large repos with hundreds of open issues, consider pre-filtering in the Compose step to limit payload size.
-- Make sure your GitHub PAT has `repo` scope (classic) or `Issues: Read` permission (fine-grained). Without it, private repo queries return empty results with no error.
+1. **Teams HTML formatting.** Plain text loses line breaks. Always send as HTML. Test in the Power Automate "Test" pane before deploying.
+2. **Planner task visibility.** The Power Automate Planner connector can only see tasks in plans you specify. If the team has multiple plans, you'll need to query each one or use Graph API with a broader scope.
+3. **SharePoint List column names are case-sensitive** in Power Automate connectors. Confirm exact column names from your list settings.
+4. **"Updated yesterday" includes minor edits.** A status-column change from "In Progress" to "In Progress" (same value) may not appear. Normalize status update discipline.
+5. **No standup if nothing moved.** Consider sending a brief "All quiet — no updates detected" message rather than skipping the post entirely, so the team knows the automation ran.
