@@ -1,6 +1,6 @@
 ---
 name: weekly-status
-description: Generates a weekly status summary for any team member from their GitHub project board. Shows completed, in-progress, blocked, and upcoming items.
+description: Generates a weekly status summary for any Solutions Marketing team member. Follows the Key Focus / Update / Next Step / Risk format from Microsoft's Skilling-Weekly-Status-Deck template. Pulls from Planner, SharePoint Lists, Loop trackers, or manual input.
 allowed-tools: [Bash, Read, Grep, Glob]
 ---
 
@@ -8,176 +8,139 @@ allowed-tools: [Bash, Read, Grep, Glob]
 
 **Type:** Weekly Operations
 **Speed:** ~20 seconds
+**Output:** Teams post + deck-ready bullets (matches Skilling Weekly Status Deck format)
 
 ## What This Skill Does
 
-Generates a weekly status summary for any team member based on their GitHub issues:
-1. **Completed This Week** -- Issues closed in the last 7 days
-2. **In Progress** -- Open issues actively being worked
-3. **Blocked / At-Risk** -- Items that need attention or escalation
-4. **Coming Up Next Week** -- Priority items and upcoming deadlines
-5. **Discussion Points** -- Auto-suggested talking points for 1:1s
+Generates a weekly status summary for any team member or the full team, using the format observed in Microsoft Solutions & Partner Marketing:
+
+1. **Key Focus** — What this person/team is driving this week
+2. **Update** — What shipped or moved forward
+3. **Next Step** — What's coming next week
+4. **Risks / Flags** — What needs attention or escalation
+
+Also produces:
+- **Completed This Week** — Deliverables finished, grouped by owner
+- **In Progress** — Active workstreams with RAG status
+- **Blocked / At-Risk** — Items needing escalation
 
 ## Triggers
 
 ```
 /weekly-status              # Prompts for which person (or shows all)
 /weekly-status [name]       # Specific person's status
+/weekly-status --deck       # Format for weekly status deck (bullet-only)
+/weekly-status --all        # Full team rollup
 ```
 
-## Prerequisites
+## Data Sources
 
-- GitHub CLI (`gh`) authenticated with repo access
-- Issues use `owner:[name]` labels to assign ownership
-- Priority labels (e.g., `p0`, `p1`, `p2`) for sorting
-- Status labels (e.g., `status:blocked`, `status:at-risk`, `status:in-progress`)
-- Repository name set as `REPO` variable
+| Source | What It Contains | Priority |
+|--------|-----------------|----------|
+| **SharePoint Lists / MS Lists** | Initiative status, owner, progress %, target date, obstacles | Primary |
+| **Planner / Tasks** | Tasks completed/in-progress/overdue by person this week | Primary |
+| **Loop tables** | Initiative fields: Priority / Motion / Owner / Progress / End date / Obstacles | Secondary |
+| **Weekly status deck (running)** | Prior week's update for continuity | Context only |
+| **Manual input** | User pastes their own update | Fallback |
+
+> **Note:** If the team uses GitHub Issues, substitute `gh issue list` queries filtered by `closed:>=WEEK_START` and `owner:[name]` labels.
 
 ## Implementation
 
-### Step 1: Set Variables
+### Step 1: Set Date Window
 
-```bash
-REPO="[org]/[repo]"
-OWNER="[name]"   # From the command argument
-WEEK_AGO=$(date -v-7d +%Y-%m-%d 2>/dev/null || date -d "7 days ago" +%Y-%m-%d)
+```
+WEEK_START = Monday of current week (or prior week if run Monday)
+WEEK_END   = Friday of current week
+NEXT_WEEK  = Following Monday
 ```
 
-### Step 2: Query Completed Issues (Last 7 Days)
+### Step 2: Gather Data Per Section
 
-```bash
-gh issue list --repo "$REPO" \
-  --state closed \
-  --label "owner:${OWNER}" \
-  --search "closed:>=${WEEK_AGO}" \
-  --json number,title,closedAt \
-  --limit 20
-```
+**Completed This Week:**
+- Planner: tasks with completion date within the week window, grouped by assignee
+- SharePoint List: items moved to "Complete" status with date in window
+- Loop table: rows where Progress = 100% updated this week
 
-### Step 3: Query In-Progress Issues
+**In Progress (with RAG):**
+- Planner: open tasks due this week or next week
+- SharePoint List: items with Status = "In Progress"
+- Assign RAG:
+  - 🟢 **Green** — On track, no blockers
+  - 🟡 **Yellow** — At risk, flagged obstacle or slipping date
+  - 🔴 **Red** — Blocked or overdue
 
-```bash
-gh issue list --repo "$REPO" \
-  --state open \
-  --label "owner:${OWNER}" \
-  --json number,title,labels,updatedAt \
-  --limit 30
-```
+**Blocked / At-Risk:**
+- Planner: tasks with blocker flag or overdue by 3+ days
+- SharePoint List: items with content in "Obstacles" column
+- Loop: rows with non-empty Obstacles field
 
-Filter for items with `status:in-progress`, `p0`, or `p1` labels to surface active work. Everything else goes into the backlog count.
+**Next Week Preview:**
+- Planner: tasks due next week
+- SharePoint List: items with target date in the following week
+- Top 3 per person
 
-### Step 4: Query Blocked / At-Risk Issues
+### Step 3: Format Output
 
-```bash
-gh issue list --repo "$REPO" \
-  --state open \
-  --label "owner:${OWNER}" \
-  --label "status:blocked" \
-  --json number,title,labels,updatedAt \
-  --limit 10
-
-gh issue list --repo "$REPO" \
-  --state open \
-  --label "owner:${OWNER}" \
-  --label "status:at-risk" \
-  --json number,title,labels,updatedAt \
-  --limit 10
-```
-
-### Step 5: Identify Upcoming Deadlines
-
-Scan open issues for due dates in the next 7-14 days. Check issue bodies, milestones, or project custom date fields.
-
-### Step 6: Generate Discussion Points
-
-Auto-suggest based on patterns:
-- Any blocked items that need escalation
-- Items waiting on the team lead's decision (e.g., `status:waiting-approval`)
-- Cross-team coordination needs (e.g., `sp:cross-solution` or similar labels)
-- Stale items (no update in 14+ days)
-
-## Output Format
+**Standard format (Teams post):**
 
 ```markdown
-## Weekly Status -- [Name] | Week of [Date]
+## Weekly Status — [Name] — Week of [Date]
 
----
+**Key Focus:** [What they're driving this week — 1 sentence]
 
-### Completed This Week
-- **#123** Issue title
-- **#124** Another completed item
-- (or "No items closed this week")
+**Update:**
+- ✅ [Completed item 1 — outcome, not activity]
+- ✅ [Completed item 2]
+- 🔄 [In-progress item — current status]
 
-### In Progress
-- **#125** Active work item [P0]
-- **#126** Another active item [P1]
-- **#127** Third active item
+**Next Step:**
+- [Priority 1 next week]
+- [Priority 2 next week]
 
-### Blocked / At-Risk
-- **#128** Blocked item -- reason/waiting on X
-- (or "All clear -- no blockers")
-
-### Coming Up Next Week
-- [Priority items for next week based on P0/P1 labels]
-- [Any upcoming deadlines or events]
-
-### Discussion Points for 1:1
-- [Auto-suggest: blocked items needing escalation]
-- [Items waiting on lead's decision]
-- [Cross-team coordination needed]
-- [Stale items to review]
-
----
-
-*Generated [timestamp] from GitHub Issues*
+**Risks / Flags:**
+- 🔴 [Blocked item] — needs [decision/asset] from @[person] by [date]
+- 🟡 [At-risk item] — [brief reason]
 ```
 
-## Team Lead Roll-Up
+**Deck format (`--deck`):**
 
-When invoked without a name (or with the team lead's name), aggregate all team members:
+Bullet-only, no markdown headers. Designed for direct paste into the Skilling-Weekly-Status-Deck template:
 
-```markdown
-## Weekly Status -- Team Roll-Up | Week of [Date]
+```
+Key Focus: [1 sentence]
+Update: [bullet] / [bullet] / [bullet]
+Next Step: [bullet] / [bullet]
+Risks: [bullet or "None"]
+```
 
-### Summary
-| Owner | Closed | In Progress | Blocked |
-|-------|--------|-------------|---------|
-| [Person A] | 3 | 5 | 0 |
-| [Person B] | 1 | 4 | 1 |
-| [Person C] | 2 | 6 | 0 |
-| **Total** | **6** | **15** | **1** |
+**Full team rollup (`--all`):**
 
-### Highlights
-- [Top 3 completions across the team]
+Table format — one row per person, 4-column (Key Focus / Update / Next Step / Risk).
 
-### Needs Attention
-- [Blocked items, stale items, at-risk items]
+### Step 4: Handle Missing Data
+
+If no connected source is available:
+```
+⚠️ No data source connected for [Name].
+
+To generate status, please provide:
+1. What did you complete this week?
+2. What are you working on now?
+3. What's coming next week?
+4. Any blockers or risks to flag?
 ```
 
 ## Gotchas
 
-- **Lead with wins, then problems.** Always show "Completed" before "Blocked" -- this is for morale and reflects well in status meetings.
-- **Keep each section to 5 items max.** If there are more, summarize (e.g., "and 4 more items"). Long lists lose the reader.
-- **P0s should be visually prominent.** Bold them or tag them so they stand out in the In Progress section.
-- **Don't editorialize.** This report should be factual data pulled from GitHub. Add context only in Discussion Points.
-- **Stale items (14+ days no update) are a signal.** Surface them in Discussion Points -- they often indicate work is stuck but not labeled as blocked.
-- **Weekend timing matters.** If run on Monday, the "last 7 days" window should cover the full prior work week (Monday to Friday), not Saturday to Monday.
-- **Some team members have project boards; some don't.** The `owner:` label query works regardless of whether they have a dedicated project board.
-- **Always include all 5 sections** even if empty ("All clear" or "No items"). Consistent structure makes it scannable.
-
-## Customization Points
-
-| Setting | Default | Override |
-|---------|---------|----------|
-| Lookback window | 7 days | Adjust for sprints or pay periods |
-| Owner label prefix | `owner:` | Change to match your label scheme |
-| Priority labels | `p0`, `p1`, `p2` | Map to your priority scheme |
-| Stale threshold | 14 days | Adjust based on team cadence |
-| Max items per section | 5 | Increase for detailed reviews |
+- **RAG status requires team discipline.** If SharePoint list Status fields aren't updated, RAG assessment defaults to Yellow for anything past target date.
+- **"Completed" vs "done done."** Distinguish between "draft delivered" and "published/launched." The update should reflect outcome-level completions, not intermediate steps.
+- **Keep Key Focus to one sentence.** The weekly status deck format has limited space — one sentence per section is the norm.
+- **The deck format and Teams format serve different audiences.** Deck goes to leadership; Teams post goes to the team. Tone and level of detail should differ.
 
 ## Related Skills
 
-- `/standup` -- Daily version (24h window)
-- `/1on1-prep` -- Deep prep including FIRE framework
-- `/mbr` -- Monthly roll-up for leadership
-- `/peer-digest` -- Cross-team Friday update
+- `/standup` — Daily version of the same signals
+- `/1on1-prep` — Uses weekly status as the prep context
+- `/mbr` — Monthly rollup that draws on weekly status data
+- `/peer-digest` — Cross-team version (Friday)
