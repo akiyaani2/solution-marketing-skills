@@ -1,223 +1,153 @@
 # Weekly Friday Digest
 
-**Cadence:** Every Friday at 2:00 PM PT
+**Cadence:** Every Friday at 2:00 PM local time
 **Platform:** Copilot Studio + Power Automate
-**Output channel:** Microsoft Teams channel post
+**Output:** Teams channel post + email to distribution list
 
 ---
 
 ## What This Does
 
-Sends a week-in-review summary to the team channel every Friday afternoon. This is the highlight reel -- what the team shipped, what is actively being worked on, what is stuck, and what is coming up next week. It replaces the manual end-of-week recap that someone would otherwise have to write by hand, and gives the team a shared sense of momentum going into the weekend.
+Sends a week-in-review digest to the team channel and via email every Friday afternoon. Follows the format used by Microsoft Solutions & Partner Marketing teams — the "Weekly Wrap-up" pattern: what shipped, what's coming, what's blocked, links for fast navigation.
+
+It replaces the manual end-of-week recap that someone would otherwise have to write by hand, and gives the team a shared sense of momentum going into the weekend.
+
+Dual output matches your org's actual pattern: Teams channel post for the team, email for broader distribution and leadership visibility.
 
 ## Sample Output
 
-The following message appears in your Teams channel on Friday at 2:00 PM:
+**Team channel post:**
 
 ---
 
-**Week in Review -- March 16-20**
+**Week in Review — March 16–20**
 
-**Shipped This Week (6)**
-- Competitive landscape deck for Q3 planning -- *[GTM Lead]*
-- Reactor session recording uploaded to Learn -- *[Hackathon Lead]*
-- NVIDIA 1:Many registration page live -- *[Hackathon Lead]*
-- Build 2026 session abstracts submitted -- *[GTM Lead]*
-- Hackathon winner swag order placed -- *[Events Lead]*
-- Updated vendor SOW for Q4 -- *[Ops Lead]*
+✅ **What Shipped**
+- NVIDIA content brief v1 delivered to Red Thread — @Erica
+- Build 2026 lab track outline locked — @Mindy
+- Applied Skills attribution model spec sent to Nextant — @Amy
 
-**In Progress (8)**
-- Build 2026 keynote demo environment setup -- *[Events Lead]* -- 60% complete
-- Agent Fest speaker confirmations -- *[Hackathon Lead]* -- waiting on 3 of 7 speakers
-- Blog series: AI Agents in Production -- *[GTM Lead]* -- draft 2 of 4 published
-- Q4 budget forecast -- *[Ops Lead]* -- final review pending
-- NVIDIA MDF tracking dashboard -- *[GTM Lead]* -- data model complete, viz in progress
-- 8K Marketplace hack logistics -- *[Events Lead]* -- venue confirmed, AV pending
-- AI Show 2.0 episode 3 script -- *[Hackathon Lead]* -- first draft complete
-- Cross-solution sync deck for [Sr. Director] -- *[GTM Lead]* -- outline approved
+📅 **Coming Next Week**
+- March 23: NVIDIA partner sync
+- March 24: Applied Skills weekly review
+- March 25: Innovation Studio UX walkthrough
 
-**Blocked (2)**
-- NVIDIA MDF approval -- *[Events Lead]* -- waiting on partner legal (9 days)
-- Lab badge certification content -- *[Hackathon Lead]* -- waiting on Learn platform team (5 days)
+⛔ **Blockers / Asks**
+- Build 2026 DevRel alignment — needs @Mark Winters decision by March 25
+- Innovation Studio registration flow — UX fix ETA TBD
 
-**Coming Next Week**
-- Monday: Hackathon planning sync ([Hackathon Lead], [Events Lead])
-- Tuesday: [Sr. Director] 1:1 prep due
-- Wednesday: AI Show 2.0 episode 3 recording
-- Thursday: Build 2026 content lock deadline
-- Friday: Peer digest goes out to [Peer Lead 1] and [Peer Lead 2]
-
-**Team Stats**
-| Metric | This Week | Last Week | Trend |
-|--------|-----------|-----------|-------|
-| Issues closed | 6 | 4 | Up |
-| Issues opened | 3 | 5 | Down |
-| Avg days to close | 4.2 | 6.1 | Improving |
-| Blocked items | 2 | 3 | Improving |
+🔗 **Links**
+- [Initiative tracker](link)
+- [NVIDIA content brief](link)
+- [Build 2026 lab outline](link)
 
 ---
 
-## Setup in Copilot Studio
+**Email version:** Same content, sent to team DL + leadership as needed.
 
-### Step 1: Create the Agent (if not already created)
+---
 
-Use your **Reporting Engine** agent. (Same agent used for the Daily Pulse and Board Health Check.)
+## How to Build This
 
-### Step 2: Add the Trigger
+### Step 1: Power Automate — Recurrence Trigger
 
-1. Open your **Reporting Engine** agent
-2. Go to **Topics** in the left sidebar
-3. Click **+ Add** > **Topic** > **From blank**
-4. Name the topic `Friday Digest`
-5. For the trigger, select **When a flow calls this topic**
+- **Trigger:** Recurrence
+- **Interval:** 1 week
+- **Frequency:** Week
+- **Days:** Friday
+- **Start time:** 2:00 PM (team timezone)
 
-### Step 3: Configure the Topic
+### Step 2: Pull Week's Data from M365 Sources
 
-Add a **Message** node with the following instructions:
+**What shipped this week (SharePoint List):**
+```
+Filter: Status = "Complete" AND Modified >= [Monday of this week]
+Output: Title, Owner, Modified date
+Sort: Modified descending
+Limit: Top 5 (surface the most recent)
+```
 
-> You will receive a JSON object with these arrays: `closedThisWeek`, `inProgress`, `blocked`, `upcomingNextWeek`, and `statsThisWeek` / `statsLastWeek`.
->
-> Format the output as a weekly digest with:
-> - Header: "Week in Review -- [Month] [StartDay]-[EndDay]"
-> - "Shipped This Week" -- list each closed issue with title and owner. This is the celebration section. Use confident, accomplished tone.
-> - "In Progress" -- list each active issue with title, owner, and a brief status note (from the most recent comment or a default "in progress")
-> - "Blocked" -- list each blocked issue with title, owner, reason, and days stuck
-> - "Coming Next Week" -- list items due in the next 7 days, organized by day of week
-> - "Team Stats" -- table comparing this week vs last week for issues closed, opened, avg days to close, and blocked count. Add a Trend column (Up/Down/Flat and Improving/Declining/Flat)
-> - If "Shipped This Week" is empty, lead with "Quiet week on closures -- but the pipeline is building" instead of showing an empty section
+**What shipped this week (Planner):**
+```
+Filter: completedDateTime >= [Monday of this week]
+Output: Task title, Assignee, completedDateTime
+```
 
-Add an **Output** variable called `digestMessage` of type Text.
+**Blockers / At-risk (SharePoint List):**
+```
+Filter: Status = "Blocked" OR Obstacles != null AND Status != "Complete"
+Output: Title, Owner, Obstacles, Target_Date
+```
 
-### Step 4: Connect the Flow
+**Coming next week (SharePoint List):**
+```
+Filter: Target_Date >= [next Monday] AND Target_Date <= [next Friday] AND Status != "Complete"
+Output: Title, Owner, Target_Date
+Sort: Target_Date ascending
+Limit: Top 5
+```
 
-The topic receives structured data from the Power Automate flow and returns `digestMessage` for posting.
+**Links:** Pull from a "key documents" list or use fixed SharePoint links to the initiative tracker and recent deliverables.
 
-## Power Automate Flow Design
+### Step 3: Compose Teams Message (HTML)
 
-### Flow Name
+> ⚠️ **Formatting gotcha:** Use HTML. Teams collapses plain-text newlines in Power Automate posts.
 
-`Reporting Engine - Post - Weekly Friday Digest`
+```html
+<b>Week in Review — [Monday Date]–[Friday Date]</b><br><br>
+✅ <b>What Shipped</b><br>
+[Loop: - Title — @Owner]<br><br>
+📅 <b>Coming Next Week</b><br>
+[Loop: - Date: Title]<br><br>
+⛔ <b>Blockers / Asks</b><br>
+[Loop: - Title — needs [ask] from @[person] by [date]]<br>
+[If none: No blockers this week ✅]<br><br>
+🔗 <b>Links</b><br>
+[Initiative tracker] | [Key deliverable 1] | [Key deliverable 2]
+```
 
-### Trigger
+### Step 4: Post to Teams Channel
 
-**Recurrence** (Schedule connector)
-- Frequency: Week
-- Interval: 1
-- On these days: Friday
-- At these hours: 14
-- Time zone: Pacific Standard Time
+- **Action:** Post message in a chat or channel (HTML)
+- **Channel:** Your team's general or comms channel
 
-### Inputs
+### Step 5: Send Email Version
 
-| Input | Type | Description |
-|-------|------|-------------|
-| `GitHubPAT` | String (env variable) | GitHub personal access token |
-| `GitHubOwner` | String (env variable) | GitHub organization or username |
-| `GitHubRepo` | String (env variable) | Repository name |
-| `TeamsTeamId` | String (env variable) | Target Teams team ID |
-| `TeamsChannelId` | String (env variable) | Target Teams channel ID |
+- **Action:** Send an email (V2) via Office 365 Outlook connector
+- **To:** Team DL (e.g., teamalias@microsoft.com)
+- **CC:** Leadership if configured
+- **Subject:** `[Team Name] Weekly Wrap-up — [Month DD]`
+- **Body:** Same content as Teams post, formatted as plain HTML email
 
-### Actions (Step by Step)
+---
 
-1. **Compose -- Calculate date range**
-   - Connector: Data Operation > Compose
-   - Input:
-     ```json
-     {
-       "weekStart": "@{formatDateTime(addDays(utcNow(), -4), 'yyyy-MM-dd')}",
-       "weekEnd": "@{formatDateTime(utcNow(), 'yyyy-MM-dd')}",
-       "nextWeekEnd": "@{formatDateTime(addDays(utcNow(), 7), 'yyyy-MM-dd')}",
-       "lastWeekStart": "@{formatDateTime(addDays(utcNow(), -11), 'yyyy-MM-dd')}",
-       "lastWeekEnd": "@{formatDateTime(addDays(utcNow(), -5), 'yyyy-MM-dd')}"
-     }
-     ```
+## Copilot Studio Variant
 
-2. **HTTP -- Get issues closed this week**
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+is:closed+closed:@{outputs('Calculate_date_range')?['weekStart']}..@{outputs('Calculate_date_range')?['weekEnd']}`
-   - Headers: `Authorization: Bearer @{variables('GitHubPAT')}`, `Accept: application/vnd.github+json`
+1. Create a Friday 2:00 PM scheduled trigger
+2. Invoke the `peer-digest` skill (which already produces dual Teams+email output)
+3. Skill pulls from SharePoint List and Planner via Graph MCP
+4. Post to Teams via agent flow + send email via Outlook connector
 
-3. **HTTP -- Get issues closed last week** (for comparison stats)
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+is:closed+closed:@{outputs('Calculate_date_range')?['lastWeekStart']}..@{outputs('Calculate_date_range')?['lastWeekEnd']}`
-   - Headers: same as above
+---
 
-4. **HTTP -- Get in-progress issues**
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+is:open+label:status:in-progress`
-   - Headers: same as above
-   - Note: If you use a project board status column instead of a label, you will need the GraphQL API to filter by project field value.
+## Data Source Configuration
 
-5. **HTTP -- Get blocked issues**
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+is:open+label:status:blocked`
-   - Headers: same as above
+| Setting | Value |
+|---------|-------|
+| SharePoint site URL | [Your team's SharePoint site] |
+| Initiative list name | [Your tracker list name] |
+| Planner plan ID(s) | [Active Planner plans] |
+| Teams channel | [Week-in-review channel] |
+| Email DL | [Team distribution list] |
+| Leadership CC | [Optional — leaders to CC] |
+| Max items per section | 5 (adjust per team size) |
 
-6. **HTTP -- Get issues due next week**
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+is:open+due:@{outputs('Calculate_date_range')?['weekEnd']}..@{outputs('Calculate_date_range')?['nextWeekEnd']}`
-   - Headers: same as above
-
-7. **HTTP -- Get issues opened this week** (for stats)
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+created:@{outputs('Calculate_date_range')?['weekStart']}..@{outputs('Calculate_date_range')?['weekEnd']}`
-   - Headers: same as above
-
-8. **HTTP -- Get issues opened last week** (for stats)
-   - Connector: HTTP
-   - Method: GET
-   - URI: `https://api.github.com/search/issues?q=repo:@{variables('GitHubOwner')}/@{variables('GitHubRepo')}+is:issue+created:@{outputs('Calculate_date_range')?['lastWeekStart']}..@{outputs('Calculate_date_range')?['lastWeekEnd']}`
-   - Headers: same as above
-
-9. **Compose -- Build digest payload**
-   - Connector: Data Operation > Compose
-   - Input: JSON object combining:
-     - `closedThisWeek`: mapped from step 2 (number, title, assignee, closed_at)
-     - `inProgress`: mapped from step 4 (number, title, assignee, labels, updated_at)
-     - `blocked`: mapped from step 5 (number, title, assignee, labels, updated_at)
-     - `upcomingNextWeek`: mapped from step 6 (number, title, assignee, due_date)
-     - `statsThisWeek`: `{ closed: length(step2), opened: length(step7) }`
-     - `statsLastWeek`: `{ closed: length(step3), opened: length(step8) }`
-
-10. **Copilot Studio -- Run Friday Digest topic**
-    - Connector: Microsoft Copilot Studio
-    - Action: Run a flow-connected topic
-    - Agent: Reporting Engine
-    - Topic: Friday Digest
-    - Input: the composed payload from step 9
-
-11. **Microsoft Teams -- Post message in channel**
-    - Connector: Microsoft Teams
-    - Action: Post message in a chat or channel
-    - Team: `@{variables('TeamsTeamId')}`
-    - Channel: `@{variables('TeamsChannelId')}`
-    - Message: `@{outputs('Run_Friday_Digest_topic')?['digestMessage']}`
-
-### Output
-
-A formatted Teams channel message with the week-in-review digest.
-
-## Customization
-
-| Setting | Default | How to Change |
-|---------|---------|---------------|
-| Post time | 2:00 PM PT Friday | Edit Recurrence trigger hours and day |
-| In-progress detection | `status:in-progress` label | Change label in step 4 URI, or switch to GraphQL for project board status |
-| Blocked detection | `status:blocked` label | Change label in step 5 URI |
-| Week-over-week stats | Enabled | Remove steps 3, 7, 8 and the stats keys from the payload if not needed |
-| Trend language | Improving/Declining/Flat | Edit the Copilot Studio topic instructions |
-| Additional recipients | Teams channel only | Add an Outlook "Send an email" action after step 11 to also email the digest |
+---
 
 ## Gotchas
 
-- This flow makes 7 HTTP requests. GitHub Search API allows 30/minute for authenticated users, so you are safe. But if you run this alongside the Daily Pulse or other flows at the same time, stagger them by a few minutes to avoid rate limits.
-- The `due:` search qualifier depends on how your repo tracks due dates. If due dates live in project custom fields rather than milestone dates, the search API will not find them. Use GraphQL project item queries instead.
-- "In Progress" detection via labels only works if your team consistently applies the `status:in-progress` label. If your workflow uses project board columns instead, replace step 4 with a GraphQL query against the project board's Status field.
-- The "avg days to close" stat requires calculating `closed_at - created_at` for each closed issue. Do this in a Compose action with an Apply to Each loop, then average the results. The Copilot Studio agent cannot do date math on raw ISO timestamps reliably.
-- Large teams with 50+ closed issues per week may hit the Teams message character limit (28 KB for connector messages). If this happens, truncate the "Shipped" section to top 15 items and add a "and X more" note.
+1. **"What shipped" vs. "what got marked complete."** Some items get marked complete in batches at end of week. Others may have shipped but weren't marked complete. The digest reflects tracker state, not reality — set that expectation with the team.
+2. **Email formatting differs from Teams.** The Teams HTML post and the email body use the same content but may render differently. Test both before deploying.
+3. **Links to SharePoint documents require correct permissions.** If the email goes to a broad DL, confirm that linked documents are accessible to all recipients.
+4. **Don't flood.** If the team has 20+ completions in a week, cap the digest at 5 highlights with a "see full tracker" link rather than listing everything.
+5. **Dual-publish is the right pattern.** Teams post for the team (scannable, fast), email for leadership + discoverability. Both should link back to the live initiative tracker as the source of truth.
