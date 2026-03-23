@@ -1,228 +1,146 @@
 ---
 name: epic-health
-description: Scores all type:initiative epics on 5 health dimensions — completion %, blocked count, staleness, RAPID completeness, TBD count. Produces a weighted health score with green/yellow/red grading.
+description: Scores strategic initiatives on 5 health dimensions using M365-native sources (SharePoint Lists, Loop tables, Planner). No GitHub required. Produces RAG-graded health scores per initiative with aggregate summary. Matches the 3-layer initiative model used by Microsoft Solutions Marketing teams.
 allowed-tools: [Bash, Read]
 trigger_phrases:
   - "/epic-health"
   - "/epic-health --red-only"
-  - "/epic-health #[number]"
-  - "check epic health"
-  - "are epics on track"
-  - "epic status"
+  - "/epic-health [initiative-name]"
+  - "check initiative health"
+  - "are initiatives on track"
+  - "initiative status"
+  - "how are we doing on [program]"
 ---
 
-# Epic Health Scoring
+# Initiative Health Scoring
 
-Score every `type:initiative` epic on 5 health dimensions. Produces a weighted composite score (0-100) with green/yellow/red grading per epic and an aggregate summary.
+Score every strategic initiative on 5 health dimensions. Produces a weighted composite score (0–100) with Green/Yellow/Red grading per initiative and an aggregate summary.
+
+Follows the 3-layer model observed in Microsoft Solutions Marketing:
+- **Viva Goals** — OKR/outcome layer (strategy)
+- **SharePoint Lists / Loop tables** — Initiative layer ("epics")
+- **Planner / Tasks** — Work item layer (execution)
+
+This skill operates on the **initiative layer** (Layer B).
 
 ## Usage
 
 ```
-/epic-health              # All epics
-/epic-health --red-only   # Only show unhealthy epics
-/epic-health #24          # Specific epic by number
-/epic-health [owner]      # Epics owned by a specific person
+/epic-health                      # All initiatives
+/epic-health --red-only           # Only show unhealthy initiatives
+/epic-health [initiative-name]    # Specific initiative by name
+/epic-health [owner]              # Initiatives owned by a specific person
 ```
+
+## Data Sources
+
+| Source | Fields Used | Priority |
+|--------|------------|----------|
+| **SharePoint List / MS Lists** | Status, Owner, % Complete, Target Date, Obstacles, Last Updated | Primary |
+| **Loop table (Main Tracker style)** | Priority, Motion, Owner, Progress, End Date, Obstacles, Notes | Primary |
+| **Planner** | Open tasks, blocked tasks, overdue tasks linked to initiative | Secondary (for task counts) |
+| **Manual input** | User provides initiative status directly | Fallback |
+
+> **Expected schema (Loop/List):** Priority / Motion / Category / Title / Owner / Progress / End Date / Obstacles / Notes
 
 ## Health Dimensions
 
 | # | Dimension | Weight | What It Measures |
 |---|-----------|--------|------------------|
-| 1 | **Completion %** | 30% | Sub-issues done vs total |
-| 2 | **Blocked count** | 25% | Items with `status:blocked` label |
-| 3 | **Staleness** | 20% | Days since last update on epic or sub-issues |
-| 4 | **RAPID completeness** | 15% | Are RAPID roles assigned in the issue body? |
-| 5 | **TBD count** | 10% | Unresolved "TBD" / "TBA" placeholders in body |
+| 1 | **Completion Progress** | 30% | % complete vs. time elapsed in the initiative window |
+| 2 | **Blocker Count** | 25% | Number of open blockers or items in the "Obstacles" field |
+| 3 | **Staleness** | 20% | Days since last status update (item or task activity) |
+| 4 | **Decision Debt** | 15% | Open decisions or unresolved dependencies (if tracked) |
+| 5 | **Date Confidence** | 10% | End date vs. current progress trajectory |
 
-## Health Grades
+## Scoring Logic
 
-| Grade | Score | Criteria | Action |
-|-------|-------|----------|--------|
-| 🟢 **Green** | 75-100 | >70% complete, 0 blocked, updated <7 days | On track |
-| 🟡 **Yellow** | 40-74 | 40-70% complete OR 1-2 blocked OR 7-14 days stale | Needs attention |
-| 🔴 **Red** | 0-39 | <40% complete OR 3+ blocked OR >14 days stale | Escalate |
-
-## Scoring Formula
-
+### Completion Progress (30 pts max)
 ```
-Health Score = (
-  (completion_pct * 0.30) +
-  (blocked_score * 0.25) +
-  (freshness_score * 0.20) +
-  (rapid_score * 0.15) +
-  (tbd_score * 0.10)
-)
+time_elapsed_pct = (today - start_date) / (end_date - start_date)
+progress_pct = item.progress_field (0–100)
 
-Where:
-- completion_pct:  (closed_sub_issues / total_sub_issues) * 100
-                   If no sub-issues, score = 0 (flag as "no breakdown")
-- blocked_score:   100 - (blocked_count * 20), min 0
-                   0 blocked = 100, 1 = 80, 2 = 60, 5+ = 0
-- freshness_score: 100 - (days_since_update * 5), min 0
-                   Updated today = 100, 7 days ago = 65, 20+ days = 0
-- rapid_score:     100 if all 5 RAPID roles filled
-                   50 if partial (some roles filled)
-                   0 if no RAPID table found
-- tbd_score:       100 - (tbd_count * 10), min 0
-                   0 TBDs = 100, 5 = 50, 10+ = 0
+if progress_pct >= time_elapsed_pct × 0.9:   30 pts (on track)
+elif progress_pct >= time_elapsed_pct × 0.7:  20 pts (slight lag)
+else:                                           0–10 pts (behind)
 ```
 
-## Implementation Steps
+### Blocker Count (25 pts max)
+```
+blockers = count of non-empty Obstacles entries + Planner blocked tasks
 
-### 1. Fetch all epics
-
-```bash
-# Get all open epics (type:initiative)
-gh issue list --repo OWNER/REPO \
-  --state open \
-  --label "type:initiative" \
-  --json number,title,body,labels,updatedAt,assignees \
-  --limit 100
+if blockers == 0:    25 pts
+elif blockers == 1:  15 pts
+elif blockers == 2:  5 pts
+else:                0 pts
 ```
 
-If `--red-only` flag: run the full scoring, then filter output to only red epics.
+### Staleness (20 pts max)
+```
+days_stale = today - last_modified_date
 
-If `#[number]` specified: fetch just that issue.
-
-If `[owner]` specified: add `--label "owner:[name]"` to the query.
-
-### 2. For each epic, calculate sub-issue completion
-
-```bash
-# Get the epic body and parse task list items
-gh issue view [EPIC_NUMBER] --repo OWNER/REPO --json body
-
-# Count patterns in the body:
-#   "- [x]" or "- [X]" = completed
-#   "- [ ]"            = incomplete
-# Also check for "#NN" references to linked issues
+if days_stale <= 3:   20 pts
+elif days_stale <= 7:  12 pts
+elif days_stale <= 14:  5 pts
+else:                   0 pts
 ```
 
-For linked issues (referenced as `#NN` in the body), check their state:
+### Decision Debt (15 pts max)
+```
+open_decisions = count of items where Notes contains "TBD" or "Decision needed"
 
-```bash
-gh issue view [SUB_ISSUE_NUMBER] --repo OWNER/REPO --json state
+if open_decisions == 0:   15 pts
+elif open_decisions == 1:  8 pts
+else:                       0 pts
 ```
 
-### 3. Check for blocked sub-issues
-
-```bash
-gh issue list --repo OWNER/REPO \
-  --state open \
-  --label "status:blocked" \
-  --json number,title,labels
+### Date Confidence (10 pts max)
 ```
-
-Cross-reference blocked issues against each epic's sub-issue list.
-
-### 4. Parse RAPID table from epic body
-
-Look for a markdown table containing RAPID roles:
-- `Recommend`, `Agree`, `Perform`, `Input`, `Decide`
-- Score: 100 if all filled, 50 if partial, 0 if missing
-
-### 5. Count TBD occurrences
-
-Search the epic body for case-insensitive occurrences of:
-- "TBD", "TBA", "To be determined", "To be announced"
-
-### 6. Calculate composite score and assign grade
-
-Apply the weighted formula. Assign the health grade emoji.
+if end_date is in the future AND progress >= 50% AND no critical blockers:   10 pts
+elif end_date is approaching (< 14 days) AND blockers > 0:                     3 pts
+elif end_date has passed AND status != "Complete":                              0 pts
+else:                                                                           7 pts
+```
 
 ## Output Format
 
 ```markdown
-# Epic Health Report — [Date]
+# Initiative Health — [Date]
 
 ## Summary
-| Health | Count | Epics |
-|--------|-------|-------|
-| 🟢 Green | X | #NN, #NN |
-| 🟡 Yellow | X | #NN, #NN |
-| 🔴 Red | X | #NN |
 
----
+| Initiatives | 🟢 Green | 🟡 Yellow | 🔴 Red |
+|-------------|---------|---------|-------|
+| [Total] | [Count] | [Count] | [Count] |
 
-## 🔴 Red Epics (Needs Escalation)
+## Initiative Scores
 
-### #NN — [Epic Title]
-| Metric | Value | Detail |
-|--------|-------|--------|
-| Completion | 15% | 2/13 sub-issues done |
-| Blocked | 3 | #NN, #NN, #NN |
-| Last Update | 18 days | Stale |
-| RAPID | Incomplete | Missing Decide role |
-| TBDs | 8 | Scoping incomplete |
+| Initiative | Owner | Score | Status | Top Issue |
+|------------|-------|-------|--------|-----------|
+| [Name] | [Owner] | 87/100 | 🟢 | None |
+| [Name] | [Owner] | 61/100 | 🟡 | Stale (9 days) |
+| [Name] | [Owner] | 32/100 | 🔴 | 2 blockers + behind pace |
 
-**Health Score:** 25/100 🔴
-**Recommendation:** [Actionable next step]
+## Red Initiatives — Action Required
 
----
-
-## 🟡 Yellow Epics (Needs Attention)
-
-### #NN — [Epic Title]
-| Metric | Value | Detail |
-|--------|-------|--------|
-| Completion | 55% | 5/9 sub-issues done |
-| Blocked | 1 | #NN |
-| Last Update | 10 days | Slightly stale |
-| RAPID | Complete | All roles assigned |
-| TBDs | 2 | Budget, vendor TBD |
-
-**Health Score:** 62/100 🟡
-**Recommendation:** [Actionable next step]
-
----
-
-## 🟢 Green Epics (On Track)
-
-### #NN — [Epic Title]
-| Metric | Value |
-|--------|-------|
-| Completion | 80% |
-| Blocked | 0 |
-| Last Update | 2 days |
-| RAPID | Complete |
-| TBDs | 0 |
-
-**Health Score:** 92/100 🟢
-
----
-
-## Trends (if previous data available)
-
-| Epic | Last Check | This Check | Delta |
-|------|-----------|-----------|-------|
-| #NN | 🔴 20 | 🟡 45 | +25 |
-| #NN | 🟡 60 | 🟢 78 | +18 |
-```
-
-## Auto-Label Option
-
-When run with `--auto-label`, apply health labels to epics:
-
-```bash
-# Add new health label
-gh issue edit [NUMBER] --repo OWNER/REPO --add-label "health:red"
-
-# Remove old health labels
-gh issue edit [NUMBER] --repo OWNER/REPO --remove-label "health:yellow,health:green"
+### [Initiative Name] — Score: 32/100 🔴
+**Owner:** [Name]
+**Progress:** 25% complete (should be ~55% by now)
+**Blockers:** [Blocker 1], [Blocker 2]
+**Last Updated:** [Date] (X days ago)
+**Recommended Action:** [Specific next step]
 ```
 
 ## Gotchas
 
-- **No sub-issues = score 0 for completion.** An epic without a task breakdown should be flagged as "needs breakdown" rather than scored as healthy. This is a common gap when epics are freshly created.
-- **Staleness can be misleading.** An epic body might not be updated but its sub-issues could be active. Check sub-issue `updatedAt` timestamps too, not just the epic's own timestamp.
-- **Pagination matters.** If your repo has 100+ open issues, `gh issue list` may truncate results. Use `--limit 200` or paginate with `--jq` filtering.
-- **RAPID table format varies.** Teams may use different table formats. Look for role keywords (Recommend, Agree, Perform, Input, Decide) anywhere in the body, not just in a perfectly formatted table.
-- **Duplicate project board entries.** An issue can appear multiple times on a project board. When counting, deduplicate by issue number.
-- **TBD false positives.** The string "TBD" might appear in historical context ("was TBD, now confirmed"). Parse carefully and consider proximity to dates or names.
+- **Staleness detection depends on list/table having a Last Modified or Last Updated field.** If your SharePoint List doesn't expose last modified date, staleness scoring will not be available.
+- **"Obstacles" field discipline matters.** If team members don't update the Obstacles field when blocked, blocker count will underreport.
+- **Progress % is often manually entered.** It reflects what the owner believes, not a computed value. This is a limitation of M365-native tracking vs. automated systems.
+- **Green doesn't mean risk-free.** An initiative with 90/100 health today can slip to 40/100 next week if a key milestone is missed. Run this check weekly.
+- **No GitHub required.** If the team uses GitHub Issues alongside M365, you can supplement with `gh issue list` queries, but it's not required.
 
 ## Related Skills
 
-- `/sp-health` — Aggregates epic health to the solution play level
-- `/mbr` — Monthly roll-up includes epic health summary
-- `/standup` — Daily view of blocked items across epics
-- `/1on1-prep` — Shows a person's epic health for meeting prep
+- `/solution-play-health` — Aggregates initiative scores into play-level view
+- `/weekly-status` — Per-person view that feeds initiative health
+- `/mbr` — Monthly rollup that draws on initiative health data
