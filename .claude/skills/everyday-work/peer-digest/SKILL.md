@@ -1,6 +1,6 @@
 ---
 name: peer-digest
-description: Generates a Friday cross-team digest for peer solution play leads. Covers what shipped, what's coming, cross-team heads up, blockers, and team health -- all in under 10 lines.
+description: Generates a Friday cross-team digest for peer solution play leads. Follows the Solutions & Partner Marketing Weekly Wrap-up format — what changed, what's blocked, what's next, links. Dual-output: Teams post + email-ready version.
 allowed-tools: [Bash, Read, Grep, Glob]
 ---
 
@@ -9,162 +9,134 @@ allowed-tools: [Bash, Read, Grep, Glob]
 **Type:** Cross-Team Visibility
 **Speed:** ~15 seconds
 **Cadence:** Weekly (Fridays)
+**Output:** Teams channel post + email version
 
 ## What This Skill Does
 
-Generates a concise weekly update for peer leads on adjacent teams. The goal is to maintain cross-team visibility without creating meetings or long email threads.
+Generates a concise weekly update for peer leads on adjacent teams. Follows the format used in Microsoft Solutions & Partner Marketing — specifically the "Weekly Wrap-up" pattern: curated index of what moved, what's blocked, what's coming, and links for fast navigation.
 
 Sections:
-1. **What Shipped This Week** -- 1-3 completed items
-2. **What's Coming Next Week** -- 1-3 upcoming items
-3. **Cross-Team Heads Up** -- Anything touching peer teams
-4. **Blockers / At-Risk** -- Items needing attention
-5. **Team Health** -- Green/Yellow/Red signal
+1. **What Changed This Week** — Progress + decisions (1–3 items)
+2. **What's Coming Next Week** — Upcoming milestones (1–3 items)
+3. **Cross-Team Heads-up** — Anything touching peer teams, shared dependencies
+4. **Blockers / Asks** — What you need and from whom
+5. **Links** — Recordings, decks, trackers (the fast-nav index)
 
 ## Triggers
 
 ```
 /peer-digest            # Generate this week's digest
+/peer-digest --email    # Email-ready format (for forwarding)
+/peer-digest --brief    # 5-bullet version for a quick Teams post
 ```
 
-## Prerequisites
+## Data Sources
 
-- GitHub CLI (`gh`) authenticated with repo access
-- Issues use labels for cross-team tracking (e.g., `sp:cross-solution`, `sp:[play-name]`)
-- Status labels (`status:blocked`, `status:at-risk`) for risk items
-- Repository name set as `REPO` variable
+| Source | What It Contains | Use |
+|--------|-----------------|-----|
+| **SharePoint Lists / MS Lists** | Initiative status, completions, blockers | Primary — pull completed/at-risk items |
+| **Planner / Tasks** | Cross-team task completions and upcoming milestones | Primary |
+| **Teams channel** | Prior week's posts, meeting outcomes shared in channel | Context scan for qualitative items |
+| **Calendar / meetings** | Meetings held this week with cross-team attendance | Source for "What changed" (decisions made) |
+| **Manual input** | User provides highlights | Fallback |
+
+> **Note:** If the team tracks cross-solution work with GitHub labels (e.g., `sp:cross-solution`), substitute GitHub queries filtered by those labels. GitHub is optional.
 
 ## Implementation
 
-### Step 1: Set Variables
+### Step 1: Determine Cross-Team Scope
 
-```bash
-REPO="[org]/[repo]"
-WEEK_AGO=$(date -v-7d +%Y-%m-%d 2>/dev/null || date -d "7 days ago" +%Y-%m-%d)
-TODAY=$(date +%Y-%m-%d)
-```
+Define which items are "peer-facing" vs. internal-only:
+- Items with cross-team dependencies or shared owners
+- Decisions made this week that affect adjacent teams
+- Blockers requiring peer team action
+- Upcoming milestones where peer teams have visibility or dependencies
 
-### Step 2: Query Closed Issues This Week
+### Step 2: Gather Per-Section Data
 
-```bash
-gh issue list --repo "$REPO" \
-  --state closed \
-  --search "closed:>=${WEEK_AGO}" \
-  --json number,title,labels \
-  --limit 20
-```
+**What Changed:**
+- Completed deliverables with external impact (shipped content, launched events, finalized decisions)
+- Decisions made in cross-team meetings
+- Status changes on shared initiatives
 
-### Step 3: Query Cross-Team Issues
+**What's Coming:**
+- Milestones due next week that peers should know about
+- Upcoming events, launches, or reviews requiring cross-team awareness
 
-```bash
-gh issue list --repo "$REPO" \
-  --state open \
-  --label "sp:cross-solution" \
-  --json number,title,labels \
-  --limit 10
-```
+**Cross-Team Heads-up:**
+- Dependencies on peer teams (what you need from them)
+- Items where your team's work affects their roadmap
+- Shared program updates (NVIDIA, GitHub, Build-related work)
 
-Adjust the label to match your cross-team tracking scheme. Some teams use `cross-team`, `x-solution`, or `contributor:[peer-name]`.
+**Blockers / Asks:**
+- Specific asks from peer teams with owner and deadline
+- Escalations that need peer visibility
 
-### Step 4: Query Blocked / At-Risk Items
+**Links:**
+- Meeting recordings from cross-team syncs this week
+- Decks or documents referenced in the digest
+- The team's initiative tracker (SharePoint List or Loop table link)
 
-```bash
-gh issue list --repo "$REPO" \
-  --state open \
-  --label "status:blocked" \
-  --json number,title,labels \
-  --limit 5
+### Step 3: Format Output
 
-gh issue list --repo "$REPO" \
-  --state open \
-  --label "status:at-risk" \
-  --json number,title,labels \
-  --limit 5
-```
-
-### Step 5: Determine Team Health
-
-Calculate health signal from the data:
-- **Green:** No blockers, completions on track, no overdue items
-- **Yellow:** 1-2 blockers or at-risk items, or below-average completions
-- **Red:** 3+ blockers, critical items overdue, or capacity issue
-
-### Step 6: Select Top Items
-
-Pick the 1-3 most impactful items for each section. Prioritize:
-- Items that touch peer teams (cross-solution labels)
-- P0/P1 items over P2
-- Items with external dependencies
-- Upcoming events or deadlines
-
-## Output Format
+**Teams post format:**
 
 ```markdown
-## Skilling Team Update -- Week of [Date]
+📋 **Weekly Wrap-up — [Team Name] — Week of [Date]**
 
-**For:** [Peer Lead A], [Peer Lead B]
-**From:** [Team Lead]
+**What Changed**
+- ✅ [Completed item or decision — outcome framing]
+- ✅ [Completed item or decision]
 
----
+**What's Coming Next Week**
+- 📅 [Milestone / launch / event] — [date] — [owner]
+- 📅 [Milestone]
 
-### 1. What Shipped This Week
-- [Completed item 1]
-- [Completed item 2]
+**Cross-Team Heads-up**
+- [Dependency or shared item] — touches @[peer team/lead]
+- [Update relevant to adjacent teams]
 
-### 2. What's Coming Next Week
-- [Upcoming item 1]
-- [Upcoming item 2]
+**Blockers / Asks**
+- Need [specific thing] from @[team/person] by [date]
+- [Or: No asks this week]
 
-### 3. Cross-Team Heads Up
-- [Item affecting peer teams -- be specific about what they need to know]
-- Or "None this week"
-
-### 4. Blockers / At-Risk
-- [Blocked item with context]
-- Or "All clear"
-
-### 5. Team Health
-Green -- All systems go
--- OR --
-Yellow -- Some attention needed: [brief reason]
--- OR --
-Red -- Needs intervention: [brief reason]
-
----
-
-*Questions? Ping [Team Lead] or reply to this thread.*
+**Links**
+- [Meeting recap / recording]
+- [Deck or doc]
+- [Initiative tracker]
 ```
 
-## Rules
+**Email format (`--email`):**
 
-- **Keep it under 10 lines of actual content.** This is a scan-and-move-on artifact, not a detailed report.
-- **Always include "Cross-Team Heads Up" even if empty.** Peers need to know you checked, not just that nothing came up.
-- **Don't editorialize.** Facts and status, not opinions. Let peers draw their own conclusions.
-- **Sign as the team lead, not the AI.** This goes to peers; it should read as a person-to-person update.
-- **Present to team lead for review before sending.** Never auto-send -- always show the draft first.
+Same structure, plain text with hyperlinks. Subject line: `[Team Name] Weekly Wrap-up — [Month DD]`
+
+**Brief format (`--brief`):**
+
+```
+[Team Name] | Week of [Date]
+✅ Shipped: [item]
+📅 Next: [item]
+🔗 Asks: [item or None]
+[Link to full tracker]
+```
+
+## Dual-Publish Pattern
+
+Publish to both:
+1. **Teams channel** — short, scannable post in the cross-solution or shared channel
+2. **Email** — for discoverability and forwarding to leaders not in the channel
+
+Keep the **source of truth** as the initiative tracker (SharePoint List or Loop table) so the digest links back to live data rather than being a static artifact.
 
 ## Gotchas
 
-- **"Cross-Team Heads Up" is the most valuable section.** Peers don't need to know about your internal tasks -- they need to know what affects them. Over-invest in getting this section right.
-- **If there's nothing cross-team, say so explicitly.** "None this week" is a valid and useful signal. Don't pad with irrelevant items.
-- **Team Health should be honest.** A permanent "Green" signal erodes trust. If the team is stretched, say Yellow. Peers respect candor.
-- **Timing matters.** Send Friday afternoon or Monday morning. Mid-week updates get lost.
-- **Keep the recipient list small.** This is for 2-3 peer leads, not a broadcast. If leadership wants a copy, create a separate format.
-- **Blockers that affect peers should be called out in BOTH sections 3 and 4.** A blocker is a blocker; a cross-team blocker is a call to action.
-- **Don't include internal personnel issues or team dynamics.** Keep it professional and work-focused.
-
-## Customization Points
-
-| Setting | Default | Override |
-|---------|---------|----------|
-| Recipient list | 2-3 peer leads | Add/remove as org changes |
-| Cross-team label | `sp:cross-solution` | Match your labeling scheme |
-| Content limit | 10 lines | Strict -- trim aggressively |
-| Cadence | Weekly (Friday) | Biweekly if peers prefer |
-| Delivery channel | Terminal for review | Teams, email, Slack, or GitHub Discussion |
+- **Peer digest is not your internal status.** Don't include internal team details, budget specifics, or pre-announcement strategy. Filter to cross-team-relevant items only.
+- **Links are the most valuable part.** The Teams Wrap-up format that works in your org is a curated index. Prioritize fast navigation over prose.
+- **Brevity over completeness.** Peer leads get digests from multiple teams. 5 bullets and 3 links is better than 15 bullets.
+- **Decisions made in meetings often don't appear in trackers.** Scan the Teams channel and calendar for meeting outcomes that should be included.
 
 ## Related Skills
 
-- `/weekly-status` -- Detailed status that feeds into the digest
-- `/standup` -- Daily data that accumulates into weekly view
-- `/mbr` -- Monthly leadership report (different audience, different depth)
+- `/weekly-status` — Internal version of the same week's data
+- `/standup` — Daily signals that feed into the Friday digest
+- `/stakeholder-brief` — Longer-form brief for stakeholder escalation
