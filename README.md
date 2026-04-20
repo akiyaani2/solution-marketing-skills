@@ -1,6 +1,6 @@
 # 🚀 Solution Marketing Skills
 
-AI-powered toolkit for Solution and Partner Marketing teams. Prompts, skills, automations, and Copilot Studio agent blueprints — ready to use.
+AI-powered toolkit for Solution and Partner Marketing team. Prompts, skills, automations, and Copilot Studio agent blueprints — ready to use.
 
 Works with **Copilot**, **Claude**, **ChatGPT**, and any AI assistant. No technical setup required.
 
